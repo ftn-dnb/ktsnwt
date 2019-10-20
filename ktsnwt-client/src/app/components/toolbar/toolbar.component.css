@@ -1,0 +1,16 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+.button {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.title:hover {
+    cursor: pointer;
+}
+
+.btnText {
+    margin-right: 5px;
+}

@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <span class="title" (click)="onTitleClick()">KTS-NWT</span>
+
+        <ng-template [ngIf]="isUserLoggedIn()" [ngIfElse]="nonRegisteredUser">
+            <span class="spacer"></span>
+            
+        </ng-template>
+        
+        <ng-template #nonRegisteredUser>
+            <span class="spacer"></span>
+
+            <button mat-raised-button class="button" (click)="onClickLogin()">
+                Login
+            </button>
+        </ng-template>
+    </mat-toolbar-row>
+</mat-toolbar>
