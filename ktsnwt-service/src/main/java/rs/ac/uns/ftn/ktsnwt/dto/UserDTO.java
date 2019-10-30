@@ -14,7 +14,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
-    private boolean enabled;
+    private boolean activated;
     private List<String> authorities;
     private UserTokenState token;
 
@@ -25,7 +25,7 @@ public class UserDTO {
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
-        this.enabled = user.isEnabled();
+        this.activated = user.isActivatedAccount();
         this.token = null;
 
         this.authorities = user.getAuthorities().stream()
@@ -72,12 +72,12 @@ public class UserDTO {
         this.email = email;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public boolean isActivated() {
+        return activated;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 
     public List<String> getAuthorities() {
