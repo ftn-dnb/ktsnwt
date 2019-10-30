@@ -18,4 +18,9 @@ public class TimeProvider implements Serializable {
     public Timestamp nowTimestamp() {
         return new Timestamp(new Date().getTime());
     }
+
+    public long timeDifferenceInMinutes(Date time1, Date time2) {
+        long difference = Math.abs(time1.getTime() - time2.getTime());
+        return difference / (60 * 1000);
+    }
 }

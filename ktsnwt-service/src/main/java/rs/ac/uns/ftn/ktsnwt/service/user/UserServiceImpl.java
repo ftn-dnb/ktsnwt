@@ -10,9 +10,12 @@ import rs.ac.uns.ftn.ktsnwt.dto.UserRegistrationDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Authority;
+import rs.ac.uns.ftn.ktsnwt.model.ConfirmationToken;
 import rs.ac.uns.ftn.ktsnwt.model.User;
 import rs.ac.uns.ftn.ktsnwt.repository.AuthorityRepository;
+import rs.ac.uns.ftn.ktsnwt.repository.ConfirmationTokenRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.UserRepository;
+import rs.ac.uns.ftn.ktsnwt.service.email.MailSenderService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,10 +30,16 @@ public class UserServiceImpl implements UserService {
     private AuthorityRepository authorityRepository;
 
     @Autowired
+    private ConfirmationTokenRepository tokenRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     private TimeProvider timeProvider;
+
+    @Autowired
+    private MailSenderService mailSenderService;
 
 
     @Override
@@ -69,6 +78,11 @@ public class UserServiceImpl implements UserService {
         User user = createNewUserObject(userInfo);
         userRepository.save(user);
 
+        ConfirmationToken token = new ConfirmationToken(user);
+        tokenRepository.save(token);
+
+        mailSenderService.sendRegistrationMail(token);
+
         return user;
     }
 
@@ -91,6 +105,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void activateAccount(String token) {
-        // @TODO: Implement this
+        ConfirmationToken confirmationToken = tokenRepository.findByToken(token);
+
+        if (confirmationToken == null) {
+            throw new ResourceNotFoundException("Confirmation token doesn't exist.");
+        }
+
+        if (confirmationToken.isUsed()) {
+            throw new ApiRequestException("This token has been already used.");
+        }
+
+        User user = confirmationToken.getUser();
+        long timeDifference = timeProvider.timeDifferenceInMinutes(timeProvider.now(), confirmationToken.getDatetimeCreated());
+
+        if (timeDifference < 30) {
+            user.setActivatedAccount(true);
+            userRepository.save(user);
+            confirmationToken.setUsed(true);
+            tokenRepository.save(confirmationToken);
+        } else {
+            tokenRepository.delete(confirmationToken);
+            userRepository.delete(user);
+            throw new ApiRequestException("Confirmation token timed out.");
+        }
     }
 }
