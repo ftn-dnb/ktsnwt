@@ -1,4 +1,4 @@
-package rs.ac.uns.ftn.ktsnwt.service.impl;
+package rs.ac.uns.ftn.ktsnwt.service.user;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

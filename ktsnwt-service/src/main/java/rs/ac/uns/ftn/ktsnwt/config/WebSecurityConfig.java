@@ -21,7 +21,7 @@ import org.springframework.web.filter.CorsFilter;
 import rs.ac.uns.ftn.ktsnwt.security.TokenUtils;
 import rs.ac.uns.ftn.ktsnwt.security.auth.RestAuthenticationEntryPoint;
 import rs.ac.uns.ftn.ktsnwt.security.auth.TokenAuthenticationFilter;
-import rs.ac.uns.ftn.ktsnwt.service.impl.CustomUserDetailsService;
+import rs.ac.uns.ftn.ktsnwt.service.user.CustomUserDetailsService;
 
 import java.util.Arrays;
 import java.util.Collections;
