@@ -75,6 +75,10 @@ public class UserServiceImpl implements UserService {
             throw new ApiRequestException("Provided passwords must be the same.");
         }
 
+        if (userRepository.findByEmail(userInfo.getEmail()) != null) {
+            throw new ApiRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+        }
+
         User user = createNewUserObject(userInfo);
         userRepository.save(user);
 

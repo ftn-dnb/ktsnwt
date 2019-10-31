@@ -19,7 +19,7 @@ public class ExceptionsHandler {
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
-        String message = "Parameter '" + e.getBindingResult().getFieldError().getField() + "' failed validation.";
+        String message = e.getBindingResult().getFieldError().getDefaultMessage();
         ErrorMessage errorMessage = new ErrorMessage(message, badRequest);
         return new ResponseEntity<>(errorMessage, badRequest);
     }

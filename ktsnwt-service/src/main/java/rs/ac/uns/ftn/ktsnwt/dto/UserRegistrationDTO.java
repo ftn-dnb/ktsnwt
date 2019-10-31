@@ -9,7 +9,7 @@ public class UserRegistrationDTO {
     private String username;
 
     @NotNull(message = "Email must be provided")
-    @Email(regexp = ".+@.+\\..+")
+    @Email(regexp = ".+@.+\\..+", message = "Email is not valid")
     private String email;
 
     @NotNull(message = "Password must be provided")
