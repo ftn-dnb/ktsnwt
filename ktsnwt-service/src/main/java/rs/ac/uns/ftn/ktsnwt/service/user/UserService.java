@@ -12,4 +12,5 @@ public interface UserService {
     List<User> findAll();
     User addUser(UserRegistrationDTO userInfo);
     void activateAccount(String token);
+    User getMyProfileData();
 }

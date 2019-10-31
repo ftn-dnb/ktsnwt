@@ -17,6 +17,7 @@ public class UserDTO {
     private boolean activated;
     private List<String> authorities;
     private UserTokenState token;
+    private String imagePath;
 
 
     public UserDTO(User user) {
@@ -27,6 +28,7 @@ public class UserDTO {
         this.email = user.getEmail();
         this.activated = user.isActivatedAccount();
         this.token = null;
+        this.imagePath = user.getImagePath();
 
         this.authorities = user.getAuthorities().stream()
                 .map(authority -> ((Authority) authority).getName()).collect(Collectors.toList());
@@ -94,5 +96,13 @@ public class UserDTO {
 
     public void setToken(UserTokenState token) {
         this.token = token;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

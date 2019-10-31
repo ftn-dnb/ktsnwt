@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.ktsnwt.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.ktsnwt.dto.UserDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.UserRegistrationDTO;
@@ -30,5 +31,11 @@ public class UserController {
     public ResponseEntity verifyUserAccount(@PathVariable String token) {
         userService.activateAccount(token);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/my-profile")
+    public ResponseEntity<UserDTO> getMyProfileData() {
+        User user = userService.getMyProfileData();
+        return new ResponseEntity<>(UserMapper.toDto(user), HttpStatus.OK);
     }
 }

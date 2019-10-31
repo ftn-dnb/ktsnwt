@@ -1,6 +1,8 @@
 package rs.ac.uns.ftn.ktsnwt.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -132,5 +134,10 @@ public class UserServiceImpl implements UserService {
             userRepository.delete(user);
             throw new ApiRequestException("Confirmation token timed out.");
         }
+    }
+
+    @Override
+    public User getMyProfileData() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 }
