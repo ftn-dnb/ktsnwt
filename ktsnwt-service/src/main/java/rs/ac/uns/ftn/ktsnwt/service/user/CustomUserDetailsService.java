@@ -59,7 +59,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         if (authenticationManager != null) {
             LOGGER.debug("Re-authenticating user '" + username + "' for password change request.");
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
+            try {
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, oldPassword));
+            } catch (BadCredentialsException e) {
+                throw new ApiRequestException("Credentials are not valid");
+            }
         } else {
             LOGGER.debug("No authentication manager set. can't change Password!");
             return;
