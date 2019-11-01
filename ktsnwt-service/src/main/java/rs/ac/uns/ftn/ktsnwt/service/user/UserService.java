@@ -15,4 +15,5 @@ public interface UserService {
     void activateAccount(String token);
     User getMyProfileData();
     User editUser(UserEditDTO userInfo);
+    void changeProfileImage(String imagePath);
 }
