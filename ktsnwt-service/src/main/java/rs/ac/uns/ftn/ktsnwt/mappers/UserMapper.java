@@ -11,11 +11,11 @@ public class UserMapper {
     private UserMapper() {
     }
 
-    public static UserDTO userToUserDto(User user) {
+    public static UserDTO toDto(User user) {
         return new UserDTO(user);
     }
 
-    public static List<UserDTO> userListToUserDtoList(List<User> users) {
+    public static List<UserDTO> toDtoList(List<User> users) {
         return users.stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
     }
 }
