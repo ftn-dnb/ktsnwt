@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.common.consts.UserRoles;
+import rs.ac.uns.ftn.ktsnwt.dto.UserEditDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.UserRegistrationDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
@@ -42,6 +44,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MailSenderService mailSenderService;
+
+    @Value("${user.default-profile-image}")
+    private String defaultProfileImage;
 
 
     @Override
@@ -100,7 +105,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userInfo.getEmail());
         user.setFirstName(userInfo.getFirstName());
         user.setLastName(userInfo.getLastName());
-        user.setImagePath(""); // @TODO: Kada se doda Cloudinary API, ubaciti putanju do default slike
+        user.setImagePath(defaultProfileImage);
         user.setLastPasswordResetDate(timeProvider.nowTimestamp());
 
         Authority userAuthority = authorityRepository.findByName(UserRoles.ROLE_USER);
@@ -139,5 +144,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getMyProfileData() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    @Override
+    public User editUser(UserEditDTO userInfo) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        user.setFirstName(userInfo.getFirstName());
+        user.setLastName(userInfo.getLastName());
+
+        if (userRepository.findByEmail(userInfo.getEmail()) != null) {
+            throw new ApiRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+        }
+
+        user.setEmail(userInfo.getEmail());
+
+        userRepository.save(user);
+
+        return user;
+    }
+
+    @Override
+    public void changeProfileImage(String imagePath) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        user.setImagePath(imagePath);
+        userRepository.save(user);
     }
 }

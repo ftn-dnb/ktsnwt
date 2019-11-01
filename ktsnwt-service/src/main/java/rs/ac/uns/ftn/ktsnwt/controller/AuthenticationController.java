@@ -6,15 +6,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
-import rs.ac.uns.ftn.ktsnwt.dto.PasswordChanger;
+import rs.ac.uns.ftn.ktsnwt.dto.PasswordChangerDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.UserDTO;
-import rs.ac.uns.ftn.ktsnwt.mappers.UserMapper;
 import rs.ac.uns.ftn.ktsnwt.model.UserTokenState;
 import rs.ac.uns.ftn.ktsnwt.security.TokenUtils;
 import rs.ac.uns.ftn.ktsnwt.security.auth.JwtAuthenticationRequest;
 import rs.ac.uns.ftn.ktsnwt.service.user.CustomUserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,7 +41,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/change-password")
-    public ResponseEntity changePassword(@RequestBody PasswordChanger passwordChanger) {
+    public ResponseEntity changePassword(@Valid @RequestBody PasswordChangerDTO passwordChanger) {
         userDetailsService.changePassword(passwordChanger.getOldPassword(), passwordChanger.getNewPassword());
         return ResponseEntity.ok().build();
     }
