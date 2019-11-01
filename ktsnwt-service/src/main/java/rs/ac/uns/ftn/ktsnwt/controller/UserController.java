@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.ktsnwt.dto.UserDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.UserEditDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.UserRegistrationDTO;
 import rs.ac.uns.ftn.ktsnwt.mappers.UserMapper;
 import rs.ac.uns.ftn.ktsnwt.model.User;
@@ -36,6 +37,12 @@ public class UserController {
     @GetMapping("/my-profile")
     public ResponseEntity<UserDTO> getMyProfileData() {
         User user = userService.getMyProfileData();
+        return new ResponseEntity<>(UserMapper.toDto(user), HttpStatus.OK);
+    }
+
+    @PutMapping("/my-profile")
+    public ResponseEntity<UserDTO> editMyProfile(@Valid @RequestBody UserEditDTO userInfo) {
+        User user = userService.editUser(userInfo);
         return new ResponseEntity<>(UserMapper.toDto(user), HttpStatus.OK);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.common.consts.UserRoles;
+import rs.ac.uns.ftn.ktsnwt.dto.UserEditDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.UserRegistrationDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
@@ -139,5 +140,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getMyProfileData() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    @Override
+    public User editUser(UserEditDTO userInfo) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        user.setFirstName(userInfo.getFirstName());
+        user.setLastName(userInfo.getLastName());
+
+        if (userRepository.findByEmail(userInfo.getEmail()) != null) {
+            throw new ApiRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+        }
+
+        user.setEmail(userInfo.getEmail());
+
+        userRepository.save(user);
+
+        return user;
     }
 }
