@@ -8,6 +8,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     Ticket getByRowAndColumnAndEventDayId(int row, int column, Long eventDayId);
 
-    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.pricing.id = pricingId AND t.pricing.sector.id = sectorId")
-    Long getTicketsByPricingAndSector(Long pricingId, Long sectorId);
+    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.pricing.id = ?1 AND t.pricing.sector.id = ?2")
+    Long getTicketsCountByPricingAndSector(Long pricingId, Long sectorId);
 }

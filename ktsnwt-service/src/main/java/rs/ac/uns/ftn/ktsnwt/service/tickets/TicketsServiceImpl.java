@@ -7,6 +7,7 @@ import rs.ac.uns.ftn.ktsnwt.dto.PricingSeatDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.TicketsToReserveDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.model.*;
+import rs.ac.uns.ftn.ktsnwt.model.enums.EventStatus;
 import rs.ac.uns.ftn.ktsnwt.model.enums.SectorType;
 import rs.ac.uns.ftn.ktsnwt.repository.TicketRepository;
 import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayService;
@@ -33,11 +34,14 @@ public class TicketsServiceImpl implements TicketsService {
         EventDay eventDay = eventDayService.getEventDay(ticketsInfo.getEventDayId());
         Event event = eventDay.getEvent();
 
+        if (eventDay.getStatus() != EventStatus.ACTIVE)
+            throw new ApiRequestException("You can't buy tickets for this event day because it is not active.");
+
         if (ticketsInfo.getSeats().size() > event.getTicketsPerUser())
             throw new ApiRequestException("You can't buy more than " + event.getTicketsPerUser() + " tickets at once.");
 
 
-        if (event.getStartDate().before(timeProvider.addDaysToDate(timeProvider.now(), event.getPurchaseLimit())))
+        if (event.getStartDate().before(timeProvider.addDaysToDate(timeProvider.nowTimestamp(), event.getPurchaseLimit())))
             throw new ApiRequestException("You can't buy a ticket because purchase date has expired.");
 
         ticketsInfo.getSeats().stream().forEach(seat-> createTicket(seat, eventDay));
@@ -47,7 +51,7 @@ public class TicketsServiceImpl implements TicketsService {
         Pricing pricing = pricingService.getPricing(seat.getPricingId());
         Sector sector = pricing.getSector();
 
-        if (ticketRepository.getTicketsByPricingAndSector(pricing.getId(), sector.getId()) + 1 > sector.getCapacity())
+        if (ticketRepository.getTicketsCountByPricingAndSector(pricing.getId(), sector.getId()) + 1 > sector.getCapacity())
             throw new ApiRequestException("Sector with id " + sector.getId() + " doesn't have enough space.");
 
         if (sector.getType() == SectorType.FLOOR) {
@@ -72,6 +76,7 @@ public class TicketsServiceImpl implements TicketsService {
         ticket.setColumn(seat);
         ticket.setPricing(pricing);
         ticket.setEventDay(eventDay);
+        ticket.setDatePurchased(timeProvider.nowTimestamp());
 
         ticketRepository.save(ticket);
     }

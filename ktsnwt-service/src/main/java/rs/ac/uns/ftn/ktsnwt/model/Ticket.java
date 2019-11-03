@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +26,9 @@ public class Ticket {
 
     @Column(name = "deleted", nullable = false)
     private boolean deleted;
+
+    @Column(name = "date_purchased")
+    private Timestamp datePurchased;
 
     @ManyToOne
     @JoinColumn(name = "event_day_id", referencedColumnName = "id", nullable = false)
@@ -92,6 +96,14 @@ public class Ticket {
 
     public void setPricing(Pricing pricing) {
         this.pricing = pricing;
+    }
+
+    public Timestamp getDatePurchased() {
+        return datePurchased;
+    }
+
+    public void setDatePurchased(Timestamp datePurchased) {
+        this.datePurchased = datePurchased;
     }
 
     @Override

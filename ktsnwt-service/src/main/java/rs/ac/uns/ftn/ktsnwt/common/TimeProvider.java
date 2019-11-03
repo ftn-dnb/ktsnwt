@@ -26,8 +26,8 @@ public class TimeProvider implements Serializable {
         return difference / (60 * 1000);
     }
 
-    public Date addDaysToDate(Date date, int numOfDays) {
-        LocalDateTime ldt = LocalDateTime.from(date.toInstant()).plusDays(numOfDays);
-        return Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
+    public Timestamp addDaysToDate(Timestamp date, int numOfDays) {
+        LocalDateTime ldt = date.toLocalDateTime().plusDays(numOfDays);
+        return Timestamp.valueOf(ldt);
     }
 }
