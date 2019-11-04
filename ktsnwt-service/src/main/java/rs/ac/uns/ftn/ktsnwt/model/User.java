@@ -43,6 +43,9 @@ public class User implements UserDetails {
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Ticket> tickets = new HashSet<>();
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -133,6 +136,14 @@ public class User implements UserDetails {
 
     public Set<Authority> getUserAuthorities() {
         return this.authorities;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     @Override
