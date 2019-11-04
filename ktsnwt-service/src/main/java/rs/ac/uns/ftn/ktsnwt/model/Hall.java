@@ -19,11 +19,12 @@ public class Hall {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany
-    @JoinTable(name = "hall_sectors",
-            joinColumns = @JoinColumn (name = "hall_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "sector_id", referencedColumnName = "id"))
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hall")
     private Set<Sector> sectors = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
 
     public Hall(){
 
@@ -51,6 +52,14 @@ public class Hall {
 
     public void setSectors(Set<Sector> sectors) {
         this.sectors = sectors;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     @Override

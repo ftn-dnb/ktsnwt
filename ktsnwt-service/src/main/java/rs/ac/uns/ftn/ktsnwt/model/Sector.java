@@ -31,6 +31,10 @@ public class Sector {
     @Column(name = "type", nullable = false)
     private SectorType type;
 
+    @ManyToOne
+    @JoinColumn(name = "hall_id")
+    private Hall hall;
+
     public Sector(){
 
     }
@@ -81,6 +85,14 @@ public class Sector {
 
     public void setType(SectorType type) {
         this.type = type;
+    }
+
+    public Hall getHall() {
+        return hall;
+    }
+
+    public void setHall(Hall hall) {
+        this.hall = hall;
     }
 
     @Override

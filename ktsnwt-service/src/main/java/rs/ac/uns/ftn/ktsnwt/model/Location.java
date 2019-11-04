@@ -16,23 +16,17 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "string", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "location_events",
-            joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"))
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "location")
     private Set<Event> events = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "location_halls",
-            joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "hall_id", referencedColumnName = "id"))
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "location")
     private Set<Hall> halls = new HashSet<>();
 
     public Location(){
