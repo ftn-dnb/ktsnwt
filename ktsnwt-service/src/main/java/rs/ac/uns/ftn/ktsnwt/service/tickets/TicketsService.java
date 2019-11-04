@@ -5,4 +5,5 @@ import rs.ac.uns.ftn.ktsnwt.dto.TicketsToReserveDTO;
 public interface TicketsService {
 
     void reserveTickets(TicketsToReserveDTO ticketsInfo);
+    void cancelTicket(Long id);
 }

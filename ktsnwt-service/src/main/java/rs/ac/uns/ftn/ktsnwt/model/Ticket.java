@@ -24,9 +24,6 @@ public class Ticket {
     @Column(name = "purchased", nullable = false)
     private boolean purchased;
 
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted;
-
     @Column(name = "date_purchased")
     private Timestamp datePurchased;
 
@@ -37,6 +34,11 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "pricing_id", referencedColumnName = "id", nullable = false)
     private Pricing pricing;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
 
     public Ticket(){
 
@@ -74,14 +76,6 @@ public class Ticket {
         this.purchased = purchased;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
     public EventDay getEventDay() {
         return eventDay;
     }
@@ -100,6 +94,14 @@ public class Ticket {
 
     public Timestamp getDatePurchased() {
         return datePurchased;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setDatePurchased(Timestamp datePurchased) {
