@@ -1,11 +1,16 @@
 package rs.ac.uns.ftn.ktsnwt.dto;
 
-public class PasswordChanger {
+import javax.validation.constraints.NotNull;
 
+public class PasswordChangerDTO {
+
+    @NotNull(message = "Old password is required")
     private String oldPassword;
+
+    @NotNull(message = "New password is required")
     private String newPassword;
 
-    public PasswordChanger() {
+    public PasswordChangerDTO() {
     }
 
     public String getOldPassword() {
