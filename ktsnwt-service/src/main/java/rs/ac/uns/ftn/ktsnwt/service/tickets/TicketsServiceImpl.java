@@ -57,15 +57,26 @@ public class TicketsServiceImpl implements TicketsService {
         if (sector.getType() == SectorType.FLOOR) {
             saveTicket(0, 0, pricing, eventDay);
         } else { // SectoryType.SEATS
-            if (isSeatFree(eventDay, sector, seat)) {
-                saveTicket(seat.getRow(), seat.getSeat(), pricing, eventDay);
-            }
+            saveTicketForSeatingSector(seat, pricing, eventDay, sector);
         }
     }
 
-    private boolean isSeatFree(EventDay eventDay, Sector sector, PricingSeatDTO seat) {
+    private boolean isSeatFree(EventDay eventDay, PricingSeatDTO seat) {
         Ticket ticket = ticketRepository.getByRowAndColumnAndEventDayId(seat.getRow(), seat.getSeat(), eventDay.getId());
         return ticket == null;
+    }
+
+    private void saveTicketForSeatingSector(PricingSeatDTO seat, Pricing pricing, EventDay eventDay, Sector sector) {
+        if (seat.getRow() > sector.getNumRows() || seat.getRow() < 0)
+            throw new ApiRequestException("Row " + seat.getRow() + " doesn't exist in this sector");
+
+        if (seat.getSeat() > sector.getNumColumns() || seat.getSeat() < 0)
+            throw new ApiRequestException("Seat " + seat.getSeat() + " doesn't exist in this sector");
+
+        if (!isSeatFree(eventDay, seat))
+            throw new ApiRequestException("Seat " + seat.getSeat() + " in row " + seat.getRow() + " is not free.");
+
+        saveTicket(seat.getRow(), seat.getSeat(), pricing, eventDay);
     }
 
     private void saveTicket(int row, int seat, Pricing pricing, EventDay eventDay) {

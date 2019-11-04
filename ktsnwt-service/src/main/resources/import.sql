@@ -15,9 +15,9 @@ INSERT INTO `locations` (id, name, address_id) VALUES (1, 'SPENS', 1);
 INSERT INTO `halls` (id, name, location_id) VALUES (1, 'Mala sala', 1);
 INSERT INTO `halls` (id, name, location_id) VALUES (2, 'Velika sala', 1);
 
-INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id) VALUES (1, 2, 'Sedista', 2, 2, 1, 1);
-INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id) VALUES (2, 2, 'Parter', 2, 2, 0, 1);
-INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id) VALUES (3, 2, 'Parter', 2, 2, 0, 2);
+INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id) VALUES (1, 4, 'Sedista', 2, 2, 1, 1);
+INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id) VALUES (2, 5, 'Parter', 0, 0, 0, 1);
+INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id) VALUES (3, 5, 'Parter', 0, 0, 0, 2);
 
 INSERT INTO `events` (id, description, end_date, image_path, name, purchase_limit, start_date, tickets_per_user, type, location) VALUES (1, 'Ovo je event', '2017-11-30 21:58:58', 'path', 'Koncert', 2, '2019-11-29 21:58:58', 2, 1, 1);
 
