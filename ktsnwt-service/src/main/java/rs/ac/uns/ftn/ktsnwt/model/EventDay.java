@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.ktsnwt.model;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventStatus;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
@@ -27,6 +28,9 @@ public class EventDay {
 
     @Column(name = "date", nullable = false)
     private Timestamp date;
+
+    @Column(name = "end_date",nullable = false)
+    private Timestamp endDate;
 
     @Column(name = "status", nullable = false)
     private EventStatus status;
@@ -118,6 +122,14 @@ public class EventDay {
 
     public void setPricings(Set<Pricing> pricings) {
         this.pricings = pricings;
+    }
+
+    public Timestamp getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Timestamp endDate) {
+        this.endDate = endDate;
     }
 
     @Override
