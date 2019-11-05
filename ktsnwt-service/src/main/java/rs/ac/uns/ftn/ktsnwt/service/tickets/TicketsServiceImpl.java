@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.service.tickets;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
@@ -15,7 +16,7 @@ import rs.ac.uns.ftn.ktsnwt.repository.TicketRepository;
 import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayService;
 import rs.ac.uns.ftn.ktsnwt.service.pricing.PricingService;
 
-import java.security.Security;
+import java.util.List;
 
 @Service
 public class TicketsServiceImpl implements TicketsService {
@@ -32,6 +33,12 @@ public class TicketsServiceImpl implements TicketsService {
     @Autowired
     private TimeProvider timeProvider;
 
+
+    @Override
+    public List<Ticket> getUsersTickets(int page) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ticketRepository.getByUserId(user.getId(), PageRequest.of(page, 5)).toList();
+    }
 
     @Override
     public void reserveTickets(TicketsToReserveDTO ticketsInfo) {
