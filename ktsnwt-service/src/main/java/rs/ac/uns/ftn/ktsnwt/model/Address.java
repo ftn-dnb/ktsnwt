@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.model;
 
+import rs.ac.uns.ftn.ktsnwt.dto.AddressDTO;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -41,6 +43,17 @@ public class Address {
 
     public Address(){
 
+    }
+
+    public Address(AddressDTO addressDTO) {
+        this.googleApiId = addressDTO.getGoogleApiId();
+        this.streetName = addressDTO.getStreetName();
+        this.streetNumber = addressDTO.getStreetNumber();
+        this.city = addressDTO.getCity();
+        this.country = addressDTO.getCountry();
+        this.postalCode = addressDTO.getPostalCode();
+        this.latitude = addressDTO.getLatitude();
+        this.longitude = addressDTO.getLongitude();
     }
 
     public Long getId() {
