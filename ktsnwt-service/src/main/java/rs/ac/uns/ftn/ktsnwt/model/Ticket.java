@@ -14,16 +14,16 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "row")
+    @Column(name = "row_num")
     private int row;
 
-    @Column(name = "column")
+    @Column(name = "column_num")
     private int column;
 
     @Column(name = "purchased", nullable = false)
     private boolean purchased;
 
-    @Column(name = "deleted", nullable = false)
+    @Column(name = "is_deleted", nullable = false)
     private boolean deleted;
 
     @ManyToOne
@@ -31,7 +31,7 @@ public class Ticket {
     private EventDay eventDay;
 
     @ManyToOne
-    @JoinColumn(name = "pracing_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "pricing_id", referencedColumnName = "id", nullable = false)
     private Pricing pricing;
 
     public Ticket(){
