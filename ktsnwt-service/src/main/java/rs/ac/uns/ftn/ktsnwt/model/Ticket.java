@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.model;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +23,11 @@ public class Ticket {
 
     @Column(name = "purchased", nullable = false)
     private boolean purchased;
+
+
+    @Column(name = "date_purchased")
+    private Timestamp datePurchased;
+
 
     @Column(name = "is_deleted", nullable = false)
     private boolean deleted;
@@ -94,6 +100,16 @@ public class Ticket {
         this.pricing = pricing;
     }
 
+
+    public Timestamp getDatePurchased() {
+        return datePurchased;
+    }
+
+
+    public void setDatePurchased(Timestamp datePurchased) {
+        this.datePurchased = datePurchased;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(this == obj) return true;
@@ -107,3 +123,7 @@ public class Ticket {
         return Objects.hash(id);
     }
 }
+
+
+
+

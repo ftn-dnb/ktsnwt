@@ -19,6 +19,13 @@ public class Hall {
     @Column(name = "name", nullable = false)
     private String name;
 
+
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+
+
     @OneToMany
     @JoinTable(name = "hall_sectors",
             joinColumns = @JoinColumn (name = "hall_id", referencedColumnName = "id"),
@@ -45,6 +52,15 @@ public class Hall {
         this.name = name;
     }
 
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     public Set<Sector> getSectors() {
         return sectors;
     }
@@ -66,3 +82,5 @@ public class Hall {
         return Objects.hash(id);
     }
 }
+
+

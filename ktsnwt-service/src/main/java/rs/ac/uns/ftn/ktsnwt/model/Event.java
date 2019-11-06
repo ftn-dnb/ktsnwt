@@ -43,6 +43,12 @@ public class Event {
     @Column(name="type", nullable = false)
     private EventType type;
 
+
+    @ManyToOne
+    @JoinColumn(name = "location")
+    private Location location;
+
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "event_days_connection",
             joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
@@ -131,6 +137,14 @@ public class Event {
 
     public void setEventDays(Set<EventDay> eventDays) {
         this.eventDays = eventDays;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     @Override

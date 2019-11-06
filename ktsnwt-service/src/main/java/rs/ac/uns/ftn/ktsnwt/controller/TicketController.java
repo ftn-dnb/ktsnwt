@@ -3,13 +3,12 @@ package rs.ac.uns.ftn.ktsnwt.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.ktsnwt.dto.ReportInfoDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.TicketDTO;
 import rs.ac.uns.ftn.ktsnwt.model.Ticket;
-import rs.ac.uns.ftn.ktsnwt.service.ticket.TicketService1;
+import rs.ac.uns.ftn.ktsnwt.service.location.LocationService;
+import rs.ac.uns.ftn.ktsnwt.service.ticket.TicketService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +17,11 @@ import java.util.List;
 @RequestMapping("/api/tickets")
 public class TicketController {
     @Autowired
-    private TicketService1 ticketService;
+    private TicketService ticketService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<TicketDTO>> getTickets() {
-        List<Ticket> tickets = ticketService.findAll();
+    @RequestMapping(value = "/{page_num}", method = RequestMethod.GET)
+    public ResponseEntity<List<TicketDTO>> getTickets(@PathVariable int page_num) {
+        List<Ticket> tickets = ticketService.findAll(page_num);
 
         List<TicketDTO> ticketsDTO = new ArrayList<>();
         for (Ticket t : tickets) {
@@ -40,4 +39,41 @@ public class TicketController {
 
         return new ResponseEntity<>(new TicketDTO(ticket), HttpStatus.OK);
     }
+
+
+    @PostMapping("/locationDailyReport/{idLocation}")
+    @ResponseBody
+    ResponseEntity<?> onLocationDailyReport(@PathVariable long idLocation, @RequestBody String date){
+        try {
+            return new ResponseEntity<ReportInfoDTO>(ticketService.onLocationDailyReport(idLocation, date), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @GetMapping("/locationMonthlyReport/{idLocation}")
+    @ResponseBody
+    ResponseEntity<?> onLocationMonthlyReport(@PathVariable long idLocation){
+        try {
+            return new ResponseEntity<ReportInfoDTO>(ticketService.onLocationMonthlyReport(idLocation), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
+    @PostMapping("/eventDailyReport/{idEvent}")
+    @ResponseBody
+    ResponseEntity<?> onEventDailyReport(@PathVariable long idEvent, @RequestBody String date){
+        try {
+            return new ResponseEntity<ReportInfoDTO>(ticketService.onEventDailyReport(idEvent, date), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
 }

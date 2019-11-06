@@ -1,59 +1,33 @@
-package rs.ac.uns.ftn.ktsnwt.model;
+package rs.ac.uns.ftn.ktsnwt.dto;
 
-import rs.ac.uns.ftn.ktsnwt.dto.AddressDTO;
+import rs.ac.uns.ftn.ktsnwt.model.Address;
 
-import javax.persistence.*;
-import java.util.Objects;
+public class AddressDTO {
 
-@Entity
-@Table(name = "addresses")
-public class Address {
-
-    private static final long serialVersionUID = 1L;
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "google_api_id")
     private String googleApiId;
-
-    @Column(name = "street_name")
     private String streetName;
-
-    @Column(name = "street_number")
     private String streetNumber;
-
-    @Column(name = "city")
     private String city;
-
-    @Column(name = "country")
     private String country;
-
-    @Column(name = "postal_code")
     private String postalCode;
-
-    @Column(name = "latitude", nullable = false)
     private double latitude;
-
-    @Column(name = "longitude", nullable = false)
     private double longitude;
 
-
-    public Address(){
-
+    public AddressDTO() {
+        super();
     }
 
-    public Address(AddressDTO addressDTO) {
-        this.googleApiId = addressDTO.getGoogleApiId();
-        this.streetName = addressDTO.getStreetName();
-        this.streetNumber = addressDTO.getStreetNumber();
-        this.city = addressDTO.getCity();
-        this.country = addressDTO.getCountry();
-        this.postalCode = addressDTO.getPostalCode();
-        this.latitude = addressDTO.getLatitude();
-        this.longitude = addressDTO.getLongitude();
+    public AddressDTO(Address address) {
+        this.id = address.getId();
+        this.googleApiId = address.getGoogleApiId();
+        this.streetName = address.getStreetName();
+        this.streetNumber = address.getStreetNumber();
+        this.city = address.getCity();
+        this.country = address.getCountry();
+        this.postalCode = address.getPostalCode();
+        this.latitude = address.getLatitude();
+        this.longitude = address.getLongitude();
     }
 
     public Long getId() {
@@ -126,18 +100,5 @@ public class Address {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(this == obj) return true;
-        if(obj == null || getClass() != obj.getClass()) return  false;
-        Address address = (Address) obj;
-        return id.equals(address.id);
-    }
-
-    @Override
-    public int hashCode(){
-        return Objects.hash(id);
     }
 }
