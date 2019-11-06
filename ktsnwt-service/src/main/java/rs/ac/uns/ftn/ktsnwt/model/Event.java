@@ -3,7 +3,7 @@ package rs.ac.uns.ftn.ktsnwt.model;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventType;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,10 +23,10 @@ public class Event {
     private String name;
 
     @Column(name="start_date", nullable = false)
-    private Date startDate;
+    private Timestamp startDate;
 
     @Column(name="end_date", nullable = false)
-    private Date endDate;
+    private Timestamp endDate;
 
     @Column(name="purchase_limit", nullable = false)
     private int purchaseLimit;
@@ -44,16 +44,12 @@ public class Event {
     private EventType type;
 
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "event")
+    private Set<EventDay> eventDays = new HashSet<>();
+
     @ManyToOne
     @JoinColumn(name = "location")
     private Location location;
-
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "event_days_connection",
-            joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "event_day_id", referencedColumnName = "id"))
-    private Set<EventDay> eventDays = new HashSet<>();
 
     public Event(){
 
@@ -75,19 +71,19 @@ public class Event {
         this.name = name;
     }
 
-    public Date getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public Timestamp getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
 

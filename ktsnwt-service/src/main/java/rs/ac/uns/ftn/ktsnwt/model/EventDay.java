@@ -3,8 +3,10 @@ package rs.ac.uns.ftn.ktsnwt.model;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventStatus;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "event_days")
@@ -24,14 +26,23 @@ public class EventDay {
     private String description;
 
     @Column(name = "date", nullable = false)
-    private Date date;
+    private Timestamp date;
 
     @Column(name = "status", nullable = false)
     private EventStatus status;
 
-    @OneToOne
-    @JoinColumn(name = "hall_id", referencedColumnName = "id")
+    @ManyToOne
     private Hall hall;
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "eventDay")
+    private Set<Ticket> tickets = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "eventDay")
+    private Set<Pricing> pricings = new HashSet<>();
 
     public EventDay(){
 
@@ -61,11 +72,11 @@ public class EventDay {
         this.description = description;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -83,6 +94,30 @@ public class EventDay {
 
     public void setHall(Hall hall) {
         this.hall = hall;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public Set<Pricing> getPricings() {
+        return pricings;
+    }
+
+    public void setPricings(Set<Pricing> pricings) {
+        this.pricings = pricings;
     }
 
     @Override

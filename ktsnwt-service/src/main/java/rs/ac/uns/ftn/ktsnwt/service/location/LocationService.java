@@ -14,5 +14,4 @@ public interface LocationService {
     Location addLocation(LocationDTO locationDTO);
     Location editLocation(LocationDTO locationDTO);
     Location changeAddress(Long id, AddressDTO addressDTO);
-
 }
