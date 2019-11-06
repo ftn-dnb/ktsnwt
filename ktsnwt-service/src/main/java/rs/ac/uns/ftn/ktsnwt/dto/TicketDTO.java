@@ -1,13 +1,12 @@
 package rs.ac.uns.ftn.ktsnwt.dto;
 
+import rs.ac.uns.ftn.ktsnwt.model.EventDay;
 import rs.ac.uns.ftn.ktsnwt.model.Pricing;
 import rs.ac.uns.ftn.ktsnwt.model.Ticket;
 import rs.ac.uns.ftn.ktsnwt.model.enums.SectorType;
-
 import java.sql.Timestamp;
 
 public class TicketDTO {
-
     private Long id;
     private int row;
     private int seat;
@@ -40,6 +39,7 @@ public class TicketDTO {
         this.locationName = ticket.getPricing().getSector().getHall().getLocation().getName();
         this.address = new AddressDTO(ticket.getPricing().getSector().getHall().getLocation().getAddress());
         this.price = ticket.getPricing().getPrice();
+
     }
 
     public Long getId() {

@@ -43,6 +43,7 @@ public class Event {
     @Column(name="type", nullable = false)
     private EventType type;
 
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "event")
     private Set<EventDay> eventDays = new HashSet<>();
 

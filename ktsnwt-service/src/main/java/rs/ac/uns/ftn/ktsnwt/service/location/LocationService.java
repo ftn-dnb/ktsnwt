@@ -4,8 +4,11 @@ import rs.ac.uns.ftn.ktsnwt.dto.AddressDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.LocationDTO;
 import rs.ac.uns.ftn.ktsnwt.model.Location;
 
-public interface LocationService {
+import java.util.List;
 
+
+public interface LocationService {
+    List<Location> findAll();
     Location findById(Long id);
     Location findByName(String name);
     Location addLocation(LocationDTO locationDTO);

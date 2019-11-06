@@ -10,7 +10,7 @@ import rs.ac.uns.ftn.ktsnwt.model.Address;
 import rs.ac.uns.ftn.ktsnwt.model.Location;
 import rs.ac.uns.ftn.ktsnwt.repository.AddressRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.LocationRepository;
-
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -21,6 +21,18 @@ public class LocationServiceImpl implements LocationService {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Override
+
+    public List<Location> findAll() {
+        try {
+            return locationRepository.findAll();
+        } catch (NoSuchElementException e) {
+            throw new ResourceNotFoundException(
+                    "Locations not found"
+            );
+        }
+    }
 
     @Override
     public Location findById(Long id) {

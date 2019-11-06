@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "pricing")
+@Table(name = "pricings")
 public class Pricing {
 
     private static final long serialVersionUID = 1L;
