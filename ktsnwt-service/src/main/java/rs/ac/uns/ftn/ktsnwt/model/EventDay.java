@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.ktsnwt.model;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventStatus;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
@@ -30,9 +31,6 @@ public class EventDay {
 
     @Column(name = "status", nullable = false)
     private EventStatus status;
-
-    @ManyToOne
-    private Hall hall;
 
     @ManyToOne
     @JoinColumn(name = "event_id")
@@ -86,14 +84,6 @@ public class EventDay {
 
     public void setStatus(EventStatus status) {
         this.status = status;
-    }
-
-    public Hall getHall() {
-        return hall;
-    }
-
-    public void setHall(Hall hall) {
-        this.hall = hall;
     }
 
     public Event getEvent() {

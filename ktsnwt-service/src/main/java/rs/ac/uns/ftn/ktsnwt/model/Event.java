@@ -47,8 +47,8 @@ public class Event {
     private Set<EventDay> eventDays = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "location")
-    private Location location;
+    @JoinColumn(name = "hall_id")
+    private Hall hall;
 
     public Event(){
 
@@ -134,12 +134,12 @@ public class Event {
         this.eventDays = eventDays;
     }
 
-    public Location getLocation() {
-        return location;
+    public Hall getHall() {
+        return hall;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setHall(Hall hall) {
+        this.hall = hall;
     }
 
     @Override
