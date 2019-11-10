@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.model;
 
+import rs.ac.uns.ftn.ktsnwt.dto.LocationDTO;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -33,6 +35,10 @@ public class Location {
 
     }
 
+    public Location(LocationDTO locationDTO) {
+        this.name = locationDTO.getName();
+    }
+
     public Long getId() {
         return id;
     }
@@ -58,6 +64,9 @@ public class Location {
     }
 
     public Set<Event> getEvents() {
+        if (this.events == null) {
+            this.events = new HashSet<>();
+        }
         return events;
     }
 
@@ -66,6 +75,9 @@ public class Location {
     }
 
     public Set<Hall> getHalls() {
+        if (this.halls == null) {
+            this.halls = new HashSet<>();
+        }
         return halls;
     }
 

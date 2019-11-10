@@ -13,6 +13,7 @@ import rs.ac.uns.ftn.ktsnwt.dto.UserEditDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.UserRegistrationDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
+import rs.ac.uns.ftn.ktsnwt.mappers.UserMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Authority;
 import rs.ac.uns.ftn.ktsnwt.model.ConfirmationToken;
 import rs.ac.uns.ftn.ktsnwt.model.User;
@@ -98,18 +99,11 @@ public class UserServiceImpl implements UserService {
     }
 
     private User createNewUserObject(UserRegistrationDTO userInfo) {
-        User user = new User();
-        user.setUsername(userInfo.getUsername());
+        User user = UserMapper.toEntity(userInfo);
         user.setPassword(passwordEncoder.encode(userInfo.getPassword()));
-        user.setActivatedAccount(false);
-        user.setEmail(userInfo.getEmail());
-        user.setFirstName(userInfo.getFirstName());
-        user.setLastName(userInfo.getLastName());
         user.setImagePath(defaultProfileImage);
         user.setLastPasswordResetDate(timeProvider.nowTimestamp());
-
-        Authority userAuthority = authorityRepository.findByName(UserRoles.ROLE_USER);
-        user.getUserAuthorities().add(userAuthority);
+        user.getUserAuthorities().add(authorityRepository.findByName(UserRoles.ROLE_USER));
 
         return user;
     }
