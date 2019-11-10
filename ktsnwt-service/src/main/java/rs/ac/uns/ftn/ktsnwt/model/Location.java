@@ -24,10 +24,7 @@ public class Location {
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
-
-    //@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "location")
-   // private Set<Event> events = new HashSet<>();
-
+    
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "location")
     private Set<Hall> halls = new HashSet<>();
 
@@ -62,17 +59,6 @@ public class Location {
     public void setAddress(Address address) {
         this.address = address;
     }
-
-   // public Set<Event> getEvents() {
-    //    if (this.events == null) {
-   //         this.events = new HashSet<>();
-   //     }
-   //     return events;
-   // }
-
-  //  public void setEvents(Set<Event> events) {
-  //      this.events = events;
-  //  }
 
     public Set<Hall> getHalls() {
         if (this.halls == null) {
