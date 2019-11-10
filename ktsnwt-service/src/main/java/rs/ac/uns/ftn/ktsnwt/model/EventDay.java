@@ -29,9 +29,6 @@ public class EventDay {
     @Column(name = "date", nullable = false)
     private Timestamp date;
 
-    @Column(name = "end_date",nullable = false)
-    private Timestamp endDate;
-
     @Column(name = "status", nullable = false)
     private EventStatus status;
 
@@ -111,14 +108,6 @@ public class EventDay {
 
     public void setPricings(Set<Pricing> pricings) {
         this.pricings = pricings;
-    }
-
-    public Timestamp getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Timestamp endDate) {
-        this.endDate = endDate;
     }
 
     @Override

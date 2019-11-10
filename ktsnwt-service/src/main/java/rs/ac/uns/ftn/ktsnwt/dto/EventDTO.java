@@ -18,6 +18,10 @@ public class EventDTO {
     private EventType type;
     private Long hallId;
 
+    public EventDTO(){
+
+    }
+
     public EventDTO(Event event){
         this.id = event.getId();
         this.name = event.getName();
@@ -25,6 +29,8 @@ public class EventDTO {
         this.ticketsPerUser = event.getTicketsPerUser();
         this.description = event.getDescription();
        //this.imagePath = event.getImagePath();
+        this.startDate = event.getStartDate().toString();
+        this.endDate = event.getEndDate().toString();
         this.type = event.getType();
         this.hallId = event.getHall().getId();
     }
@@ -100,4 +106,6 @@ public class EventDTO {
     public void setHallId(Long hallId) {
         this.hallId = hallId;
     }
+
+
 }
