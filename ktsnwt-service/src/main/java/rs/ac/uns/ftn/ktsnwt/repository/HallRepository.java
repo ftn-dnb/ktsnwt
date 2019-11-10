@@ -5,5 +5,5 @@ import rs.ac.uns.ftn.ktsnwt.model.Hall;
 
 public interface HallRepository extends JpaRepository<Hall, Long> {
 
-
+    Hall getById(Long id);
 }

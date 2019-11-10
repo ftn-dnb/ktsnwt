@@ -36,9 +36,6 @@ public class EventDay {
     private EventStatus status;
 
     @ManyToOne
-    private Hall hall;
-
-    @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
 
@@ -90,14 +87,6 @@ public class EventDay {
 
     public void setStatus(EventStatus status) {
         this.status = status;
-    }
-
-    public Hall getHall() {
-        return hall;
-    }
-
-    public void setHall(Hall hall) {
-        this.hall = hall;
     }
 
     public Event getEvent() {

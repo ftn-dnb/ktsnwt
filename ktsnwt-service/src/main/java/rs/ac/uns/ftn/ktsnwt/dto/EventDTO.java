@@ -9,27 +9,24 @@ public class EventDTO {
 
     private Long id;
     private String name;
-    private Timestamp startDate;
-    private Timestamp endDate;
+    private String startDate;
+    private String endDate;
     private Integer purchaseLimit;
     private Integer ticketsPerUser;
     private String description;
     //private String imagePath;
     private EventType type;
-    private Long locationId;
-
+    private Long hallId;
 
     public EventDTO(Event event){
         this.id = event.getId();
         this.name = event.getName();
-        this.startDate = event.getStartDate();
-        this.endDate = event.getEndDate();
         this.purchaseLimit = event.getPurchaseLimit();
         this.ticketsPerUser = event.getTicketsPerUser();
         this.description = event.getDescription();
        //this.imagePath = event.getImagePath();
         this.type = event.getType();
-        this.locationId = event.getLocation().getId();
+        this.hallId = event.getHall().getId();
     }
 
     public Long getId() {
@@ -46,22 +43,6 @@ public class EventDTO {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Timestamp getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
-    }
-
-    public Timestamp getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Timestamp endDate) {
-        this.endDate = endDate;
     }
 
     public Integer getPurchaseLimit() {
@@ -96,11 +77,27 @@ public class EventDTO {
         this.type = type;
     }
 
-    public Long getLocationId() {
-        return locationId;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public Long getHallId() {
+        return hallId;
+    }
+
+    public void setHallId(Long hallId) {
+        this.hallId = hallId;
     }
 }
