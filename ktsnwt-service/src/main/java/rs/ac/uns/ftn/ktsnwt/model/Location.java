@@ -24,7 +24,7 @@ public class Location {
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
-    
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "location")
     private Set<Hall> halls = new HashSet<>();
 
