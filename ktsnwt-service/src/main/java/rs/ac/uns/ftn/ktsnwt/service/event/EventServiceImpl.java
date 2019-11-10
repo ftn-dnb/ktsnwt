@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.ktsnwt.service.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
@@ -27,14 +28,14 @@ public class EventServiceImpl implements EventService {
     @Autowired EventRepository eventRepository;
     @Autowired HallRepository hallRepository;
     @Autowired EventDayRepository eventDayRepository;
-
+    @Autowired TimeProvider timeProvider;
     @Override
     public Event addEvent(EventDTO event) {
         Date startDate;
         Date endDate;
         try{
-            startDate = makeDate(event.getStartDate());
-            endDate = makeDate(event.getEndDate());
+            startDate = timeProvider.makeDate(event.getStartDate());
+            endDate = timeProvider.makeDate(event.getEndDate());
         }
         catch (ParseException e){
             throw new ApiRequestException("Invalid date format");
@@ -59,12 +60,6 @@ public class EventServiceImpl implements EventService {
         e.setEventDays(makeBasicEventDay(startDate,endDate,e));
 
         return e;
-    }
-
-    private Date makeDate(String date) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date parseDate = dateFormat.parse(date);
-        return parseDate;
     }
 
     private Set<EventDay> makeBasicEventDay(Date startDate, Date endDate, Event e){
