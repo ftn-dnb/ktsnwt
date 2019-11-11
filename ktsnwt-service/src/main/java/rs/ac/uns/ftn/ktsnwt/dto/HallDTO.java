@@ -2,10 +2,13 @@ package rs.ac.uns.ftn.ktsnwt.dto;
 
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 public class HallDTO {
     private Long id;
     private String name;
-    //private ArrayList<SectorDTO> sectors;
+    private ArrayList<SectorDTO> sectors;
     private Long locationId;
 
     public HallDTO() {
@@ -16,6 +19,9 @@ public class HallDTO {
         this.id = hall.getId();
         this.name = hall.getName();
         this.locationId = hall.getLocation().getId();
+        this.sectors = new ArrayList<>(
+                hall.getSectors().stream().map(sector -> new SectorDTO(sector)).collect(Collectors.toList())
+        );
     }
 
     public Long getId() {
@@ -40,5 +46,13 @@ public class HallDTO {
 
     public void setLocationId(Long locationId) {
         this.locationId = locationId;
+    }
+
+    public ArrayList<SectorDTO> getSectors() {
+        return sectors;
+    }
+
+    public void setSectors(ArrayList<SectorDTO> sectors) {
+        this.sectors = sectors;
     }
 }

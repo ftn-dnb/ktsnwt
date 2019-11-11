@@ -9,7 +9,9 @@ public class AddressMapper {
 
     }
 
-    public static AddressDTO toDto(Address address) { return new AddressDTO(address); }
+    public static AddressDTO toDto(Address address) {
+        return new AddressDTO(address);
+    }
 
 
 }
