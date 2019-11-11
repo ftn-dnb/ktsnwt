@@ -5,12 +5,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.dto.HallDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.model.Location;
 import rs.ac.uns.ftn.ktsnwt.repository.HallRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.LocationRepository;
 
+<<<<<<< HEAD
 import java.util.List;
+=======
+import java.util.NoSuchElementException;
+>>>>>>> feature/sector-support
 
 @Service
 public class HallServiceImpl implements HallService {
@@ -22,17 +27,32 @@ public class HallServiceImpl implements HallService {
     private LocationRepository locationRepository;
 
     @Override
+<<<<<<< HEAD
     public List<Hall> findAllById(Long id, int page, int size) {
         return hallRepository.getByLocationId(id, PageRequest.of(page, size)).toList();
+=======
+    public Hall findHallById(Long id) {
+        try {
+            return hallRepository.findById(id).get();
+        } catch (NoSuchElementException e) {
+            throw new ResourceNotFoundException(
+                    "Hall not found"
+            );
+        }
+>>>>>>> feature/sector-support
     }
 
     @Override
     public Hall addHall(Long locationId, HallDTO hallDTO) {
-        if (locationRepository.findById(locationId).get() == null) {
+        Location location = locationRepository.findById(locationId).get();
+
+        if (location == null) {
             throw new ApiRequestException("Location with this id doesn't exist.");
         }
 
-        Location location = locationRepository.findById(locationId).get();
+        if (hallRepository.findByName(hallDTO.getName(), hallDTO.getLocationId()) != null) {
+            throw new ApiRequestException("Hall with that name already exists inside given location.");
+        }
 
         Hall hall = new Hall(hallDTO);
         location.getHalls().add(hall);
@@ -47,7 +67,7 @@ public class HallServiceImpl implements HallService {
     @Override
     public Hall editHall(HallDTO hallDTO) {
         if (hallRepository.findById(hallDTO.getId()).get() == null) {
-            throw new ApiRequestException("Hall with this id doesn't exist.");
+            throw new ApiRequestException("Hall with this id does not exist.");
         }
         Hall hall = hallRepository.findById(hallDTO.getId()).get();
         hall.setName(hallDTO.getName());

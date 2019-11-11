@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.ktsnwt.model;
 
+import rs.ac.uns.ftn.ktsnwt.dto.SectorDTO;
 import rs.ac.uns.ftn.ktsnwt.model.enums.SectorType;
 
 import javax.persistence.*;
@@ -37,6 +38,14 @@ public class Sector {
 
     public Sector(){
 
+    }
+
+    public Sector(SectorDTO sectorDTO) {
+        this.name = sectorDTO.getName();
+        this.numColumns = sectorDTO.getNumColumns();
+        this.numRows = sectorDTO.getNumRows();
+        this.capacity = sectorDTO.getCapacity();
+        this.type = sectorDTO.getType();
     }
 
     public Long getId() {
