@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.service.hall;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.dto.HallDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
@@ -8,6 +9,8 @@ import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.model.Location;
 import rs.ac.uns.ftn.ktsnwt.repository.HallRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.LocationRepository;
+
+import java.util.List;
 
 @Service
 public class HallServiceImpl implements HallService {
@@ -17,6 +20,11 @@ public class HallServiceImpl implements HallService {
 
     @Autowired
     private LocationRepository locationRepository;
+
+    @Override
+    public List<Hall> findAllById(Long id, int page, int size) {
+        return hallRepository.getByLocationId(id, PageRequest.of(page, size)).toList();
+    }
 
     @Override
     public Hall addHall(Long locationId, HallDTO hallDTO) {
