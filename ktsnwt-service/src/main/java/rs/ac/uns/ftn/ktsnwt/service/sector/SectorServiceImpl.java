@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.service.sector;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.dto.SectorDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
@@ -10,6 +11,7 @@ import rs.ac.uns.ftn.ktsnwt.model.Sector;
 import rs.ac.uns.ftn.ktsnwt.repository.HallRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.SectorRepository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -30,6 +32,11 @@ public class SectorServiceImpl implements SectorService {
                     "Sector not found"
             );
         }
+    }
+
+    @Override
+    public List<Sector> findAllById(Long id, int page, int size) {
+        return sectorRepository.getByHallId(id, PageRequest.of(page, size)).toList();
     }
 
     @Override

@@ -37,8 +37,8 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public List<Location> findAll(int page) {
-        return locationRepository.findAll(PageRequest.of(page, 10)).toList();
+    public List<Location> findAll(int page, int size) {
+        return locationRepository.findAll(PageRequest.of(page, size)).toList();
     }
 
     @Override

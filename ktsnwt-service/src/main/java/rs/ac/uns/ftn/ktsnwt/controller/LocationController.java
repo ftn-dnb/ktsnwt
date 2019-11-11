@@ -30,9 +30,10 @@ public class LocationController {
         return new ResponseEntity<>(LocationMapper.toDto(location), HttpStatus.OK);
     }
 
-    @GetMapping("/all/{page}")
-    public ResponseEntity<List<LocationDTO>> getAllLocations(@PathVariable int page) {
-        List<Location> locations = locationService.findAll(page);
+    @GetMapping("/all")
+    public ResponseEntity<List<LocationDTO>> getAllLocations(@RequestParam(name = "page") int page,
+                                                             @RequestParam(name = "size") int size) {
+        List<Location> locations = locationService.findAll(page, size);
         return new ResponseEntity<>(LocationMapper.toListDto(locations), HttpStatus.OK);
     }
 

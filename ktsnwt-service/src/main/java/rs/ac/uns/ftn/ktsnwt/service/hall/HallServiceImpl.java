@@ -10,12 +10,9 @@ import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.model.Location;
 import rs.ac.uns.ftn.ktsnwt.repository.HallRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.LocationRepository;
-
-<<<<<<< HEAD
 import java.util.List;
-=======
 import java.util.NoSuchElementException;
->>>>>>> feature/sector-support
+
 
 @Service
 public class HallServiceImpl implements HallService {
@@ -27,10 +24,11 @@ public class HallServiceImpl implements HallService {
     private LocationRepository locationRepository;
 
     @Override
-<<<<<<< HEAD
     public List<Hall> findAllById(Long id, int page, int size) {
         return hallRepository.getByLocationId(id, PageRequest.of(page, size)).toList();
-=======
+
+    }
+
     public Hall findHallById(Long id) {
         try {
             return hallRepository.findById(id).get();
@@ -39,7 +37,7 @@ public class HallServiceImpl implements HallService {
                     "Hall not found"
             );
         }
->>>>>>> feature/sector-support
+
     }
 
     @Override

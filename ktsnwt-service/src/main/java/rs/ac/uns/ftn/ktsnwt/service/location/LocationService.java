@@ -10,7 +10,7 @@ import java.util.List;
 public interface LocationService {
 
     Location findById(Long id);
-    List<Location> findAll(int page);
+    List<Location> findAll(int page, int size);
     Location findByName(String name);
     Location addLocation(LocationDTO locationDTO);
     Location editLocation(LocationDTO locationDTO);

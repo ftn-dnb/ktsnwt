@@ -25,7 +25,8 @@ public class HallController {
                                                      @RequestParam(name = "size") int size,
                                                      @PathVariable Long id) {
         List<Hall> halls = hallService.findAllById(id, page, size);
-        
+        return new ResponseEntity<>(HallMapper.toListDto(halls), HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<HallDTO> getHallById(@PathVariable Long id) {

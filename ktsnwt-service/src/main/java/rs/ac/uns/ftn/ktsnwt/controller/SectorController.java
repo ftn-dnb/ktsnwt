@@ -9,6 +9,8 @@ import rs.ac.uns.ftn.ktsnwt.mappers.SectorMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Sector;
 import rs.ac.uns.ftn.ktsnwt.service.sector.SectorService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/sectors")
 public class SectorController {
@@ -20,6 +22,14 @@ public class SectorController {
     public ResponseEntity<SectorDTO> getSectorById(@PathVariable Long id) {
         Sector sector = sectorService.findById(id);
         return new ResponseEntity<>(SectorMapper.toDto(sector), HttpStatus.OK);
+    }
+
+    @GetMapping("/all/{id}")
+    public ResponseEntity<List<SectorDTO>> getAllSectors(@RequestParam(name = "page") int page,
+                                                       @RequestParam(name = "size") int size,
+                                                       @PathVariable Long id) {
+        List<Sector> sectors = sectorService.findAllById(id, page, size);
+        return new ResponseEntity<>(SectorMapper.toListDto(sectors), HttpStatus.OK);
     }
 
     @PostMapping("")
