@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.ktsnwt.dto.AddressDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.LocationDTO;
+import rs.ac.uns.ftn.ktsnwt.mappers.LocationMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Location;
 import rs.ac.uns.ftn.ktsnwt.service.location.LocationService;
 
@@ -20,30 +21,30 @@ public class LocationController {
     @GetMapping("/{id}")
     public ResponseEntity<LocationDTO> getLocationById(@PathVariable Long id) {
         Location location = locationService.findById(id);
-        return new ResponseEntity<>(new LocationDTO(location), HttpStatus.OK);
+        return new ResponseEntity<>(LocationMapper.toDto(location), HttpStatus.OK);
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<LocationDTO> getLocationByName(@PathVariable String name) {
         Location location = locationService.findByName(name);
-        return new ResponseEntity<>(new LocationDTO(location), HttpStatus.OK);
+        return new ResponseEntity<>(LocationMapper.toDto(location), HttpStatus.OK);
     }
 
     @PostMapping("")
     public ResponseEntity<LocationDTO> addLocation(@RequestBody LocationDTO locationDTO) {
         Location location = locationService.addLocation(locationDTO);
-        return new ResponseEntity<>(new LocationDTO(location), HttpStatus.OK);
+        return new ResponseEntity<>(LocationMapper.toDto(location), HttpStatus.OK);
     }
 
     @PutMapping("")
     public ResponseEntity<LocationDTO> editLocation(@RequestBody LocationDTO locationDTO) {
         Location location = locationService.editLocation(locationDTO);
-        return new ResponseEntity<>(new LocationDTO(location), HttpStatus.OK);
+        return new ResponseEntity<>(LocationMapper.toDto(location), HttpStatus.OK);
     }
 
     @PutMapping("/address/{id}")
     public ResponseEntity<LocationDTO> changeLocationAddress(@PathVariable Long id, @RequestBody AddressDTO addressDTO) {
         Location location = locationService.changeAddress(id, addressDTO);
-        return new ResponseEntity<>(new LocationDTO(location), HttpStatus.OK);
+        return new ResponseEntity<>(LocationMapper.toDto(location), HttpStatus.OK);
     }
 }
