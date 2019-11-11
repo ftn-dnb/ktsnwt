@@ -10,6 +10,8 @@ import rs.ac.uns.ftn.ktsnwt.mappers.HallMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.service.hall.HallService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/halls")
 public class HallController {
@@ -17,10 +19,20 @@ public class HallController {
     @Autowired
     private HallService hallService;
 
+
+    @GetMapping("/all/{id}")
+    public ResponseEntity<List<HallDTO>> getAllHalls(@RequestParam(name = "page") int page,
+                                                     @RequestParam(name = "size") int size,
+                                                     @PathVariable Long id) {
+        List<Hall> halls = hallService.findAllById(id, page, size);
+        return new ResponseEntity<>(HallMapper.toListDto(halls), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<HallDTO> getHallById(@PathVariable Long id) {
         Hall hall = hallService.findHallById(id);
         return new ResponseEntity<>(HallMapper.toDto(hall), HttpStatus.OK);
+
     }
 
     @PostMapping("")

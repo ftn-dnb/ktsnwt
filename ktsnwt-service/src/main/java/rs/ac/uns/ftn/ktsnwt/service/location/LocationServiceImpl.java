@@ -1,16 +1,19 @@
 package rs.ac.uns.ftn.ktsnwt.service.location;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.dto.AddressDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.LocationDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Address;
+import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.model.Location;
 import rs.ac.uns.ftn.ktsnwt.repository.AddressRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.LocationRepository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -34,6 +37,11 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
+    public List<Location> findAll(int page, int size) {
+        return locationRepository.findAll(PageRequest.of(page, size)).toList();
+    }
+
+    @Override
     public Location findByName(String name) {
         try {
             return locationRepository.findByName(name);
@@ -49,6 +57,7 @@ public class LocationServiceImpl implements LocationService {
         if (locationRepository.findByName(locationDTO.getName()) != null) {
             throw new ApiRequestException("Location with that name already exists.");
         }
+
 
         Address address;
 

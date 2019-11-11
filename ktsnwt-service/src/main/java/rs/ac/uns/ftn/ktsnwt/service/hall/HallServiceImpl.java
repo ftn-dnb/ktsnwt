@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.service.hall;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.dto.HallDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
@@ -9,8 +10,9 @@ import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.model.Location;
 import rs.ac.uns.ftn.ktsnwt.repository.HallRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.LocationRepository;
-
+import java.util.List;
 import java.util.NoSuchElementException;
+
 
 @Service
 public class HallServiceImpl implements HallService {
@@ -22,6 +24,11 @@ public class HallServiceImpl implements HallService {
     private LocationRepository locationRepository;
 
     @Override
+    public List<Hall> findAllById(Long id, int page, int size) {
+        return hallRepository.getByLocationId(id, PageRequest.of(page, size)).toList();
+
+    }
+
     public Hall findHallById(Long id) {
         try {
             return hallRepository.findById(id).get();
@@ -30,6 +37,7 @@ public class HallServiceImpl implements HallService {
                     "Hall not found"
             );
         }
+
     }
 
     @Override
