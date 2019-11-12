@@ -17,9 +17,4 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     //Ticket findById();
     //Ticket findAllByEventDay();
     //Ticket findByDatePurchased();
-    Page<Ticket> getByUserId(Long id, Pageable page);
-    Ticket getByRowAndColumnAndEventDayId(int row, int column, Long eventDayId);
-
-    @Query("SELECT COUNT(t) FROM Ticket t WHERE t.pricing.id = ?1 AND t.pricing.sector.id = ?2")
-    Long getTicketsCountByPricingAndSector(Long pricingId, Long sectorId);
-}
+    }

@@ -5,4 +5,5 @@ import java.util.List;
 
 public interface PricingService {
     Pricing getPricing(Long id);
+    List<Pricing> findAll();
 }
