@@ -21,6 +21,10 @@ public class Pricing {
     @JoinColumn(name = "sector_id", referencedColumnName = "id", nullable = false)
     private Sector sector;
 
+    @ManyToOne
+    @JoinColumn(name = "event_day_id")
+    private EventDay eventDay;
+
     public Pricing(){
 
     }
@@ -47,6 +51,14 @@ public class Pricing {
 
     public void setSector(Sector sector) {
         this.sector = sector;
+    }
+
+    public EventDay getEventDay() {
+        return eventDay;
+    }
+
+    public void setEventDay(EventDay eventDay) {
+        this.eventDay = eventDay;
     }
 
     @Override

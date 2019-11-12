@@ -6,7 +6,7 @@ public class HallDTO {
     private Long id;
     private String name;
     //private ArrayList<SectorDTO> sectors;
-    private LocationDTO location;
+    private Long locationId;
 
     public HallDTO() {
         super();
@@ -15,6 +15,7 @@ public class HallDTO {
     public HallDTO(Hall hall) {
         this.id = hall.getId();
         this.name = hall.getName();
+        this.locationId = hall.getLocation().getId();
     }
 
     public Long getId() {
@@ -33,11 +34,11 @@ public class HallDTO {
         this.name = name;
     }
 
-    public LocationDTO getLocation() {
-        return location;
+    public Long getLocationId() {
+        return locationId;
     }
 
-    public void setLocation(LocationDTO location) {
-        this.location = location;
+    public void setLocationId(Long locationId) {
+        this.locationId = locationId;
     }
 }

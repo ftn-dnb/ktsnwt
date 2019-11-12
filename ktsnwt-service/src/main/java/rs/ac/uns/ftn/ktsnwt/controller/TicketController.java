@@ -12,6 +12,11 @@ import rs.ac.uns.ftn.ktsnwt.service.location.LocationService;
 import rs.ac.uns.ftn.ktsnwt.service.tickets.TicketsService;
 
 import java.util.ArrayList;
+import org.springframework.security.access.prepost.PreAuthorize;
+import rs.ac.uns.ftn.ktsnwt.dto.TicketsToReserveDTO;
+import rs.ac.uns.ftn.ktsnwt.mappers.TicketMapper;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -52,5 +57,24 @@ public class TicketController {
     }
 
 
+    @GetMapping("/{page}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<TicketDTO>> getUsersTickets(@PathVariable int page) {
+        List<Ticket> tickets = ticketsService.getUsersTickets(page);
+        return new ResponseEntity<>(TicketMapper.toListDto(tickets), HttpStatus.OK);
+    }
 
+    @PostMapping("/reserve")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity reserveTicket(@Valid @RequestBody TicketsToReserveDTO ticketsInfo) {
+        ticketsService.reserveTickets(ticketsInfo);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/cancel/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity cancelTicket(@PathVariable Long id) {
+        ticketsService.cancelTicket(id);
+        return ResponseEntity.ok().build();
+    }
 }

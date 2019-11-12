@@ -34,8 +34,7 @@ public class TicketsServiceImpl implements TicketsService {
     @Autowired
     private TimeProvider timeProvider;
 
-
-
+  
     @Override
     public Ticket findById(Long id) {
         try {
@@ -64,8 +63,6 @@ public class TicketsServiceImpl implements TicketsService {
     public ReportInfoDTO onEventDailyReport(long idEvent, String date) {
         return null;
     }
-
-
 
     @Override
     public List<Ticket> getUsersTickets(int page) {
