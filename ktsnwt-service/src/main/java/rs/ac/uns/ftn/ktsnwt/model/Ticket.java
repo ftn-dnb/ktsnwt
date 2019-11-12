@@ -40,6 +40,13 @@ public class Ticket {
     @JoinColumn(name = "pricing_id", referencedColumnName = "id", nullable = false)
     private Pricing pricing;
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+
+
     public Ticket(){
 
     }
@@ -105,6 +112,14 @@ public class Ticket {
         return datePurchased;
     }
 
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public void setDatePurchased(Timestamp datePurchased) {
         this.datePurchased = datePurchased;
