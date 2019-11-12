@@ -22,7 +22,7 @@ public class TicketController {
 
     @RequestMapping(value = "/{page_num}", method = RequestMethod.GET)
     public ResponseEntity<List<TicketDTO>> getTickets(@PathVariable int page_num) {
-        return new ResponseEntity<>(TicketMapper.toTicketDTOs(ticketsService.findAll(page_num)), HttpStatus.OK);
+        return new ResponseEntity<>(TicketMapper.toListDto(ticketsService.findAll(page_num)), HttpStatus.OK);
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
