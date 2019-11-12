@@ -103,6 +103,14 @@ public class Ticket {
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public void setDatePurchased(Timestamp datePurchased) {
         this.datePurchased = datePurchased;
     }

@@ -25,13 +25,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
 
     public List<Location> findAll() {
-        try {
-            return locationRepository.findAll();
-        } catch (NoSuchElementException e) {
-            throw new ResourceNotFoundException(
-                    "Locations not found"
-            );
-        }
+        return locationRepository.findAll();
     }
 
     @Override

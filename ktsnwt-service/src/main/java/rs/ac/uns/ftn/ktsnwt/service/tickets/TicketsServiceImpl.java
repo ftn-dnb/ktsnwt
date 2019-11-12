@@ -6,6 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.dto.PricingSeatDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.ReportInfoDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.TicketsToReserveDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
@@ -15,8 +16,8 @@ import rs.ac.uns.ftn.ktsnwt.model.enums.SectorType;
 import rs.ac.uns.ftn.ktsnwt.repository.TicketRepository;
 import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayService;
 import rs.ac.uns.ftn.ktsnwt.service.pricing.PricingService;
-
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class TicketsServiceImpl implements TicketsService {
@@ -33,6 +34,35 @@ public class TicketsServiceImpl implements TicketsService {
     @Autowired
     private TimeProvider timeProvider;
 
+  
+    @Override
+    public Ticket findById(Long id) {
+        try {
+            return ticketRepository.findById(id).get();
+        } catch (NoSuchElementException e) {
+            throw new ApiRequestException("Ticket with id '" + id + "' doesn't exist.");
+        }
+    }
+
+    @Override
+    public List<Ticket> findAll(int page) {
+        return ticketRepository.findAll(PageRequest.of(page, 5)).toList();
+    }
+
+    @Override
+    public ReportInfoDTO onLocationDailyReport(long idLocation, String date) {
+        return null;
+    }
+
+    @Override
+    public ReportInfoDTO onLocationMonthlyReport(long idLocation) {
+        return null;
+    }
+
+    @Override
+    public ReportInfoDTO onEventDailyReport(long idEvent, String date) {
+        return null;
+    }
 
     @Override
     public List<Ticket> getUsersTickets(int page) {
