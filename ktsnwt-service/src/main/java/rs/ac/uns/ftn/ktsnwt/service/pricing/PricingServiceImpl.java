@@ -19,19 +19,6 @@ public class PricingServiceImpl implements PricingService {
 
 
     @Override
-    public Pricing findById1(Long id) {
-        try {
-            return pricingRepository.findById(id).get();
-        } catch (NoSuchElementException e) {
-            throw new ApiRequestException("Pricing with id '" + id + "' doesn't exist.");
-        }
-    }
-
-    @Override
-    public List<Pricing> findAll1() {
-        return pricingRepository.findAll();
-      
-    @Override
     public Pricing getPricing(Long id) {
         Pricing pricing = pricingRepository.getById(id);
 
