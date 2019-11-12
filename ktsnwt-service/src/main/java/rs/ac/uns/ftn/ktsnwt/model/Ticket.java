@@ -15,10 +15,10 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "row_seat")
+    @Column(name = "row_num")
     private int row;
 
-    @Column(name = "seat")
+    @Column(name = "column_num")
     private int column;
 
     @Column(name = "purchased", nullable = false)
@@ -91,7 +91,6 @@ public class Ticket {
     public void setPricing(Pricing pricing) {
         this.pricing = pricing;
     }
-
     public Timestamp getDatePurchased() {
         return datePurchased;
     }
@@ -121,3 +120,7 @@ public class Ticket {
         return Objects.hash(id);
     }
 }
+
+
+
+

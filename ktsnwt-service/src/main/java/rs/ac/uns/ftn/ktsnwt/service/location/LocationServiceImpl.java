@@ -26,6 +26,18 @@ public class LocationServiceImpl implements LocationService {
     private AddressRepository addressRepository;
 
     @Override
+
+    public List<Location> findAll() {
+        try {
+            return locationRepository.findAll();
+        } catch (NoSuchElementException e) {
+            throw new ResourceNotFoundException(
+                    "Locations not found"
+            );
+        }
+    }
+
+    @Override
     public Location findById(Long id) {
         try {
             return locationRepository.findById(id).get();

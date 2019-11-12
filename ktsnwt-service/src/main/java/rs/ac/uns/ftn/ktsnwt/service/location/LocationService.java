@@ -7,8 +7,9 @@ import rs.ac.uns.ftn.ktsnwt.model.Location;
 
 import java.util.List;
 
-public interface LocationService {
 
+public interface LocationService {
+    List<Location> findAll();
     Location findById(Long id);
     List<Location> findAll(int page, int size);
     Location findByName(String name);

@@ -21,6 +21,7 @@ public class Hall {
     @Column(name = "name", nullable = false)
     private String name;
 
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "hall")
     private Set<Sector> sectors = new HashSet<>();
 
@@ -50,6 +51,15 @@ public class Hall {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Set<Sector> getSectors() {
@@ -84,3 +94,5 @@ public class Hall {
         return Objects.hash(id);
     }
 }
+
+
