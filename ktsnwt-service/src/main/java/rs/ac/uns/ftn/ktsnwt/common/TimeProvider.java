@@ -4,6 +4,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -29,5 +31,11 @@ public class TimeProvider implements Serializable {
     public Timestamp addDaysToDate(Timestamp date, int numOfDays) {
         LocalDateTime ldt = date.toLocalDateTime().plusDays(numOfDays);
         return Timestamp.valueOf(ldt);
+    }
+
+    public Date makeDate(String date) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date parseDate = dateFormat.parse(date);
+        return parseDate;
     }
 }

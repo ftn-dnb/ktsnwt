@@ -19,10 +19,10 @@ INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id)
 INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id) VALUES (2, 5, 'Parter', 0, 0, 0, 1);
 INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id) VALUES (3, 5, 'Parter', 0, 0, 0, 2);
 
-INSERT INTO `events` (id, description, end_date, image_path, name, purchase_limit, start_date, tickets_per_user, type, location) VALUES (1, 'Ovo je event', '2017-11-30 21:58:58', 'path', 'Koncert', 2, '2019-11-29 21:58:58', 2, 1, 1);
+INSERT INTO `events` (id, description, end_date, image_path, name, purchase_limit, start_date, tickets_per_user, type, hall_id) VALUES (1, 'Ovo je event', '2019-11-30 00:00:00', 'path', 'Koncert', 2, '2019-11-30 00:00:00', 2, 1, 1);
 
-INSERT INTO `event_days` (id, date, description, name, status, event_id, hall_id) VALUES (1, '2019-11-29 21:58:58', 'dan 1', 'DAY1', 0, 1, 1);
-INSERT INTO `event_days` (id, date, description, name, status, event_id, hall_id) VALUES (2, '2019-11-30 21:58:58', 'dan 2', 'DAY2', 0, 1, 1);
+INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (1, '2019-11-29 21:58:58', 'dan 1', 'DAY1', 0, 1);
+INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (2, '2019-11-30 21:58:58', 'dan 2', 'DAY2', 0, 1);
 
 INSERT INTO `pricing` (id, price, event_day_id, sector_id) VALUES (1, 199, 1, 1);
 INSERT INTO `pricing` (id, price, event_day_id, sector_id) VALUES (2, 399, 1, 2);
