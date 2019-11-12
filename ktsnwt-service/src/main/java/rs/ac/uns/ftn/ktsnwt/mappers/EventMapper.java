@@ -3,6 +3,9 @@ package rs.ac.uns.ftn.ktsnwt.mappers;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class EventMapper {
 
     private EventMapper(){
@@ -21,5 +24,9 @@ public class EventMapper {
 
     public static EventDTO toDTO(Event event){
         return new EventDTO(event);
+    }
+
+    public static List<EventDTO> toListDto(List<Event> events){
+        return events.stream().map(EventDTO::new).collect(Collectors.toList());
     }
 }

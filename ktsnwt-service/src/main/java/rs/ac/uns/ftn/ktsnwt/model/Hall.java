@@ -73,14 +73,6 @@ public class Hall {
         this.sectors = sectors;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if(this == obj) return true;

@@ -1,9 +1,11 @@
 package rs.ac.uns.ftn.ktsnwt.service.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.SearchEventDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
@@ -19,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -29,6 +32,7 @@ public class EventServiceImpl implements EventService {
     @Autowired HallRepository hallRepository;
     @Autowired EventDayRepository eventDayRepository;
     @Autowired TimeProvider timeProvider;
+
     @Override
     public Event addEvent(EventDTO event) {
         Date startDate;
@@ -60,6 +64,26 @@ public class EventServiceImpl implements EventService {
         e.setEventDays(makeBasicEventDay(startDate,endDate,e));
 
         return e;
+    }
+
+    @Override
+    public List<Event> filterEvents(SearchEventDTO filter, int page, int size){
+        Date startDate;
+        Date endDate;
+        if((filter.getStartDate() == null) || (filter.getEndDate() == null)){
+            throw new ApiRequestException("Please chose date");
+        }
+
+        try{
+            startDate = timeProvider.makeDate(filter.getStartDate());
+            endDate = timeProvider.makeDate(filter.getEndDate());
+        }
+        catch (ParseException e){
+            throw new ApiRequestException("Invalid date format");
+        }
+
+
+        return eventRepository.filterEvents(startDate,endDate,filter.getType(),filter.getLocation(), PageRequest.of(page,size)).toList();
     }
 
     private Set<EventDay> makeBasicEventDay(Date startDate, Date endDate, Event e){
