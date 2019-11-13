@@ -9,7 +9,7 @@ public interface TicketsService {
       Ticket findById(Long id);
     List<Ticket> findAll(int page);
     ReportInfoDTO onLocationDailyReport(long idLocation, String date);
-    ReportInfoDTO onLocationMonthlyReport(long idLocation);
+    ReportInfoDTO onLocationMonthlyReport(long idLocation, String date);
     ReportInfoDTO onEventDailyReport(long idEvent, String date);
     List<Ticket> getUsersTickets(int page);
     void reserveTickets(TicketsToReserveDTO ticketsInfo);

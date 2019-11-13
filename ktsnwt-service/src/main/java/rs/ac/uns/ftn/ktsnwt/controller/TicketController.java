@@ -23,12 +23,12 @@ public class TicketController {
     private TicketsService ticketsService;
 
 
-    @RequestMapping(value = "/{page_num}", method = RequestMethod.GET)
+    @RequestMapping(value = "/all/{page_num}", method = RequestMethod.GET)
     public ResponseEntity<List<TicketDTO>> getTickets(@PathVariable int page_num) {
         return new ResponseEntity<>(TicketMapper.toListDto(ticketsService.findAll(page_num)), HttpStatus.OK);
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    @RequestMapping(value="/specific/{id}", method=RequestMethod.GET)
     public ResponseEntity<TicketDTO> getTicketById(@PathVariable Long id){
         Ticket ticket = ticketsService.findById(id);
         return new ResponseEntity<>(new TicketDTO(ticket), HttpStatus.OK);
@@ -36,19 +36,21 @@ public class TicketController {
 
 
     @PostMapping("/locationDailyReport/{idLocation}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     ResponseEntity<ReportInfoDTO> onLocationDailyReport(@PathVariable long idLocation, @RequestBody String date){
         return new ResponseEntity<>(ticketsService.onLocationDailyReport(idLocation, date), HttpStatus.OK);
     }
 
 
-    @GetMapping("/locationMonthlyReport/{idLocation}")
-    ResponseEntity<ReportInfoDTO> onLocationMonthlyReport(@PathVariable long idLocation){
-        return new ResponseEntity<>(ticketsService.onLocationMonthlyReport(idLocation), HttpStatus.OK);
+    @PostMapping("/locationMonthlyReport/{idLocation}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    ResponseEntity<ReportInfoDTO> onLocationMonthlyReport(@PathVariable long idLocation, @RequestBody String date){
+        return new ResponseEntity<>(ticketsService.onLocationMonthlyReport(idLocation, date), HttpStatus.OK);
     }
 
 
-
     @PostMapping("/eventDailyReport/{idEvent}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     ResponseEntity<ReportInfoDTO> onEventDailyReport(@PathVariable long idEvent, @RequestBody String date){
         return new ResponseEntity<>(ticketsService.onEventDailyReport(idEvent, date), HttpStatus.OK);
 
