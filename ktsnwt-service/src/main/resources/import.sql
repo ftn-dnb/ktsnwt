@@ -24,5 +24,5 @@ INSERT INTO `events` (id, description, end_date, image_path, name, purchase_limi
 INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (1, '2019-11-29 21:58:58', 'dan 1', 'DAY1', 0, 1);
 INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (2, '2019-11-30 21:58:58', 'dan 2', 'DAY2', 0, 1);
 
-INSERT INTO `pricing` (id, price, event_day_id, sector_id) VALUES (1, 199, 1, 1);
-INSERT INTO `pricing` (id, price, event_day_id, sector_id) VALUES (2, 399, 1, 2);
+INSERT INTO `pricings` (id, price, event_day_id, sector_id) VALUES (1, 199, 1, 1);
+INSERT INTO `pricings` (id, price, event_day_id, sector_id) VALUES (2, 399, 1, 2);

@@ -53,7 +53,6 @@ public class Hall {
         this.name = name;
     }
 
-
     public Set<Sector> getSectors() {
         if (this.sectors == null) {
             this.sectors = new HashSet<>();
