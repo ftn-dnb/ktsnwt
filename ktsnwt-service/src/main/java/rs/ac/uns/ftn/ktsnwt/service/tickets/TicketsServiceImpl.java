@@ -16,6 +16,11 @@ import rs.ac.uns.ftn.ktsnwt.model.enums.SectorType;
 import rs.ac.uns.ftn.ktsnwt.repository.TicketRepository;
 import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayService;
 import rs.ac.uns.ftn.ktsnwt.service.pricing.PricingService;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -49,19 +54,66 @@ public class TicketsServiceImpl implements TicketsService {
         return ticketRepository.findAll(PageRequest.of(page, 5)).toList();
     }
 
+    //for chosen date
     @Override
     public ReportInfoDTO onLocationDailyReport(long idLocation, String date) {
-        return null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return calculateReportByDate(dateFormat, idLocation, date);
     }
 
+    //this month
     @Override
-    public ReportInfoDTO onLocationMonthlyReport(long idLocation) {
-        return null;
+    public ReportInfoDTO onLocationMonthlyReport(long idLocation, String date) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        return calculateReportByDate(dateFormat, idLocation, date);
     }
 
+    private ReportInfoDTO calculateReportByDate(SimpleDateFormat dateFormat, long idLocation, String date){
+        Date parsedDate = null;
+        List<Ticket> tickets = ticketRepository.findAll();
+        int ticketsSold = 0;
+        double income = 0.0;
+
+        try {
+            parsedDate = dateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new ReportInfoDTO(-1,-1);
+        }
+
+        for(Ticket t : tickets){
+            if(t.getPricing().getSector().getHall().getLocation().getId() == idLocation && dateFormat.format( t.getDatePurchased()).equals(date)){
+                ticketsSold+=1;
+                income+=t.getPricing().getPrice();
+            }
+        }
+        return new ReportInfoDTO(ticketsSold,income );
+    }
+
+
+    //for chosen date
     @Override
     public ReportInfoDTO onEventDailyReport(long idEvent, String date) {
-        return null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedDate = null;
+        List<Ticket> tickets = ticketRepository.findAll();
+        int ticketsSold = 0;
+        double income = 0.0;
+
+        try {
+            parsedDate = dateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return new ReportInfoDTO(-1,-1);
+        }
+
+        for(Ticket t : tickets){
+            if(t.getPricing().getEventDay().getId() == idEvent && dateFormat.format( t.getDatePurchased()).equals(date)){
+                ticketsSold+=1;
+                income+=t.getPricing().getPrice();
+            }
+        }
+        return new ReportInfoDTO(ticketsSold,income );
     }
 
     @Override

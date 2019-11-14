@@ -54,14 +54,6 @@ public class Hall {
     }
 
 
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
     public Set<Sector> getSectors() {
         if (this.sectors == null) {
             this.sectors = new HashSet<>();
