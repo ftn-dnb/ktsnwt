@@ -1,0 +1,23 @@
+<div class="container">
+    <h2>KTS-NWT Login</h2>
+    
+    <mat-form-field appearance="outline">
+        <mat-icon matPrefix class="icon">account_circle</mat-icon>
+        <input matInput type="text" placeholder="Username" [(ngModel)]="username" />
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+        <mat-icon matPrefix class="icon">lock</mat-icon>
+        <input matInput type="password" placeholder="Password" [(ngModel)]="password" />
+    </mat-form-field>
+    
+    <div>
+        <button mat-button (click)="onClickRegister()" class="button">
+            Register
+        </button>
+        
+        <button mat-raised-button color="primary" (click)="onClickLogin()" class="button">
+            Login
+        </button>
+    </div>
+</div>

@@ -29,4 +29,9 @@ export class ToolbarComponent implements OnInit {
   onClickLogin(): void {
     this.router.navigate([LOGIN_PATH]);
   }
+
+  onClickLogout(): void {
+    this.authService.logout();
+    this.router.navigate([HOME_PATH]);
+  }
 }

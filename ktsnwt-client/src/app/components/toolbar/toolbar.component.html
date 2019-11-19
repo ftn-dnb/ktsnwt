@@ -5,6 +5,9 @@
         <ng-template [ngIf]="isUserLoggedIn()" [ngIfElse]="nonRegisteredUser">
             <span class="spacer"></span>
             
+            <button mat-raised-button class="button" (click)="onClickLogout()">
+                Logout
+            </button>
         </ng-template>
         
         <ng-template #nonRegisteredUser>
