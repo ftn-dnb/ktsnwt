@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -18,7 +19,9 @@ export class RegistrationComponent implements OnInit {
   email: string = '';
   firstName: string = '';
   lastName: string = '';
+
   isUserInfoSent: boolean = false;
+  registrationForm: FormGroup;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -30,9 +33,21 @@ export class RegistrationComponent implements OnInit {
       this.toastr.warning('Please logout if you want to create a new account.', 'Warning');
       this.router.navigate([HOME_PATH]);
     }
+
+    this.registrationForm = new FormGroup({
+      'username': new FormControl(null, [Validators.required]),
+      'email': new FormControl(null, [Validators.required, Validators.email]),
+      'firstName': new FormControl(null, [Validators.required]),
+      'lastName': new FormControl(null, [Validators.required]),
+      'password': new FormControl(null, [Validators.required]),
+      'repeatPassword': new FormControl(null, [Validators.required])
+    });
   }
 
-  onClickRegister(): void {
+  onRegisterSubmit(): void {
+
+    // TODO: metoda se aktivira i ako je validacija forme pogresna !
+
     if (this.password !== this.repeatPassword) {
       this.toastr.warning('Passwords don\'t match', 'Warning');
       return;

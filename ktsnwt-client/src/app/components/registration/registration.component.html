@@ -12,45 +12,47 @@
         </button>
     
         <br />
-    
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-            <input matInput type="text" placeholder="First name" [(ngModel)]="firstName" />
-        </mat-form-field>
-    
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-            <input matInput type="text" placeholder="Last name" [(ngModel)]="lastName" />
-        </mat-form-field>
-    
-        <br />
-    
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-icon matPrefix class="icon">account_circle</mat-icon>
-            <input matInput type="text" placeholder="Username" [(ngModel)]="username" />
-        </mat-form-field>
-    
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-icon matPrefix class="icon">email</mat-icon>
-            <input matInput type="email" placeholder="E-mail" [(ngModel)]="email" />
-        </mat-form-field>
-    
-        <br />
-    
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-icon matPrefix class="icon">lock</mat-icon>
-            <input matInput type="password" placeholder="Password" [(ngModel)]="password" />
-        </mat-form-field>
-    
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-icon matPrefix class="icon">lock</mat-icon>
-            <input matInput type="password" placeholder="Repeat password" [(ngModel)]="repeatPassword" />
-        </mat-form-field>
-    
-        <br />
-    
-        <button mat-raised-button color="primary" (click)="onClickRegister()">
-            Register
-        </button>
+        
+        <form (ngSubmit)="onRegisterSubmit()">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-icon matPrefix class="icon">perm_identity</mat-icon>
+                <input matInput type="text" placeholder="First name" [(ngModel)]="firstName" name="firstName" required />
+            </mat-form-field>
+        
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-icon matPrefix class="icon">perm_identity</mat-icon>
+                <input matInput type="text" placeholder="Last name" [(ngModel)]="lastName" name="lastName" required />
+            </mat-form-field>
+        
+            <br />
+        
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-icon matPrefix class="icon">account_circle</mat-icon>
+                <input matInput type="text" placeholder="Username" [(ngModel)]="username" name="username" required />
+            </mat-form-field>
+        
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-icon matPrefix class="icon">email</mat-icon>
+                <input matInput type="email" placeholder="E-mail" [(ngModel)]="email" name="email" required />
+            </mat-form-field>
+        
+            <br />
+        
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-icon matPrefix class="icon">lock</mat-icon>
+                <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+            </mat-form-field>
+        
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-icon matPrefix class="icon">lock</mat-icon>
+                <input matInput type="password" placeholder="Repeat password" [(ngModel)]="repeatPassword" name="repeatPassword" required />
+            </mat-form-field>
+        
+            <br />
+        
+            <button type="submit" mat-raised-button color="primary">
+                Register
+            </button>
+        </form>
     </ng-template>
 </div>

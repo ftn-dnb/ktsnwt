@@ -28,7 +28,7 @@ export class AccountConfirmationComponent implements OnInit {
 
   private activateAccount(): void {
     this.authService.activateAccount(this.confirmationToken).subscribe(data => {
-      this.toastr.success('Your account has been activated. Proceed to login page.');
+      this.toastr.success('Your account has been activated.');
       this.router.navigate([LOGIN_PATH]);      
     }, error => {
       this.toastr.error('There was an error while activating your account.');
