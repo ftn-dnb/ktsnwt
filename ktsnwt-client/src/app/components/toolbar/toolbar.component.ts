@@ -1,5 +1,5 @@
 import { AuthService } from './../../services/auth.service';
-import { HOME_PATH, LOGIN_PATH } from './../../config/router-paths';
+import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH } from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -28,6 +28,10 @@ export class ToolbarComponent implements OnInit {
 
   onClickLogin(): void {
     this.router.navigate([LOGIN_PATH]);
+  }
+
+  onClickRegister(): void {
+    this.router.navigate([REGISTRATION_PATH]);
   }
 
   onClickLogout(): void {

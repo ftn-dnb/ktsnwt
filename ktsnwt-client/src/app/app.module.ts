@@ -12,6 +12,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './components/login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { AccountConfirmationComponent } from './components/account-confirmation/account-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { LoginComponent } from './components/login/login.component';
     ToolbarComponent,
     HomeComponent,
     LoginComponent,
+    RegistrationComponent,
+    AccountConfirmationComponent,
   ],
   imports: [
     BrowserModule,
