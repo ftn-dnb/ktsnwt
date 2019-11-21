@@ -13,39 +13,39 @@
     
         <br />
         
-        <form (ngSubmit)="onRegisterSubmit()">
+        <form [formGroup]="registrationForm" (ngSubmit)="onRegisterSubmit()">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-                <input matInput type="text" placeholder="First name" [(ngModel)]="firstName" name="firstName" required />
+                <input matInput type="text" placeholder="First name" [(ngModel)]="firstName" formControlName="firstName" />
             </mat-form-field>
         
             <mat-form-field class="input-field" appearance="outline">
                 <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-                <input matInput type="text" placeholder="Last name" [(ngModel)]="lastName" name="lastName" required />
+                <input matInput type="text" placeholder="Last name" [(ngModel)]="lastName" formControlName="lastName" />
             </mat-form-field>
         
             <br />
         
             <mat-form-field class="input-field" appearance="outline">
                 <mat-icon matPrefix class="icon">account_circle</mat-icon>
-                <input matInput type="text" placeholder="Username" [(ngModel)]="username" name="username" required />
+                <input matInput type="text" placeholder="Username" [(ngModel)]="username" formControlName="username" />
             </mat-form-field>
         
             <mat-form-field class="input-field" appearance="outline">
                 <mat-icon matPrefix class="icon">email</mat-icon>
-                <input matInput type="email" placeholder="E-mail" [(ngModel)]="email" name="email" required />
+                <input matInput type="email" placeholder="E-mail" [(ngModel)]="email" formControlName="email" />
             </mat-form-field>
         
             <br />
         
             <mat-form-field class="input-field" appearance="outline">
                 <mat-icon matPrefix class="icon">lock</mat-icon>
-                <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+                <input matInput type="password" placeholder="Password" [(ngModel)]="password" formControlName="password" />
             </mat-form-field>
         
             <mat-form-field class="input-field" appearance="outline">
                 <mat-icon matPrefix class="icon">lock</mat-icon>
-                <input matInput type="password" placeholder="Repeat password" [(ngModel)]="repeatPassword" name="repeatPassword" required />
+                <input matInput type="password" placeholder="Repeat password" [(ngModel)]="repeatPassword" formControlName="repeatPassword" />
             </mat-form-field>
         
             <br />

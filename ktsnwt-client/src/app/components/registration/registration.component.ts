@@ -13,13 +13,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class RegistrationComponent implements OnInit {
 
-  username: string = '';
-  password: string = '';
-  repeatPassword: string = '';
-  email: string = '';
-  firstName: string = '';
-  lastName: string = '';
-
   isUserInfoSent: boolean = false;
   registrationForm: FormGroup;
 
@@ -35,31 +28,36 @@ export class RegistrationComponent implements OnInit {
     }
 
     this.registrationForm = new FormGroup({
-      'username': new FormControl(null, [Validators.required]),
-      'email': new FormControl(null, [Validators.required, Validators.email]),
-      'firstName': new FormControl(null, [Validators.required]),
-      'lastName': new FormControl(null, [Validators.required]),
-      'password': new FormControl(null, [Validators.required]),
-      'repeatPassword': new FormControl(null, [Validators.required])
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      username: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', Validators.required),
+      repeatPassword: new FormControl('', Validators.required)
     });
   }
 
   onRegisterSubmit(): void {
-
-    // TODO: metoda se aktivira i ako je validacija forme pogresna !
-
-    if (this.password !== this.repeatPassword) {
-      this.toastr.warning('Passwords don\'t match', 'Warning');
+    if (!this.registrationForm.valid) {
+      this.toastr.error('All fields need to be filled.');
       return;
     }
 
+    const password = this.registrationForm.controls['password'].value;
+    const repeatPassword = this.registrationForm.controls['repeatPassword'].value;
+
+    if (password !== repeatPassword) {
+      this.toastr.warning('Passwords don\'t match', 'Warning');
+      return;
+    }
+    
     const userInfo: UserInfo = {
-      username: this.username,
-      password: this.password,
-      repeatPassword: this.repeatPassword,
-      email: this.email,
-      firstName: this.firstName,
-      lastName: this.lastName
+      username: this.registrationForm.controls['username'].value,
+      password: this.registrationForm.controls['password'].value,
+      repeatPassword: this.registrationForm.controls['repeatPassword'].value,
+      email: this.registrationForm.controls['email'].value,
+      firstName: this.registrationForm.controls['firstName'].value,
+      lastName: this.registrationForm.controls['lastName'].value,
     };
 
     this.authService.addNewUser(userInfo).subscribe(data => {
