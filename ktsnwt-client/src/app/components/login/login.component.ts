@@ -1,6 +1,6 @@
 import { USER_ID_KEY, USER_ROLE_KEY, USERNAME_KEY, USER_TOKEN_KEY } from './../../config/local-storage-keys';
-import { LoginInfo } from './../../models/LoginInfo';
-import { HOME_PATH } from './../../config/router-paths';
+import { LoginInfo } from '../../models/login-info';
+import { HOME_PATH, REGISTRATION_PATH } from './../../config/router-paths';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
@@ -47,9 +47,7 @@ export class LoginComponent implements OnInit {
   }
 
   onClickRegister(): void {
-    // @TODO: Uraditi redirekciju na stranicu za registraciju
-    // this.router.navigate([REGISTER_PATH]);
-    console.log("TODO: Go to registration page");
+    this.router.navigate([REGISTRATION_PATH]);
   }
 
 }

@@ -22,8 +22,7 @@ public class MailSenderService {
         message.setFrom("KTSNWT-Tim05");
         message.setTo(token.getUser().getEmail());
 
-        // @TODO: Kada se implementira stranica za verifikaciju na frontendu dodati putanju do nje (ne zaboravi token)
-        message.setText("This will be changed later. Here is your token: " + token.getToken());
+        message.setText("Go to this page to activate your account http://localhost:4200/verify?token=" + token.getToken());
 
         mailSender.send(message);
     }
