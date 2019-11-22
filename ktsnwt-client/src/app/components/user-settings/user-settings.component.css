@@ -1,0 +1,38 @@
+.container {
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img { /* this is bad way, it's better to use class name but it does not work */
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+}
+
+.image-container {
+    text-align: center;
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.input-field {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.user-info-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    margin-bottom: 10px;
+    width: 150px;
+}

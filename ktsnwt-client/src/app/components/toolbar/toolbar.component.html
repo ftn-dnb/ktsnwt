@@ -5,9 +5,22 @@
         <ng-template [ngIf]="isUserLoggedIn()" [ngIfElse]="nonRegisteredUser">
             <span class="spacer"></span>
             
-            <button mat-raised-button class="button" (click)="onClickLogout()">
-                Logout
+            <button mat-button [matMenuTriggerFor]="userMenu">
+                <span class="btnText">{{ getUsername() }}</span>
+                <mat-icon>keyboard_arrow_down</mat-icon>
             </button>
+
+            <mat-menu #userMenu="matMenu">
+                <button mat-menu-item (click)="onClickProfileSettings()">
+                    <mat-icon>settings_applications</mat-icon>
+                    <span>Profile settings</span>
+                </button>
+
+                <button mat-menu-item (click)="onClickLogout()">
+                    <mat-icon>input</mat-icon>
+                    <span>Logout</span>
+                </button>
+            </mat-menu>
         </ng-template>
         
         <ng-template #nonRegisteredUser>

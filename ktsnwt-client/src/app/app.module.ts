@@ -14,6 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AccountConfirmationComponent } from './components/account-confirmation/account-confirmation.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AccountConfirmationComponent } from './components/account-confirmation/
     LoginComponent,
     RegistrationComponent,
     AccountConfirmationComponent,
+    UserSettingsComponent,
   ],
   imports: [
     BrowserModule,
