@@ -17,33 +17,37 @@
 
 
     <div class="user-info-container">
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-            <input matInput type="text" placeholder="First name" [(ngModel)]="user.firstName" />
-        </mat-form-field>
-
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-            <input matInput type="text" placeholder="Last name" [(ngModel)]="user.lastName" />
-        </mat-form-field>
-
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-icon matPrefix class="icon">email</mat-icon>
-            <input matInput type="email" placeholder="E-mail" [(ngModel)]="user.email" />
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" (click)="onClickSaveEdit()">Save</button>
-
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-icon matPrefix class="icon">lock</mat-icon>
-            <input matInput type="password" placeholder="Old password" [(ngModel)]="oldPassword" />
-        </mat-form-field>
-
-        <mat-form-field class="input-field" appearance="outline">
-            <mat-icon matPrefix class="icon">lock</mat-icon>
-            <input matInput type="password" placeholder="New password" [(ngModel)]="newPassword" />
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" (click)="onClickEditPassword()">Change</button>
+        <form [formGroup]="basicInfoForm" (ngSubmit)="onClickSaveEdit()">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-icon matPrefix class="icon">perm_identity</mat-icon>
+                <input matInput type="text" placeholder="First name" formControlName="firstName" />
+            </mat-form-field>
+    
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-icon matPrefix class="icon">perm_identity</mat-icon>
+                <input matInput type="text" placeholder="Last name" formControlName="lastName" />
+            </mat-form-field>
+    
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-icon matPrefix class="icon">email</mat-icon>
+                <input matInput type="email" placeholder="E-mail" formControlName="email" />
+            </mat-form-field>
+    
+            <button type="submit" mat-raised-button color="primary">Save</button>
+        </form>
+    
+        <form [formGroup]="passwordForm" (ngSubmit)="onClickEditPassword()">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-icon matPrefix class="icon">lock</mat-icon>
+                <input matInput type="password" placeholder="Old password" formControlName="oldPassword" />
+            </mat-form-field>
+    
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-icon matPrefix class="icon">lock</mat-icon>
+                <input matInput type="password" placeholder="New password" formControlName="newPassword" />
+            </mat-form-field>
+    
+            <button type="submit" mat-raised-button color="primary">Change</button>
+        </form>
     </div>
 </div>

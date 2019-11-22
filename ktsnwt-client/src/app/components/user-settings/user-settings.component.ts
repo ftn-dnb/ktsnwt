@@ -1,3 +1,4 @@
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LOGIN_PATH } from './../../config/router-paths';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -17,8 +18,9 @@ export class UserSettingsComponent implements OnInit {
 
   // TODO: Namesti ovo da VS Code ne prijavljuje error
   user: User = {};
-  oldPassword: string = '';
-  newPassword: string = '';
+
+  basicInfoForm: FormGroup;
+  passwordForm: FormGroup;
 
   constructor(private userService: UserService, 
               private toastr: ToastrService,
@@ -28,6 +30,17 @@ export class UserSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.getUserData();
+
+    this.basicInfoForm = new FormGroup({
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email])
+    });
+
+    this.passwordForm = new FormGroup({
+      oldPassword: new FormControl('', Validators.required),
+      newPassword: new FormControl('', Validators.required)
+    });
   }
 
   private getUserData(): void {
@@ -40,32 +53,31 @@ export class UserSettingsComponent implements OnInit {
         lastName: data.lastName,
         imagePath: data.imagePath
       };
+
+      this.addValuesToFormGroups();
     }, error => {
       this.toastr.error('There was an error while getting your profile data');
     })
   }
 
+  private addValuesToFormGroups(): void {
+    this.basicInfoForm.setValue({
+      firstName: this.user.firstName,
+      lastName: this.user.lastName,
+      email: this.user.email
+    });
+  }
+
   onClickSaveEdit(): void {
-    // TODO: Naci bolji nacin da se izvrse ove provere
-    if (this.user.firstName == '') {
-      this.toastr.warning('Field for first name can not be empty.');
-      return;
-    }
-
-    if (this.user.lastName == '') {
-      this.toastr.warning('Field for last name can not be empty.');
-      return;
-    }
-
-    if (this.user.email == '') {
-      this.toastr.warning('Field for email can not be empty.');
+    if (!this.basicInfoForm.valid) {
+      this.toastr.warning('All fields must be filled out.');
       return;
     }
 
     const data: UserEditInfo = {
-      firstName: this.user.firstName,
-      lastName: this.user.lastName,
-      email: this.user.email
+      firstName: this.basicInfoForm.controls['firstName'].value,
+      lastName: this.basicInfoForm.controls['lastName'].value,
+      email: this.basicInfoForm.controls['email'].value,
     };
 
     this.userService.editMyProfile(data).subscribe(data => {
@@ -76,22 +88,17 @@ export class UserSettingsComponent implements OnInit {
   }
 
   onClickEditPassword(): void {
-    // TODO: Mozda dodati FormGroup ovde sa Validators.required ??
-    // TODO: Naci bolji nacin da se izvrse ove provere
-
-    if (this.oldPassword == '') {
-      this.toastr.warning('Old password can not be empty.');
+    if (!this.passwordForm.valid) {
+      this.toastr.warning('All fields must be filled out');
       return;
     }
 
-    if (this.newPassword == '') {
-      this.toastr.warning('New password can not be empty.');
-      return;
-    }
-
+    const oldPassword = this.passwordForm.controls['oldPassword'].value;
+    const newPassword = this.passwordForm.controls['newPassword'].value;
+    
     const passwords: PasswordChange = {
-      oldPassword: this.oldPassword,
-      newPassword: this.newPassword
+      oldPassword: oldPassword,
+      newPassword: newPassword
     };
 
     this.userService.editUsersPassword(passwords).subscribe(data => {

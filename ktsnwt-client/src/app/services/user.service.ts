@@ -25,7 +25,7 @@ export class UserService {
     return this.http.post(API_USER_PASSWORD_CHANGE, passwords);
   }
 
-  editUserProfileImage(image): Observable<any> {
+  editUserProfileImage(image: FormData): Observable<any> {
     return this.http.post(API_USER_IMAGE, image);
   }
 }
