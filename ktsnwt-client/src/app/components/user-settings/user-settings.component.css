@@ -11,6 +11,11 @@ img { /* this is bad way, it's better to use class name but it does not work */
     border-radius: 100px;
 }
 
+img:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
 .image-container {
     text-align: center;
 }

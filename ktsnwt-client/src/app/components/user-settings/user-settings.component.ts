@@ -15,7 +15,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserSettingsComponent implements OnInit {
 
-  // Namesti ovo da ne prijavljuje error
+  // TODO: Namesti ovo da VS Code ne prijavljuje error
   user: User = {};
   oldPassword: string = '';
   newPassword: string = '';
@@ -46,8 +46,21 @@ export class UserSettingsComponent implements OnInit {
   }
 
   onClickSaveEdit(): void {
-    // TODO: provere da neko polje nije ostalo prazno
-    // proveriti firstName, lastName i email
+    // TODO: Naci bolji nacin da se izvrse ove provere
+    if (this.user.firstName == '') {
+      this.toastr.warning('Field for first name can not be empty.');
+      return;
+    }
+
+    if (this.user.lastName == '') {
+      this.toastr.warning('Field for last name can not be empty.');
+      return;
+    }
+
+    if (this.user.email == '') {
+      this.toastr.warning('Field for email can not be empty.');
+      return;
+    }
 
     const data: UserEditInfo = {
       firstName: this.user.firstName,
@@ -64,7 +77,8 @@ export class UserSettingsComponent implements OnInit {
 
   onClickEditPassword(): void {
     // TODO: Mozda dodati FormGroup ovde sa Validators.required ??
-    
+    // TODO: Naci bolji nacin da se izvrse ove provere
+
     if (this.oldPassword == '') {
       this.toastr.warning('Old password can not be empty.');
       return;
@@ -89,7 +103,15 @@ export class UserSettingsComponent implements OnInit {
     });
   }
 
-  onClickImageChange(): void {
-    // TODO menjanje slike odavde
+  onClickImageChange(event): void {
+    const image = event.target.files[0];
+    const uploadData = new FormData();
+    uploadData.append('file', image, image.name);
+
+    this.userService.editUserProfileImage(uploadData).subscribe(data => {
+      this.toastr.success('Your image has been successfully updated.');
+    }, error => {
+      this.toastr.error('There was an error while uploading your new profile image.');
+    });
   }
 }

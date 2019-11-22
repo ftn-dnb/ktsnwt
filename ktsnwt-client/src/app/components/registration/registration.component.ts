@@ -1,4 +1,4 @@
-import { User } from './../../models/user-info';
+import { UserInfo } from './../../models/user-info';
 import { HOME_PATH, LOGIN_PATH } from './../../config/router-paths';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -51,7 +51,7 @@ export class RegistrationComponent implements OnInit {
       return;
     }
     
-    const userInfo: User = {
+    const userInfo: UserInfo = {
       username: this.registrationForm.controls['username'].value,
       password: this.registrationForm.controls['password'].value,
       repeatPassword: this.registrationForm.controls['repeatPassword'].value,

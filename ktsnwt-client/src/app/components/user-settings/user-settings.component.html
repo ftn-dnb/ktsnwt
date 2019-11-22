@@ -1,8 +1,20 @@
 <div class="container">
     <div class="image-container">
-        <img class="profile-image" src="{{user.imagePath}}" />
+        <img class="profile-image" src="{{user.imagePath}}" 
+            matTooltip="Click to upload new image" 
+            (click)="fileInput.click()"
+        />
+        
         <h3>{{ user.username }}</h3>
+        
+        <input
+            style="display: none"
+            type="file" (change)="onClickImageChange($event)"
+            #fileInput
+            accept="image/x-png,image/gif,image/jpeg"
+        >
     </div>
+
 
     <div class="user-info-container">
         <mat-form-field class="input-field" appearance="outline">
