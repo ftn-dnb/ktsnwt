@@ -16,7 +16,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserSettingsComponent implements OnInit {
 
-  // TODO: Namesti ovo da VS Code ne prijavljuje error
   user: User = {};
 
   basicInfoForm: FormGroup;
