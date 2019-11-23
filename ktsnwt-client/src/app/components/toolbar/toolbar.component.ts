@@ -1,5 +1,6 @@
+import { USERNAME_KEY } from './../../config/local-storage-keys';
 import { AuthService } from './../../services/auth.service';
-import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH } from './../../config/router-paths';
+import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH, USER_SETTINGS_PATH } from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -18,6 +19,10 @@ export class ToolbarComponent implements OnInit {
   ngOnInit() {
   }
 
+  getUsername(): string {
+    return localStorage.getItem(USERNAME_KEY);
+  }
+
   isUserLoggedIn(): boolean {
     return this.authService.isUserLoggedIn();
   }
@@ -32,6 +37,10 @@ export class ToolbarComponent implements OnInit {
 
   onClickRegister(): void {
     this.router.navigate([REGISTRATION_PATH]);
+  }
+
+  onClickProfileSettings(): void {
+    this.router.navigate([USER_SETTINGS_PATH]);
   }
 
   onClickLogout(): void {
