@@ -1,5 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.constants;
 
+import rs.ac.uns.ftn.ktsnwt.dto.AddressDTO;
+
 public class AddressConstants {
 
     // Existing data in database
@@ -26,6 +28,20 @@ public class AddressConstants {
     public static final String NEW_DB_POSTAL_CODE = "11000";
     public static final String NEW_DB_STREET_NAME = "Novi bulevar";
     public static final String NEW_DB_STREET_NUMBER = "23A";
+
+    public static AddressDTO createNewAddressDto() {
+        AddressDTO address = new AddressDTO();
+        address.setCity(AddressConstants.NEW_DB_CITY);
+        address.setCountry(AddressConstants.NEW_DB_COUNTRY);
+        address.setGoogleApiId(AddressConstants.NEW_DB_GOOGLE_API_ID);
+        address.setLatitude(AddressConstants.NEW_DB_LATITUDE);
+        address.setLongitude(AddressConstants.NEW_DB_LONGITUDE);
+        address.setPostalCode(AddressConstants.NEW_DB_POSTAL_CODE);
+        address.setStreetName(AddressConstants.NEW_DB_STREET_NAME);
+        address.setStreetNumber(AddressConstants.NEW_DB_STREET_NUMBER);
+
+        return address;
+    }
 
     private AddressConstants() {
     }

@@ -104,7 +104,7 @@ public class AddressControllerIntegrationTest {
     public void whenAddAddressReturnNewAddress() {
         int sizeBeforeInsert = addressRepository.findAll().size();
 
-        AddressDTO newAddressDto = createAddressDtoForInsert();
+        AddressDTO newAddressDto = AddressConstants.createNewAddressDto();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<AddressDTO> request = new HttpEntity<>(newAddressDto, headers);
@@ -131,20 +131,6 @@ public class AddressControllerIntegrationTest {
         addressRepository.delete(lastAddress);
     }
 
-    private AddressDTO createAddressDtoForInsert() {
-        AddressDTO address = new AddressDTO();
-        address.setCity(AddressConstants.NEW_DB_CITY);
-        address.setCountry(AddressConstants.NEW_DB_COUNTRY);
-        address.setGoogleApiId(AddressConstants.NEW_DB_GOOGLE_API_ID);
-        address.setLatitude(AddressConstants.NEW_DB_LATITUDE);
-        address.setLongitude(AddressConstants.NEW_DB_LONGITUDE);
-        address.setPostalCode(AddressConstants.NEW_DB_POSTAL_CODE);
-        address.setStreetName(AddressConstants.NEW_DB_STREET_NAME);
-        address.setStreetNumber(AddressConstants.NEW_DB_STREET_NUMBER);
-
-        return address;
-    }
-
     private void checkAddressDto(Address address, AddressDTO addressDto) {
         assertEquals(address.getId(), addressDto.getId());
         assertEquals(address.getCity(), addressDto.getCity());
@@ -165,7 +151,7 @@ public class AddressControllerIntegrationTest {
         int sizeBeforeInsert = addressRepository.findAll().size();
 
         // Create new address dto, but with existing google api id
-        AddressDTO newAddressDto = createAddressDtoForInsert();
+        AddressDTO newAddressDto = AddressConstants.createNewAddressDto();
         newAddressDto.setGoogleApiId(AddressConstants.DB_GOOGLE_API_ID);
 
         HttpHeaders headers = new HttpHeaders();
