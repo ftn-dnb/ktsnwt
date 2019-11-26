@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 public class AddressServiceImplUnitTest {
 
     @Autowired
-    private AddressService addressService;
+    private AddressServiceImpl addressService;
 
     @MockBean
     private AddressRepository addressRepository;
