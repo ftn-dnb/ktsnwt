@@ -29,6 +29,10 @@ public class AddressConstants {
     public static final String NEW_DB_STREET_NAME = "Novi bulevar";
     public static final String NEW_DB_STREET_NUMBER = "23A";
 
+    // Data for mock object
+    public static final Long MOCK_ID = 12345L;
+    public static final String MOCK_GOOGLE_API_ID = "54321";
+
     public static AddressDTO createNewAddressDto() {
         AddressDTO address = new AddressDTO();
         address.setCity(AddressConstants.NEW_DB_CITY);
