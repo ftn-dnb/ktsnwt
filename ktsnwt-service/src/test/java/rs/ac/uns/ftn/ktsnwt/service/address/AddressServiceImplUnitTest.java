@@ -70,8 +70,8 @@ public class AddressServiceImplUnitTest {
     @Test
     public void whenAddAddressReturnAddress() {
         AddressDTO addressDto = AddressConstants.createNewAddressDto();
+        Mockito.when(addressRepository.findByGoogleApiId(addressDto.getGoogleApiId())).thenReturn(null);
         Address address = addressService.addAddress(addressDto);
-        Mockito.when(addressRepository.findByGoogleApiId(address.getGoogleApiId())).thenReturn(null);
         assertEquals(AddressConstants.MOCK_ID, address.getId());
     }
 
