@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TicketsService {
       Ticket findById(Long id);
-    List<Ticket> findAll(int page);
+    List<Ticket> findAll(int page, int size);
     ReportInfoDTO onLocationDailyReport(long idLocation, String date);
     ReportInfoDTO onLocationMonthlyReport(long idLocation, String date);
     ReportInfoDTO onEventDailyReport(long idEvent, String date);

@@ -50,8 +50,8 @@ public class TicketsServiceImpl implements TicketsService {
     }
 
     @Override
-    public List<Ticket> findAll(int page) {
-        return ticketRepository.findAll(PageRequest.of(page, 5)).toList();
+    public List<Ticket> findAll(int page, int size) {
+        return ticketRepository.findAll(PageRequest.of(page, size)).toList();
     }
 
     //for chosen date

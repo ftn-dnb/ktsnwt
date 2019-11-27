@@ -29,13 +29,14 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address findByGoogleApiId(String googleApiId) {
-        try {
-            return addressRepository.findByGoogleApiId(googleApiId);
-        } catch (NoSuchElementException e) {
+        Address address = addressRepository.findByGoogleApiId(googleApiId);
+        if (address == null) {
             throw new ResourceNotFoundException(
                     "Address with googleId: '" + googleApiId + "' doesn't exist."
             );
         }
+
+        return address;
     }
 
     @Override
