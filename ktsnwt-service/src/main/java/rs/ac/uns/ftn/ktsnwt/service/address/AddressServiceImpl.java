@@ -48,7 +48,7 @@ public class AddressServiceImpl implements AddressService {
         }
 
         Address address = createNewAddressObject(addressDTO);
-        addressRepository.save(address);
+        address = addressRepository.save(address);
 
         return address;
     }
