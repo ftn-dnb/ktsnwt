@@ -19,6 +19,8 @@ public class UserDTO {
     private UserTokenState token;
     private String imagePath;
 
+    public UserDTO() {
+    }
 
     public UserDTO(User user) {
         this.id = user.getId();
