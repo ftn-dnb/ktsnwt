@@ -20,7 +20,7 @@ public class PricingServiceImpl implements PricingService {
 
     @Override
     public Pricing getPricing(Long id) {
-        Pricing pricing = pricingRepository.getById(id);
+        Pricing pricing = pricingRepository.findById(id).orElse(null);
 
         if (pricing == null)
             throw new ResourceNotFoundException("Pricing with id " + id + " doesn't exist.");
