@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.ktsnwt.service.tickets;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
@@ -117,9 +118,10 @@ public class TicketsServiceImpl implements TicketsService {
     }
 
     @Override
-    public List<Ticket> getUsersTickets(int page) {
+    public List<Ticket> getUsersTickets(int page, int size) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return ticketRepository.getByUserId(user.getId(), PageRequest.of(page, 5)).toList();
+        SecurityContext ctx = SecurityContextHolder.getContext();
+        return ticketRepository.getByUserId(user.getId(), PageRequest.of(page, size)).toList();
     }
 
     @Override

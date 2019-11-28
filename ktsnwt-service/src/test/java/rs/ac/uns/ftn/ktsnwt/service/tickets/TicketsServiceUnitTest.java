@@ -13,13 +13,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+import rs.ac.uns.ftn.ktsnwt.constants.SecurityContextConstants;
+import rs.ac.uns.ftn.ktsnwt.constants.TicketConstants;
+import rs.ac.uns.ftn.ktsnwt.constants.UserConstants;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.model.Ticket;
+import rs.ac.uns.ftn.ktsnwt.model.User;
 import rs.ac.uns.ftn.ktsnwt.repository.TicketRepository;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +45,7 @@ public class TicketsServiceUnitTest {
     TicketRepository ticketRepositoryMocked;
 
     @Before
-    public void setUp() {
+    public void setUp() throws ParseException {
         Ticket ticket = new Ticket();
         ticket.setId(1L);
         Mockito.when(ticketRepositoryMocked.findById(ticket.getId())).thenReturn(Optional.of(ticket));
@@ -48,6 +56,18 @@ public class TicketsServiceUnitTest {
         tickets.add(t1);
         tickets.add(t2);
         Mockito.when(ticketRepositoryMocked.findAll(PageRequest.of(0,2))).thenReturn(new PageImpl<>(tickets));
+
+
+        ArrayList<Ticket> ticketsReport = new ArrayList<>(TicketConstants.returnMockedTickets());
+
+        //SecurityContext logged user
+
+        User user = UserConstants.returnLoggedUser();
+        SecurityContext securityContext = SecurityContextConstants.returnMockedSecurityContext();
+        SecurityContextHolder.setContext(securityContext);
+        Mockito.when(ticketRepositoryMocked.getByUserId(user.getId(), PageRequest.of(0, 2))).thenReturn(new PageImpl<>(ticketsReport));
+
+
     }
 
     @Test
@@ -86,7 +106,16 @@ public class TicketsServiceUnitTest {
         List<Ticket> tickets = ticketsService.findAll(page, size);
     }
 
+    @Test
+    @WithMockUser(username = "jane.doe")
+    public void testshit() {
 
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        assertEquals("jane.doe", user.getUsername());
+
+        List<Ticket> userTickets = ticketsService.getUsersTickets(0, 2);
+        assertEquals(2, userTickets.size());
+    }
 
 
 }

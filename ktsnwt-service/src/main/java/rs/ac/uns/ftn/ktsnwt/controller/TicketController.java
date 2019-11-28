@@ -58,10 +58,11 @@ public class TicketController {
     }
 
 
-    @GetMapping("/{page}")
+    @GetMapping("")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<TicketDTO>> getUsersTickets(@PathVariable int page) {
-        List<Ticket> tickets = ticketsService.getUsersTickets(page);
+    public ResponseEntity<List<TicketDTO>> getUsersTickets(@RequestParam(name = "page") int page,
+                                                           @RequestParam(name = "size") int size) {
+        List<Ticket> tickets = ticketsService.getUsersTickets(page, size);
         return new ResponseEntity<>(TicketMapper.toListDto(tickets), HttpStatus.OK);
     }
 
