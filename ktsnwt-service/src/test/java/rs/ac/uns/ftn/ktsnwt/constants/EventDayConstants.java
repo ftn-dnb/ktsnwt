@@ -6,11 +6,11 @@ public class EventDayConstants {
 
     private EventDayConstants() {}
 
-    public static final Long DB_ID = 1L;
+    public static final Long MOCK_ID = 1L;
 
     public static EventDay returnMockedEventDay() {
         EventDay eventDay = new EventDay();
-        eventDay.setId(EventDayConstants.DB_ID);
+        eventDay.setId(EventDayConstants.MOCK_ID);
         return eventDay;
     }
 }

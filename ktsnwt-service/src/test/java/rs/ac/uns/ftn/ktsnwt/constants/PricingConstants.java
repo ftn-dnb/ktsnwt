@@ -27,13 +27,13 @@ public class PricingConstants {
     // Non existing
     public static final Long NON_EXISTING_DB_ID = 123456L;
     
-    public static final Long DB_ID = 1L;
-    public static final double DB_PRICE = 1200;
+    public static final Long MOCK_ID = 1L;
+    public static final double MOCK_PRICE = 1200;
 
     public static Pricing returnMockedPricing() {
         Pricing pricing = new Pricing();
-        pricing.setId(PricingConstants.DB_ID);
-        pricing.setPrice(PricingConstants.DB_PRICE);
+        pricing.setId(PricingConstants.MOCK_ID);
+        pricing.setPrice(PricingConstants.MOCK_PRICE);
         pricing.setSector(SectorConstants.returnMockedSector());
         pricing.setEventDay(EventDayConstants.returnMockedEventDay());
         return pricing;

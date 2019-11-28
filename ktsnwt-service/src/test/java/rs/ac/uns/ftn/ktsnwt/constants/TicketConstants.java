@@ -15,21 +15,21 @@ public class TicketConstants {
 
     private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static final Long DB_ID_1 = 1L;
-    public static final String DB_DATE_PURCHASED_1 = "2019-11-28";
+    public static final Long MOCK_ID_1 = 1L;
+    public static final String MOCK_DATE_PURCHASED_1 = "2019-11-28";
 
-    public static final Long DB_ID_2 = 2L;
-    public static final String DB_DATE_PURCHASED_2 = "2019-11-28";
+    public static final Long MOCK_ID_2 = 2L;
+    public static final String MOCK_DATE_PURCHASED_2 = "2019-11-28";
 
 
     public static List<Ticket> returnMockedTickets() throws ParseException {
         Ticket t1 = new Ticket();
-        t1.setId(TicketConstants.DB_ID_1);
-        t1.setDatePurchased(new Timestamp(formatter.parse(TicketConstants.DB_DATE_PURCHASED_1).getTime()));
+        t1.setId(TicketConstants.MOCK_ID_1);
+        t1.setDatePurchased(new Timestamp(formatter.parse(TicketConstants.MOCK_DATE_PURCHASED_1).getTime()));
 
         Ticket t2 = new Ticket();
-        t2.setId(TicketConstants.DB_ID_2);
-        t2.setDatePurchased(new Timestamp(formatter.parse(TicketConstants.DB_DATE_PURCHASED_2).getTime()));
+        t2.setId(TicketConstants.MOCK_ID_2);
+        t2.setDatePurchased(new Timestamp(formatter.parse(TicketConstants.MOCK_DATE_PURCHASED_2).getTime()));
 
         Pricing mockedPricing = PricingConstants.returnMockedPricing();
 
