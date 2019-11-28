@@ -23,9 +23,10 @@ public class TicketController {
     private TicketsService ticketsService;
 
 
-    @RequestMapping(value = "/all/{page_num}", method = RequestMethod.GET)
-    public ResponseEntity<List<TicketDTO>> getTickets(@PathVariable int page_num) {
-        return new ResponseEntity<>(TicketMapper.toListDto(ticketsService.findAll(page_num)), HttpStatus.OK);
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<List<TicketDTO>> getTickets(@RequestParam(name = "page") int page,
+                                                      @RequestParam(name = "size") int size) {
+        return new ResponseEntity<>(TicketMapper.toListDto(ticketsService.findAll(page, size)), HttpStatus.OK);
     }
 
     @RequestMapping(value="/specific/{id}", method=RequestMethod.GET)
@@ -57,10 +58,11 @@ public class TicketController {
     }
 
 
-    @GetMapping("/{page}")
+    @GetMapping("")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<TicketDTO>> getUsersTickets(@PathVariable int page) {
-        List<Ticket> tickets = ticketsService.getUsersTickets(page);
+    public ResponseEntity<List<TicketDTO>> getUsersTickets(@RequestParam(name = "page") int page,
+                                                           @RequestParam(name = "size") int size) {
+        List<Ticket> tickets = ticketsService.getUsersTickets(page, size);
         return new ResponseEntity<>(TicketMapper.toListDto(tickets), HttpStatus.OK);
     }
 

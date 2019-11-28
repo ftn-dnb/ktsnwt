@@ -1,7 +1,6 @@
 package rs.ac.uns.ftn.ktsnwt.constants;
 
 import rs.ac.uns.ftn.ktsnwt.model.Pricing;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +26,18 @@ public class PricingConstants {
 
     // Non existing
     public static final Long NON_EXISTING_DB_ID = 123456L;
+    
+    public static final Long MOCK_ID = 1L;
+    public static final double MOCK_PRICE = 1200;
+
+    public static Pricing returnMockedPricing() {
+        Pricing pricing = new Pricing();
+        pricing.setId(PricingConstants.MOCK_ID);
+        pricing.setPrice(PricingConstants.MOCK_PRICE);
+        pricing.setSector(SectorConstants.returnMockedSector());
+        pricing.setEventDay(EventDayConstants.returnMockedEventDay());
+        return pricing;
+    }
 
     public static List<Pricing> createPricingListForMocking() {
         Pricing pricing1 = new Pricing();
