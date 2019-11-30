@@ -1,7 +1,6 @@
 import { ToastrService } from 'ngx-toastr';
 import { LocationService } from './../../services/location.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-locations',
@@ -13,13 +12,15 @@ export class LocationsComponent implements OnInit {
   locations: [] = [];
   pageSize: string = '5';
   pageNum: number = 0;
-  pageSizeOptions: number[] = [5, 10, 15, 20];
+  totalNumOfLocations: number = 0;
 
   constructor(private locationService: LocationService,
               private toastr: ToastrService) { 
   }
 
   ngOnInit() {
+    // TODO: Promeniti ovo u poziv funkcije koja ce dobaviti koliko lokacija postoji u bazi. (kad se implementira na back-u)
+    this.totalNumOfLocations = 20;
     this.getLocations();
   }
 
@@ -49,12 +50,18 @@ export class LocationsComponent implements OnInit {
     console.log("STATS location with id " + locationId);
   }
 
+  onPageSizeSelect(): void {
+    this.pageNum = 0;
+    this.getLocations();
+  }
+
   onClickNext(): void {
-    // Voditi racuna da je this.pageSize string !!
-    console.log(this.pageSize);
+    this.pageNum++;
+    this.getLocations();
   }
 
   onClickPrevious(): void {
-
+    this.pageNum--;
+    this.getLocations();
   }
 }
