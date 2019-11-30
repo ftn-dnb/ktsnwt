@@ -1,0 +1,65 @@
+<div class="container">
+    <div class="header">
+        <h3>All locations</h3>
+
+        <button mat-raised-button color="primary" class="btnAdd" (click)="onClickAddLocation()">
+            <mat-icon class="icon">add_circle</mat-icon>
+            <span>Add new</span>
+        </button>
+    </div>
+
+    <table class="highlight centered table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Address</th>
+                <th>Num. of halls</th>
+                <th>Edit</th>
+                <th>Statistics</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let location of locations">
+                <td>{{location.id}}</td>
+                <td>{{location.name}}</td>
+                <td>{{location.address.city}}</td>
+                <td>{{location.address.country}}</td>
+                <td>{{location.address.streetName + ' ' + location.address.streetNumber}}</td>
+                <td>{{location.halls.length}}</td>
+                <td>
+                    <button mat-button (click)="onClickEdit(location.id)">
+                        <mat-icon>edit</mat-icon>             
+                    </button>
+                </td>
+                <td>
+                    <button mat-button (click)="onClickStats(location.id)">
+                        <mat-icon>assessment</mat-icon>                    
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+            <td>
+                <mat-select class="page-size-select" [(ngModel)]="pageSize">
+                    <mat-option value="5">5</mat-option>
+                    <mat-option value="10">10</mat-option>
+                    <mat-option value="15">15</mat-option>
+                </mat-select>
+            </td>
+            <td>
+                <button mat-button (click)="onClickPrevious()">
+                    Previous
+                </button>
+            </td>
+            <td>
+                <button mat-button (click)="onClickNext()">
+                    Next
+                </button>
+            </td>
+        </tfoot>
+    </table>
+</div>

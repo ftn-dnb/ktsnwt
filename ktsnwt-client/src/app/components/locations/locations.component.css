@@ -1,0 +1,32 @@
+.container {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.table {
+    background: white;
+    border: 1px black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.btnAdd {
+    margin-left: 70px;
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.page-size-select {
+    width: 70px;
+}
