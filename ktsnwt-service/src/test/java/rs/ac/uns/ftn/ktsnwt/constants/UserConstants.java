@@ -9,14 +9,30 @@ public class UserConstants {
     public static final String DB_USERNAME = "jane.doe";
     public static final String DB_PASSWORD = "123";
 
+    public static final Long MOCK_ID = 1L;
+    public static final String MOCK_USERNAME = "jane.doe";
+    public static final String MOCK_PASSWORD = "123";
+
+    public static final Long MOCK_ID_OTHER = 2L;
+    public static final String MOCK_USERNAME_OTHER = "john.doe";
+    public static final String MOCK_PASSWORD_OTHER = "123";
+
     private UserConstants() {
     }
 
     public static User returnLoggedUser() {
         User user = new User();
-        user.setId(UserConstants.DB_ID);
-        user.setUsername(UserConstants.DB_USERNAME);
-        user.setPassword(UserConstants.DB_PASSWORD);
+        user.setId(UserConstants.MOCK_ID);
+        user.setUsername(UserConstants.MOCK_USERNAME);
+        user.setPassword(UserConstants.MOCK_PASSWORD);
+        return user;
+    }
+
+    public static User returnTicketUser() {
+        User user = new User();
+        user.setId(MOCK_ID_OTHER);
+        user.setUsername(MOCK_USERNAME_OTHER);
+        user.setPassword(MOCK_PASSWORD_OTHER);
         return user;
     }
 }

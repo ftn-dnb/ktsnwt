@@ -1,15 +1,19 @@
 package rs.ac.uns.ftn.ktsnwt.service.tickets;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -19,15 +23,21 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import rs.ac.uns.ftn.ktsnwt.constants.SecurityContextConstants;
-import rs.ac.uns.ftn.ktsnwt.constants.TicketConstants;
-import rs.ac.uns.ftn.ktsnwt.constants.UserConstants;
+import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
+import rs.ac.uns.ftn.ktsnwt.constants.*;
+import rs.ac.uns.ftn.ktsnwt.dto.ReportInfoDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.TicketsToReserveDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Ticket;
 import rs.ac.uns.ftn.ktsnwt.model.User;
 import rs.ac.uns.ftn.ktsnwt.repository.TicketRepository;
+import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayService;
+import rs.ac.uns.ftn.ktsnwt.service.pricing.PricingService;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,8 +54,19 @@ public class TicketsServiceUnitTest {
     @MockBean
     TicketRepository ticketRepositoryMocked;
 
+    @MockBean
+    EventDayService eventDayServiceMocked;
+
+    @MockBean
+    PricingService pricingServiceMocked;
+
+    @SpyBean
+    TimeProvider timeProviderSpy;
+
     @Before
     public void setUp() throws ParseException {
+        MockitoAnnotations.initMocks(this);
+
         Ticket ticket = new Ticket();
         ticket.setId(1L);
         Mockito.when(ticketRepositoryMocked.findById(ticket.getId())).thenReturn(Optional.of(ticket));
@@ -67,6 +88,8 @@ public class TicketsServiceUnitTest {
         SecurityContextHolder.setContext(securityContext);
         Mockito.when(ticketRepositoryMocked.getByUserId(user.getId(), PageRequest.of(0, 2))).thenReturn(new PageImpl<>(ticketsReport));
 
+        //Reports
+        Mockito.when(ticketRepositoryMocked.findAll()).thenReturn(ticketsReport);
 
     }
 
@@ -107,8 +130,8 @@ public class TicketsServiceUnitTest {
     }
 
     @Test
-    @WithMockUser(username = "jane.doe")
-    public void testshit() {
+    //@WithMockUser(username = "jane.doe")
+    public void whenUserLoggedInReturnHisTickets() {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         assertEquals("jane.doe", user.getUsername());
@@ -117,5 +140,152 @@ public class TicketsServiceUnitTest {
         assertEquals(2, userTickets.size());
     }
 
+    @Test
+    public void whenDateStringValid_returnValidReportInfo() {
+        Long locationId = 1L;
+        ReportInfoDTO report = ticketsService.onLocationDailyReport(locationId, "2019-11-28");
+        assertEquals(2, report.getTicketsSold());
+        assertEquals(2400.0, report.getIncome(), 0.05);
+    }
 
+    @Test
+    public void whenDateStringInvalid_returnInvalidReportInfo() {
+        Long locationId = 1L;
+        ReportInfoDTO report = ticketsService.onLocationDailyReport(locationId, "2019");
+        assertEquals(-1, report.getTicketsSold());
+        assertEquals(-1, report.getIncome(), 0.05);
+    }
+
+    @Test
+    public void whenDateStringValid_returnValidReportInfoMonthly() {
+        Long locationId = 1L;
+        ReportInfoDTO report = ticketsService.onLocationMonthlyReport(locationId, "2019-11");
+        assertEquals(2, report.getTicketsSold());
+        assertEquals(2400.0, report.getIncome(), 0.05);
+    }
+
+    @Test
+    public void whenDateStringInvalid_returnInvalidReportInfoMonthly() {
+        Long locationId = 1L;
+        ReportInfoDTO report = ticketsService.onLocationMonthlyReport(locationId, "2019");
+        assertEquals(-1, report.getTicketsSold());
+        assertEquals(-1, report.getIncome(), 0.05);
+    }
+
+    @Test
+    public void whenDateStringValid_returnValidReportInfoForEvent() {
+        Long eventId = 1L;
+        ReportInfoDTO report = ticketsService.onEventDailyReport(eventId, "2019-11-28");
+        assertEquals(2, report.getTicketsSold());
+        assertEquals(2400.0, report.getIncome(), 0.05);
+    }
+
+    @Test
+    public void whenDateStringInvalid_returnInvalidReportInfoForEvent() {
+        Long eventId = 1L;
+        ReportInfoDTO report = ticketsService.onLocationMonthlyReport(eventId, "2019");
+        assertEquals(-1, report.getTicketsSold());
+        assertEquals(-1, report.getIncome(), 0.05);
+    }
+
+
+    @Test(expected = ApiRequestException.class)
+    public void whenEventDayNotActive_throwException() {
+        TicketsToReserveDTO mockedDTO = TicketConstants.returnTicketCanceledEvent();
+        Mockito.when(eventDayServiceMocked.getEventDay(mockedDTO.getEventDayId())).thenReturn(EventDayConstants.returnMockedCanceledEventDay());
+        ticketsService.reserveTickets(mockedDTO);
+    }
+
+
+    @Test(expected = ApiRequestException.class)
+    public void whenNumberTicketsTooLarge_throwException() {
+        TicketsToReserveDTO mockedDTO = TicketConstants.returnTicketMuchSeats();
+        Mockito.when(eventDayServiceMocked.getEventDay(mockedDTO.getEventDayId())).thenReturn(EventDayConstants.returnMockedEventDayEventSeatsTooMuch());
+        ticketsService.reserveTickets(mockedDTO);
+    }
+
+    @Test(expected = ApiRequestException.class)
+    public void whenPurchaseDateViolated_throwException() {
+        try {
+            Mockito.doReturn(new Timestamp(
+                    new SimpleDateFormat("yyyy-MM-dd").parse("2019-11-28").getTime()
+            )).when(timeProviderSpy).nowTimestamp();
+            TicketsToReserveDTO mockedDTO = TicketConstants.returnTicketPurchaseDay();
+            Mockito.when(eventDayServiceMocked.getEventDay(mockedDTO.getEventDayId())).thenReturn(EventDayConstants.returnMockedEventDayEventPurchaseDate());
+            ticketsService.reserveTickets(mockedDTO);
+        } catch (ParseException e) {}
+
+    }
+
+    @Test
+    public void givenValidData_reserveTicket() {
+        TicketsToReserveDTO mockedDTO = TicketConstants.returnValidTicketDTO();
+        Mockito.when(pricingServiceMocked.getPricing(PricingConstants.MOCK_ID_RESERVATION)).thenReturn(PricingConstants.returnReservationPricing());
+        try {
+            Mockito.when(eventDayServiceMocked.getEventDay(mockedDTO.getEventDayId())).thenReturn(EventDayConstants.returnMockedEventDayValid());
+            Mockito.doReturn(new Timestamp(
+                    new SimpleDateFormat("yyyy-MM-dd").parse("2019-11-28").getTime()
+            )).when(timeProviderSpy).nowTimestamp();
+        } catch (ParseException e) {}
+        Mockito.when(ticketRepositoryMocked.getTicketsCountByPricingAndSector(PricingConstants.MOCK_ID_RESERVATION, SectorConstants.MOCK_ID_RES)).thenReturn(7L);
+        Mockito.when(ticketRepositoryMocked.getByRowAndColumnAndEventDayId(TicketConstants.MOCK_ROW_1, TicketConstants.MOCK_SEAT_1, mockedDTO.getEventDayId())).thenReturn(null);
+        Mockito.when(ticketRepositoryMocked.getByRowAndColumnAndEventDayId(TicketConstants.MOCK_ROW_2, TicketConstants.MOCK_SEAT_2, mockedDTO.getEventDayId())).thenReturn(null);
+        Mockito.when(ticketRepositoryMocked.save(any(Ticket.class))).thenReturn(null);
+
+        ticketsService.reserveTickets(mockedDTO);
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void givenInvalidTicketId_whenCancelTicket_throwEx() {
+        Ticket invalidTicket = new Ticket();
+        Ticket nullTicket = null;
+        invalidTicket.setId(5L);
+        Mockito.when(ticketRepositoryMocked.findById(invalidTicket.getId())).thenReturn(Optional.ofNullable(nullTicket));
+        ticketsService.cancelTicket(invalidTicket.getId());
+    }
+
+    @Test(expected = ApiRequestException.class)
+    public void givenInvalidTicketUser_whenCancelTicket_throwEx() {
+        Ticket ticket = TicketConstants.returnTicketWithLoggedOffUser();
+        Mockito.when(ticketRepositoryMocked.findById(ticket.getId())).thenReturn(Optional.of(ticket));
+        ticketsService.cancelTicket(ticket.getId());
+    }
+
+    @Test(expected = ApiRequestException.class)
+    public void givenPurchasedTicket_whenCancelTicket_throwEx() {
+        Ticket ticket = TicketConstants.returnPurchasedTicket();
+        ticket.setUser((User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        Mockito.when(ticketRepositoryMocked.findById(ticket.getId())).thenReturn(Optional.of(ticket));
+        ticketsService.cancelTicket(ticket.getId());
+    }
+
+    @Test(expected = ApiRequestException.class)
+    public void givenTicketWithInvalidDate_whenCancelTicket_throwEx() {
+        try {
+            Ticket ticket = TicketConstants.returnCancelTicketPurchaseLimit();
+            ticket.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            Mockito.doReturn(
+                    new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse("2019-11-24").getTime())
+            ).when(timeProviderSpy).nowTimestamp();
+
+            Mockito.when(ticketRepositoryMocked.findById(ticket.getId())).thenReturn(Optional.of(ticket));
+            ticketsService.cancelTicket(ticket.getId());
+        } catch (ParseException e) {}
+    }
+
+    @Test
+    public void givenTicketWithValidDate_whenCancelTicket_deleteTicket() {
+        try {
+            Ticket ticket = TicketConstants.returnCancelTicketPurchaseLimit();
+            ticket.setUser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+            //Mockito.doReturn(new Timestamp(
+            //        new SimpleDateFormat("yyyy-MM-dd").parse("2019-11-19").getTime()
+            //)).when(timeProviderSpy).nowTimestamp();
+            Mockito.when(timeProviderSpy.nowTimestamp()).thenReturn(new Timestamp(
+                    new SimpleDateFormat("yyyy-MM-dd").parse("2019-11-19").getTime()
+            ));
+            Mockito.when(ticketRepositoryMocked.findById(ticket.getId())).thenReturn(Optional.of(ticket));
+            ticketsService.cancelTicket(ticket.getId());
+        } catch (ParseException e) {}
+    }
 }
