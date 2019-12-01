@@ -2,9 +2,28 @@
     <mat-toolbar-row>
         <span class="title" (click)="onTitleClick()">KTS-NWT</span>
 
+        <!-- REGISTERED USER -->
+
         <ng-template [ngIf]="isUserLoggedIn()" [ngIfElse]="nonRegisteredUser">
             <span class="spacer"></span>
             
+            <!-- ADMIN -->
+            <div *ngIf="isAdminLoggedIn()">
+                <button mat-button [matMenuTriggerFor]="adminMenu">
+                    <span class="btnText">Admin panel</span>
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                </button>
+    
+                <mat-menu #adminMenu="matMenu">
+                    <button mat-menu-item (click)="onClickAllLocations()">
+                        <mat-icon>location_city</mat-icon>
+                        <span>Locations</span>
+                    </button>
+                </mat-menu>
+            </div>
+
+            <!-- REGULAR USER -->
+
             <button mat-button [matMenuTriggerFor]="userMenu">
                 <span class="btnText">{{ getUsername() }}</span>
                 <mat-icon>keyboard_arrow_down</mat-icon>
@@ -23,6 +42,8 @@
             </mat-menu>
         </ng-template>
         
+        <!-- NON REGISTERED USER -->
+
         <ng-template #nonRegisteredUser>
             <span class="spacer"></span>
 

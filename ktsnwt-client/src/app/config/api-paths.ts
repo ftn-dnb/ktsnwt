@@ -6,3 +6,4 @@ export const API_VERIFY_ACCOUNT = API_BASE + '/api/users/public/verify-account';
 export const API_MY_PROFILE = API_BASE + '/api/users/my-profile';
 export const API_USER_PASSWORD_CHANGE = API_BASE + '/auth/change-password';
 export const API_USER_IMAGE = API_BASE + '/api/images/users';
+export const API_LOCATIONS_ALL = API_BASE + "/api/locations/all";

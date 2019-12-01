@@ -1,3 +1,4 @@
+import { LocationsComponent } from './components/locations/locations.component';
 import { AddTokenInterceptor } from './config/http-interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -25,6 +26,7 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
     RegistrationComponent,
     AccountConfirmationComponent,
     UserSettingsComponent,
+    LocationsComponent,
   ],
   imports: [
     BrowserModule,
