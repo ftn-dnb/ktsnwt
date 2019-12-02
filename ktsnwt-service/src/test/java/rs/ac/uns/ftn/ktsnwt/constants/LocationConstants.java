@@ -8,6 +8,8 @@ public class LocationConstants {
 
     public static final Long MOCK_ID = 1L;
 
+    public static final Long DB_ID = 1L;
+
     public static Location returnMockedLocation() {
         Location location = new Location();
         location.setId(LocationConstants.MOCK_ID);
