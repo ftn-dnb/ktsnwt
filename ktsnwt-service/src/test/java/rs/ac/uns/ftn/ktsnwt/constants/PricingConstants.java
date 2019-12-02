@@ -30,6 +30,8 @@ public class PricingConstants {
     public static final Long MOCK_ID = 1L;
     public static final double MOCK_PRICE = 1200;
 
+    public static final Long MOCK_ID_RESERVATION = 4L;
+
     public static Pricing returnMockedPricing() {
         Pricing pricing = new Pricing();
         pricing.setId(PricingConstants.MOCK_ID);
@@ -50,6 +52,13 @@ public class PricingConstants {
         pricings.add(pricing2);
 
         return pricings;
+    }
+
+    public static Pricing returnReservationPricing() {
+        Pricing pricing = new Pricing();
+        pricing.setId(MOCK_ID_RESERVATION);
+        pricing.setSector(SectorConstants.returnSectorRes());
+        return pricing;
     }
 
     private PricingConstants() {

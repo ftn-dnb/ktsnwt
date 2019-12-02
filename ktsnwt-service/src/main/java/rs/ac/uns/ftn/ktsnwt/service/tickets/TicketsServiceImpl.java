@@ -109,7 +109,7 @@ public class TicketsServiceImpl implements TicketsService {
         }
 
         for(Ticket t : tickets){
-            if(t.getPricing().getEventDay().getId() == idEvent && dateFormat.format( t.getDatePurchased()).equals(date)){
+            if(t.getPricing().getEventDay().getEvent().getId() == idEvent && dateFormat.format( t.getDatePurchased()).equals(date)){
                 ticketsSold+=1;
                 income+=t.getPricing().getPrice();
             }
@@ -203,6 +203,7 @@ public class TicketsServiceImpl implements TicketsService {
             throw new ApiRequestException("You can't cancel this ticket because it's not refundable.");
 
         Event event = ticket.getEventDay().getEvent();
+        Timestamp t = timeProvider.nowTimestamp();
         if (event.getStartDate().before(timeProvider.addDaysToDate(timeProvider.nowTimestamp(), event.getPurchaseLimit())))
             throw new ApiRequestException("You can't cancel this ticket because time has run out for cancellation.");
 

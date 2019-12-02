@@ -23,6 +23,7 @@ public class TicketConstants {
     public static final Long MOCK_ID_2 = 2L;
     public static final String MOCK_DATE_PURCHASED_2 = "2019-11-28";
 
+
     public static final Long DB_ID_1 = 1L;
     public static final int DB_COLUMN_NUM_1 = 2;
     public static final String DB_DATE_1 = "2019-11-20 21:30:22";
@@ -71,6 +72,15 @@ public class TicketConstants {
 
     }
 
+    public static final int MOCK_ROW_1 = 4;
+    public static final int MOCK_ROW_2 = 4;
+    public static final int MOCK_SEAT_1 = 2;
+    public static final int MOCK_SEAT_2 = 3;
+
+    public static final Long MOCK_ID_TICKET_OTHER = 3L;
+
+
+
     public static List<Ticket> returnMockedTickets() throws ParseException {
         Ticket t1 = new Ticket();
         t1.setId(TicketConstants.MOCK_ID_1);
@@ -93,4 +103,75 @@ public class TicketConstants {
 
     }
 
+    public static TicketsToReserveDTO returnTicketCanceledEvent() {
+        TicketsToReserveDTO dto = new TicketsToReserveDTO();
+        dto.setEventDayId(2L);
+        return dto;
+    }
+
+    public static TicketsToReserveDTO returnTicketMuchSeats() {
+        TicketsToReserveDTO dto = new TicketsToReserveDTO();
+        PricingSeatDTO pricingDTO1 = new PricingSeatDTO();
+        PricingSeatDTO pricingDTO2 = new PricingSeatDTO();
+        PricingSeatDTO pricingDTO3 = new PricingSeatDTO();
+        PricingSeatDTO pricingDTO4 = new PricingSeatDTO();
+        ArrayList<PricingSeatDTO> list = new ArrayList<>();
+        list.add(pricingDTO1);
+        list.add(pricingDTO2);
+        list.add(pricingDTO3);
+        list.add(pricingDTO4);
+        dto.setSeats(list);
+        dto.setEventDayId(3L);
+        return dto;
+    }
+
+    public static TicketsToReserveDTO returnTicketPurchaseDay() {
+        TicketsToReserveDTO dto = new TicketsToReserveDTO();
+        dto.setEventDayId(3L);
+        return dto;
+    }
+
+    public static TicketsToReserveDTO returnValidTicketDTO() {
+        TicketsToReserveDTO dto = new TicketsToReserveDTO();
+        dto.setEventDayId(4L);
+
+        ArrayList<PricingSeatDTO> list = new ArrayList<>();
+        PricingSeatDTO seat1 = new PricingSeatDTO();
+        seat1.setPricingId(4L);
+        seat1.setRow(MOCK_ROW_1);
+        seat1.setSeat(MOCK_SEAT_1);
+        list.add(seat1);
+
+        PricingSeatDTO seat2 = new PricingSeatDTO();
+        seat2.setPricingId(4L);
+        seat2.setRow(MOCK_ROW_2);
+        seat2.setSeat(MOCK_SEAT_2);
+        list.add(seat2);
+
+        dto.setSeats(list);
+
+        return dto;
+    }
+
+    public static Ticket returnTicketWithLoggedOffUser() {
+        Ticket ticket = new Ticket();
+        ticket.setId(MOCK_ID_TICKET_OTHER);
+        ticket.setUser(UserConstants.returnTicketUser());
+        return ticket;
+    }
+
+    public static Ticket returnPurchasedTicket() {
+        Ticket ticket = new Ticket();
+        ticket.setId(MOCK_ID_1);
+        ticket.setPurchased(true);
+        return ticket;
+    }
+
+    public static Ticket returnCancelTicketPurchaseLimit() throws ParseException{
+        Ticket ticket = new Ticket();
+        ticket.setId(MOCK_ID_1);
+        ticket.setPurchased(false);
+        ticket.setEventDay(EventDayConstants.returnMockedEventDayEventPurchaseDate());
+        return ticket;
+    }
 }
