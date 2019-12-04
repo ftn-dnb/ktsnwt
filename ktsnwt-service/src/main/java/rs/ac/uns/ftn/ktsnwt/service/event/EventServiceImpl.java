@@ -100,13 +100,12 @@ public class EventServiceImpl implements EventService {
         catch (ParseException e){
             throw new ApiRequestException("Invalid date format");
         }
-        return null;
-       // return eventRepository.filterEvents(startDate,endDate,filter.getType(),filter.getLocation(), PageRequest.of(page,size)).toList();
+
+        return eventRepository.filterEvents(startDate,endDate,filter.getType(),filter.getLocation(), PageRequest.of(page,size)).toList();
     }
 
     @Override
     public List<Event> getAllEvents(int page, int size){
-        return null;
-       // return eventRepository.findAll(PageRequest.of(page,size)).toList();
+        return eventRepository.findAll(PageRequest.of(page,size)).toList();
     }
 }

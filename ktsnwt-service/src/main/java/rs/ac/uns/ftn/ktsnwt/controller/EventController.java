@@ -27,7 +27,7 @@ public class EventController {
         return new ResponseEntity<>(EventMapper.toDTO(e), HttpStatus.OK);
     }
 
-    @GetMapping("/filter")
+    @GetMapping("/search")
     public ResponseEntity<List<EventDTO>> searchEvents(@RequestParam (name = "page") int page,
                                                        @RequestParam (name = "size") int size,
                                                        @RequestBody SearchEventDTO filter){
