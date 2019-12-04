@@ -2,9 +2,11 @@ package rs.ac.uns.ftn.ktsnwt.constants;
 
 import rs.ac.uns.ftn.ktsnwt.dto.SectorDTO;
 import rs.ac.uns.ftn.ktsnwt.model.enums.SectorType;
-
+import org.springframework.security.core.context.SecurityContext;
+import rs.ac.uns.ftn.ktsnwt.model.Sector;
 
 public class SectorConstants {
+    private SectorConstants() {}
 
     //first sector original values
     public static final Long ORIGINAL_ID = 1L;
@@ -46,6 +48,14 @@ public class SectorConstants {
     public static final Long NOT_EXISTING_DB_ID = 123L;
 
 
+
+
+    public static final Long MOCK_ID = 1L;
+
+    public static final Long MOCK_ID_RES = 4L;
+
+  
+  
     public static SectorDTO createNewSectorDTO(){
         SectorDTO s = new SectorDTO();
         s.setCapacity(NEW_VALID_CAPACITY);
@@ -123,5 +133,22 @@ public class SectorConstants {
         s.setNumRows(NEW_VALID_ROWS);
         s.setType(SectorType.SEATS);
         return s;
+
+
+    public static Sector returnMockedSector() {
+        Sector sector = new Sector();
+        sector.setId(SectorConstants.MOCK_ID);
+        sector.setHall(HallConstants.returnMockedHall());
+        return sector;
+    }
+
+    public static Sector returnSectorRes() {
+        Sector sector = new Sector();
+        sector.setId(SectorConstants.MOCK_ID_RES);
+        sector.setType(SectorType.SEATS);
+        sector.setCapacity(10);
+        sector.setNumRows(6);
+        sector.setNumColumns(5);
+        return sector;
     }
 }

@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface TicketsService {
       Ticket findById(Long id);
-    List<Ticket> findAll(int page);
+    List<Ticket> findAll(int page, int size);
     ReportInfoDTO onLocationDailyReport(long idLocation, String date);
     ReportInfoDTO onLocationMonthlyReport(long idLocation, String date);
     ReportInfoDTO onEventDailyReport(long idEvent, String date);
-    List<Ticket> getUsersTickets(int page);
+    List<Ticket> getUsersTickets(int page, int size);
     void reserveTickets(TicketsToReserveDTO ticketsInfo);
     void cancelTicket(Long id);
 }

@@ -1,6 +1,7 @@
-import { USERNAME_KEY } from './../../config/local-storage-keys';
+import { ROLE_ADMIN } from './../../config/user-roles-keys';
+import { USERNAME_KEY, USER_ROLE_KEY } from './../../config/local-storage-keys';
 import { AuthService } from './../../services/auth.service';
-import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH, USER_SETTINGS_PATH } from './../../config/router-paths';
+import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH, USER_SETTINGS_PATH, LOCATIONS_PATH } from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -27,6 +28,10 @@ export class ToolbarComponent implements OnInit {
     return this.authService.isUserLoggedIn();
   }
 
+  isAdminLoggedIn(): boolean {
+    return localStorage.getItem(USER_ROLE_KEY) === ROLE_ADMIN;
+  }
+
   onTitleClick(): void {
     this.router.navigate([HOME_PATH]);
   }
@@ -46,5 +51,9 @@ export class ToolbarComponent implements OnInit {
   onClickLogout(): void {
     this.authService.logout();
     this.router.navigate([HOME_PATH]);
+  }
+
+  onClickAllLocations(): void {
+    this.router.navigate([LOCATIONS_PATH]);
   }
 }
