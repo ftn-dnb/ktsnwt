@@ -33,6 +33,19 @@ public class Hall {
 
     }
 
+    public Hall(String name, Set<Sector> sectors, Location location) {
+        this.name = name;
+        this.sectors = sectors;
+        this.location = location;
+    }
+
+    public Hall(long id, String name, Set<Sector> sectors, Location location) {
+        this.id = id;
+        this.name = name;
+        this.sectors = sectors;
+        this.location = location;
+    }
+
     public Hall(HallDTO hallDTO) {
         this.name = hallDTO.getName();
     }

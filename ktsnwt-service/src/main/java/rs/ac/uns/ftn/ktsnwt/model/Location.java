@@ -32,6 +32,20 @@ public class Location {
 
     }
 
+    public Location(String name, Address address, Set<Hall> halls) {
+        this.name = name;
+        this.address = address;
+        this.halls = halls;
+    }
+    public Location(long id,String name, Address address, Set<Hall> halls) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.halls = halls;
+    }
+
+
+
     public Location(LocationDTO locationDTO) {
         this.name = locationDTO.getName();
     }

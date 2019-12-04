@@ -40,6 +40,26 @@ public class Sector {
 
     }
 
+    public Sector(String name, int numRows, int numColumns, int capacity, SectorType type, Hall hall) {
+        this.name = name;
+        this.numRows = numRows;
+        this.numColumns = numColumns;
+        this.capacity = capacity;
+        this.type = type;
+        this.hall = hall;
+    }
+
+    public Sector(long id, String name, int numRows, int numColumns, int capacity, SectorType type, Hall hall) {
+        this.id = id;
+        this.name = name;
+        this.numRows = numRows;
+        this.numColumns = numColumns;
+        this.capacity = capacity;
+        this.type = type;
+        this.hall = hall;
+    }
+
+
     public Sector(SectorDTO sectorDTO) {
         this.name = sectorDTO.getName();
         this.numColumns = sectorDTO.getNumColumns();
