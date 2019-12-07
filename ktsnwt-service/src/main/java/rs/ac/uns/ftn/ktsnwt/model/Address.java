@@ -56,6 +56,18 @@ public class Address {
         this.longitude = addressDTO.getLongitude();
     }
 
+    public Address(long id, String googleApiId, String streetName, String streetNumber, String city, String country, String postalCode, double latitude, double longitude) {
+        this.id = id;
+        this.googleApiId = googleApiId;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.city = city;
+        this.country = country;
+        this.postalCode = postalCode;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     public Long getId() {
         return id;
     }
