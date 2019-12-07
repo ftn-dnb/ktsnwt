@@ -46,6 +46,7 @@ public class SectorConstants {
     public static final int NOT_EXISTING_PAGE = 1234;
     public static final Long NOT_EXISTING_HALL_ID = 1000L;
     public static final Long NOT_EXISTING_DB_ID = 123L;
+    public static final String NOT_EXISTING_NAME = "asd";
 
 
 
@@ -124,7 +125,7 @@ public class SectorConstants {
         return s;
     }
 
-    public static SectorDTO createSeatSectorDTOInvalidColumns(){
+    public static SectorDTO createSeatSectorDTOInvalidColumns() {
         SectorDTO s = new SectorDTO();
         s.setCapacity(NEW_VALID_CAPACITY);
         s.setHallId(ANOTHER_EXISTING_DB_HALL_ID);
@@ -133,7 +134,7 @@ public class SectorConstants {
         s.setNumRows(NEW_VALID_ROWS);
         s.setType(SectorType.SEATS);
         return s;
-
+    }
 
     public static Sector returnMockedSector() {
         Sector sector = new Sector();
