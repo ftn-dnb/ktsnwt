@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.ktsnwt.constants;
 
-import org.mockito.Mock;
 import rs.ac.uns.ftn.ktsnwt.model.EventDay;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventStatus;
 
@@ -9,6 +8,14 @@ import java.text.ParseException;
 public class EventDayConstants {
 
     private EventDayConstants() {}
+
+    public static final Long DB_ID = 1L;
+    public static final String DB_DATE = "2019-11-29 21:58:58.0";
+    public static final String DB_DESCRIPTION = "dan 1";
+    public static final String DB_NAME = "DAY1";
+    public static final Long DB_REFERENCED_EVENT_ID = 1L;
+
+    public static final Long NON_EXISTING_DB_ID = 1234567L;
 
     public static final Long MOCK_ID = 1L;
 

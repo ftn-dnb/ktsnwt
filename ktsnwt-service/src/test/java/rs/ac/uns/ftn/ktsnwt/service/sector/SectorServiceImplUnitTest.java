@@ -22,18 +22,14 @@ import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.model.Location;
 import rs.ac.uns.ftn.ktsnwt.model.Sector;
 import rs.ac.uns.ftn.ktsnwt.model.enums.SectorType;
-import rs.ac.uns.ftn.ktsnwt.repository.AddressRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.HallRepository;
-import rs.ac.uns.ftn.ktsnwt.repository.LocationRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.SectorRepository;
 
 import java.util.*;
 
-import static com.sun.javaws.JnlpxArgs.verify;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment= SpringBootTest.WebEnvironment.RANDOM_PORT)

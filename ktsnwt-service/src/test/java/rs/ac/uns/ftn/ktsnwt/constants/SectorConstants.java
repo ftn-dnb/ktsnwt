@@ -124,7 +124,7 @@ public class SectorConstants {
         return s;
     }
 
-    public static SectorDTO createSeatSectorDTOInvalidColumns(){
+    public static SectorDTO createSeatSectorDTOInvalidColumns() {
         SectorDTO s = new SectorDTO();
         s.setCapacity(NEW_VALID_CAPACITY);
         s.setHallId(ANOTHER_EXISTING_DB_HALL_ID);
@@ -133,7 +133,7 @@ public class SectorConstants {
         s.setNumRows(NEW_VALID_ROWS);
         s.setType(SectorType.SEATS);
         return s;
-
+    }
 
     public static Sector returnMockedSector() {
         Sector sector = new Sector();
