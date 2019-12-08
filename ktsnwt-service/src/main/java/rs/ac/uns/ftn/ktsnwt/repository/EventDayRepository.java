@@ -5,5 +5,4 @@ import rs.ac.uns.ftn.ktsnwt.model.EventDay;
 
 public interface EventDayRepository extends JpaRepository<EventDay, Long> {
 
-    EventDay getById(Long id);
 }
