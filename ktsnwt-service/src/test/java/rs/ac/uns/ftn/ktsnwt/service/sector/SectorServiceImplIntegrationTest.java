@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.ktsnwt.constants.SectorConstants;
 import rs.ac.uns.ftn.ktsnwt.dto.SectorDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.BadAttributeValueException;
+import rs.ac.uns.ftn.ktsnwt.exception.ResourceAlreadyExistsException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Sector;
 import rs.ac.uns.ftn.ktsnwt.model.enums.SectorType;
@@ -65,20 +67,10 @@ public class SectorServiceImplIntegrationTest {
         assertEquals(all, new ArrayList<Sector>());
     }
 
-    @Test(expected = ApiRequestException.class)
-    public void whenGetAllSectorsOnInvalidPage(){
-        List<Sector> all = sectorService.findAllById(SectorConstants.EXISTING_DB_HALL_ID, SectorConstants.NOT_VALID_PAGE, SectorConstants.VALID_SIZE);
-    }
-
     @Test
     public void whenGetAllSectorsOnNotExistingPage(){
         List<Sector> all = sectorService.findAllById(SectorConstants.EXISTING_DB_HALL_ID, SectorConstants.NOT_EXISTING_PAGE, SectorConstants.VALID_SIZE);
         assertEquals(all, new ArrayList<Sector>());
-    }
-
-    @Test(expected = ApiRequestException.class)
-    public void whenGetAllSectorsWithInvalidSize() {
-        List<Sector> all = sectorService.findAllById(SectorConstants.EXISTING_DB_HALL_ID, SectorConstants.EXISTING_PAGE, SectorConstants.NOT_VALID_SIZE);
     }
 
     @Test
@@ -97,7 +89,7 @@ public class SectorServiceImplIntegrationTest {
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = ResourceAlreadyExistsException.class)
     @Transactional @Rollback(true)
     public void whenAddSectorExistingNameAndHallId(){
         SectorDTO s = SectorConstants.createExistingSectorDTO();
@@ -105,7 +97,7 @@ public class SectorServiceImplIntegrationTest {
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = ResourceNotFoundException.class)
     @Transactional @Rollback(true)
     public void whenAddSectorNonExistingHallId(){
         SectorDTO s = SectorConstants.createSectorDTOWithNotExistingHallId();
@@ -114,22 +106,22 @@ public class SectorServiceImplIntegrationTest {
 
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     @Transactional @Rollback(true)
     public void whenAddSectorWithInvalidCalculatingCapacity(){
         SectorDTO s = SectorConstants.createSectorDTOInvalidCalculatingCapacity();
         Sector sNew = sectorService.addSector(s);
     }
 
-    @Test(expected = ApiRequestException.class)
-    @Transactional @Rollback(true)
+    @Test(expected = BadAttributeValueException.class)
+    @Transactional @Rollback()
     public void whenAddSectorWithInvalidCapacity(){
         SectorDTO s = SectorConstants.createSectorDTOInvalidCapacity();
         Sector sNew = sectorService.addSector(s);
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     @Transactional @Rollback(true)
     public void whenAddSeatSectorWithInvalidRows(){
         SectorDTO s = SectorConstants.createSeatSectorDTOInvalidRows();
@@ -137,10 +129,18 @@ public class SectorServiceImplIntegrationTest {
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     @Transactional @Rollback(true)
     public void whenAddSeatSectorWithInvalidColumns(){
         SectorDTO s = SectorConstants.createSeatSectorDTOInvalidColumns();
+        Sector sNew = sectorService.addSector(s);
+    }
+
+    @Test(expected = BadAttributeValueException.class)
+    @Transactional @Rollback(true)
+    public void whenAddSeatSectorEmptyName(){
+        SectorDTO s = SectorConstants.createNewSectorDTO();
+        s.setName("");
         Sector sNew = sectorService.addSector(s);
     }
 
@@ -160,7 +160,7 @@ public class SectorServiceImplIntegrationTest {
         assertEquals(SectorConstants.NEW_VALID_COLUMNS, edited.getNumColumns());
     }
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = ResourceAlreadyExistsException.class)
     @Transactional @Rollback(true)
     public void whenEditToExistingSector(){
         List<Sector> allBefore = sectorRepository.findAll();
@@ -171,7 +171,7 @@ public class SectorServiceImplIntegrationTest {
         assertEquals(allAfter, allBefore);
     }
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = ResourceNotFoundException.class)
     @Transactional @Rollback(true)
     public void whenEditWithNotExistingHallId(){
         List<Sector> allBefore = sectorRepository.findAll();
@@ -184,7 +184,7 @@ public class SectorServiceImplIntegrationTest {
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     @Transactional @Rollback(true)
     public void whenEditSectorWithInvalidCapacity(){
         List<Sector> allBefore = sectorRepository.findAll();
@@ -196,7 +196,7 @@ public class SectorServiceImplIntegrationTest {
         assertEquals(allAfter, allBefore);
     }
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     @Transactional @Rollback(true)
     public void whenEditSectorWithInvalidCalculatedCapacity(){
         List<Sector> allBefore = sectorRepository.findAll();
@@ -209,7 +209,7 @@ public class SectorServiceImplIntegrationTest {
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     @Transactional @Rollback(true)
     public void whenEditSectorWithInvalidRows(){
         List<Sector> allBefore = sectorRepository.findAll();
@@ -222,13 +222,26 @@ public class SectorServiceImplIntegrationTest {
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     @Transactional @Rollback(true)
     public void whenEditSectorWithInvalidColumns(){
         List<Sector> allBefore = sectorRepository.findAll();
         SectorDTO s = SectorConstants.createSeatSectorDTOInvalidColumns();
         s.setId(SectorConstants.EXISTING_DB_ID);
         s.setName(SectorConstants.RANDOM_NAME);
+        Sector edited = sectorService.editSector(s);
+        List<Sector> allAfter = sectorRepository.findAll();
+        assertEquals(allAfter, allBefore);
+
+    }
+
+    @Test(expected = BadAttributeValueException.class)
+    @Transactional @Rollback(true)
+    public void whenEditSectorEmptyName(){
+        List<Sector> allBefore = sectorRepository.findAll();
+        SectorDTO s = SectorConstants.createExistingSectorDTO();
+        s.setId(SectorConstants.EXISTING_DB_ID);
+        s.setName("");
         Sector edited = sectorService.editSector(s);
         List<Sector> allAfter = sectorRepository.findAll();
         assertEquals(allAfter, allBefore);

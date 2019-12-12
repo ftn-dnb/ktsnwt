@@ -16,6 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import rs.ac.uns.ftn.ktsnwt.constants.SectorConstants;
 import rs.ac.uns.ftn.ktsnwt.dto.SectorDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.BadAttributeValueException;
+import rs.ac.uns.ftn.ktsnwt.exception.ResourceAlreadyExistsException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Address;
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
@@ -77,7 +79,7 @@ public class SectorServiceImplUnitTest {
         Mockito.when(sectorRepository.getByHallId(SectorConstants.NOT_EXISTING_HALL_ID, PageRequest.of(SectorConstants.EXISTING_PAGE, SectorConstants.VALID_SIZE))).thenReturn(new PageImpl<>(new ArrayList<>()));
         Mockito.when(sectorRepository.getByHallId(SectorConstants.EXISTING_DB_HALL_ID, PageRequest.of(SectorConstants.EXISTING_PAGE, SectorConstants.VALID_SIZE))).thenReturn(new PageImpl<>(allInHall));
         Mockito.when(sectorRepository.findById(SectorConstants.EXISTING_DB_ID)).thenReturn(Optional.of(new Sector(1L, "Sedista", 2, 2, 4, SectorType.SEATS, new Hall(1L, "", null, null))));
-        Mockito.when(sectorRepository.findById(SectorConstants.NOT_EXISTING_DB_ID)).thenThrow(ResourceNotFoundException.class);
+        Mockito.when(sectorRepository.findById(SectorConstants.NOT_EXISTING_DB_ID)).thenReturn(Optional.empty());
         Mockito.when(sectorRepository.findByName(SectorConstants.NEW_VALID_NAME, SectorConstants.NEW_VALID_HALL_ID)).thenReturn(null);
         Mockito.when(sectorRepository.findByName(SectorConstants.EXISTING_NAME, SectorConstants.NEW_VALID_HALL_ID)).thenReturn(new Sector());
         Mockito.when(hallRepository.findById(SectorConstants.NOT_EXISTING_HALL_ID)).thenReturn(null);
@@ -115,17 +117,9 @@ public class SectorServiceImplUnitTest {
         assertTrue(all.size() <= SectorConstants.VALID_SIZE);
     }
 
-    @Test
+    @Test(expected = Exception.class)   //mozda i ne mora da baca exc, ali da se na drugi nacin hendluje
     public void whenFindAllByInvalidHallId_thenReturnEmptyList(){
         List<Sector> all = sectorService.findAllById(SectorConstants.NOT_EXISTING_HALL_ID, SectorConstants.EXISTING_PAGE, SectorConstants.VALID_SIZE);
-        assertEquals(all, new ArrayList<Sector>());
-    }
-
-
-    @Test(expected = ApiRequestException.class)
-    public void whenGetAllSectorsOnInvalidPage(){
-        Mockito.when(sectorRepository.getByHallId(SectorConstants.EXISTING_DB_HALL_ID, PageRequest.of(SectorConstants.NOT_VALID_PAGE, SectorConstants.VALID_SIZE))).thenThrow(new IllegalArgumentException("Page size must not be less than one!"));
-        List<Sector> all = sectorService.findAllById(SectorConstants.EXISTING_DB_HALL_ID, SectorConstants.NOT_VALID_PAGE, SectorConstants.VALID_SIZE);
     }
 
 
@@ -134,15 +128,6 @@ public class SectorServiceImplUnitTest {
         List<Sector> all = sectorService.findAllById(SectorConstants.EXISTING_DB_HALL_ID, SectorConstants.NOT_EXISTING_PAGE, SectorConstants.VALID_SIZE);
         assertEquals(all, new ArrayList<Sector>());
     }
-
-
-
-    @Test(expected = ApiRequestException.class)
-    public void whenGetAllSectorsWithInvalidSize() {
-        Mockito.when(sectorRepository.getByHallId(SectorConstants.EXISTING_DB_HALL_ID, PageRequest.of(SectorConstants.EXISTING_PAGE, SectorConstants.NOT_VALID_SIZE))).thenThrow(new IllegalArgumentException("Page size must not be less than one!"));
-        List<Sector> all = sectorService.findAllById(SectorConstants.EXISTING_DB_HALL_ID, SectorConstants.EXISTING_PAGE, SectorConstants.NOT_VALID_SIZE);
-    }
-
 
 
 
@@ -161,42 +146,49 @@ public class SectorServiceImplUnitTest {
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
+    public void whenAddSectorEmptyName(){
+        SectorDTO s = SectorConstants.createNewSectorDTO();
+        s.setName("");
+        Sector sNew = sectorService.addSector(s);
+    }
+
+
+    @Test(expected = ResourceAlreadyExistsException.class)
     public void whenAddSectorExistingNameAndHallId(){
         SectorDTO s = SectorConstants.createExistingSectorDTO();
         Sector sNew = sectorService.addSector(s);
     }
 
 
-    //44. line in SectorServiceImpl
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = ResourceNotFoundException.class)
     public void whenAddSectorNonExistingHallId(){
         SectorDTO s = SectorConstants.createSectorDTOWithNotExistingHallId();
         Sector sNew = sectorService.addSector(s);
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     public void whenAddSectorWithInvalidCalculatingCapacity(){
         SectorDTO s = SectorConstants.createSectorDTOInvalidCalculatingCapacity();
         Sector sNew = sectorService.addSector(s);
     }
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     public void whenAddSectorWithInvalidCapacity(){
         SectorDTO s = SectorConstants.createSectorDTOInvalidCapacity();
         Sector sNew = sectorService.addSector(s);
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     public void whenAddSeatSectorWithInvalidRows(){
         SectorDTO s = SectorConstants.createSeatSectorDTOInvalidRows();
         Sector sNew = sectorService.addSector(s);
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     public void whenAddSeatSectorWithInvalidColumns(){
         SectorDTO s = SectorConstants.createSeatSectorDTOInvalidColumns();
         Sector sNew = sectorService.addSector(s);
@@ -216,14 +208,14 @@ public class SectorServiceImplUnitTest {
 
     }
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = ResourceAlreadyExistsException.class)
     public void whenEditToExistingSector(){
         SectorDTO s = SectorConstants.createExistingSectorDTO();
         s.setId(SectorConstants.EXISTING_DB_ID);
         Sector sEdit = sectorService.editSector(s);
     }
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = ResourceNotFoundException.class)
     public void whenEditWithNotExistingHallId(){
         SectorDTO s = SectorConstants.createSectorDTOWithNotExistingHallId();
         s.setId(SectorConstants.EXISTING_DB_ID);
@@ -231,14 +223,14 @@ public class SectorServiceImplUnitTest {
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     public void whenEditSectorWithInvalidCapacity(){
         SectorDTO s = SectorConstants.createSectorDTOInvalidCapacity();
         s.setId(SectorConstants.EXISTING_DB_ID);
         Sector sEdit = sectorService.editSector(s);
     }
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     public void whenEditSectorWithInvalidCalculatedCapacity(){
         SectorDTO s = SectorConstants.createSectorDTOInvalidCalculatingCapacity();
         s.setId(SectorConstants.EXISTING_DB_ID);
@@ -246,7 +238,7 @@ public class SectorServiceImplUnitTest {
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     public void whenEditSectorWithInvalidRows(){
         SectorDTO s = SectorConstants.createSeatSectorDTOInvalidRows();
         s.setId(SectorConstants.EXISTING_DB_ID);
@@ -254,10 +246,19 @@ public class SectorServiceImplUnitTest {
     }
 
 
-    @Test(expected = ApiRequestException.class)
+    @Test(expected = BadAttributeValueException.class)
     public void whenEditSectorWithInvalidColumns(){
         SectorDTO s = SectorConstants.createSeatSectorDTOInvalidColumns();
         s.setId(SectorConstants.EXISTING_DB_ID);
+        Sector sEdit = sectorService.editSector(s);
+    }
+
+
+    @Test(expected = BadAttributeValueException.class)
+    public void whenEditSectorEmptyName(){
+        SectorDTO s = SectorConstants.createExistingSectorDTO();
+        s.setId(SectorConstants.EXISTING_DB_ID);
+        s.setName("");
         Sector sEdit = sectorService.editSector(s);
     }
 

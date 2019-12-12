@@ -39,4 +39,24 @@ public class ExceptionsHandler {
 
         return new ResponseEntity<>(errorMessage, internalServerError);
     }
+
+
+    @ExceptionHandler(value = {ResourceAlreadyExistsException.class})
+    public ResponseEntity<ErrorMessage> handleResourceAlreadyExistsException(ResourceAlreadyExistsException e) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), status);
+        e.printStackTrace();
+
+        return new ResponseEntity<>(errorMessage, status);
+    }
+
+    @ExceptionHandler(value = {BadAttributeValueException.class})
+    public ResponseEntity<ErrorMessage> handleBadAttributeValueException(BadAttributeValueException e) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), status);
+        e.printStackTrace();
+
+        return new ResponseEntity<>(errorMessage, status);
+    }
+
 }

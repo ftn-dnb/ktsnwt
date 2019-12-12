@@ -46,6 +46,7 @@ public class SectorConstants {
     public static final int NOT_EXISTING_PAGE = 1234;
     public static final Long NOT_EXISTING_HALL_ID = 1000L;
     public static final Long NOT_EXISTING_DB_ID = 123L;
+    public static final String NOT_EXISTING_NAME = "asd";
 
 
 
