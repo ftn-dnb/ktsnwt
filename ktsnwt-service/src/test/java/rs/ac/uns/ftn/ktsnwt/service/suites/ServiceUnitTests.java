@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.ktsnwt.service.suites;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import rs.ac.uns.ftn.ktsnwt.service.hall.HallServiceImplUnitTest;
+import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayServiceImplUnitTest;
 import rs.ac.uns.ftn.ktsnwt.service.sector.SectorServiceImplUnitTest;
 import rs.ac.uns.ftn.ktsnwt.service.address.AddressServiceImplUnitTest;
 import rs.ac.uns.ftn.ktsnwt.service.pricing.PricingServiceImplUnitTest;
@@ -14,7 +15,8 @@ import rs.ac.uns.ftn.ktsnwt.service.tickets.TicketsServiceUnitTest;
         AddressServiceImplUnitTest.class,
         PricingServiceImplUnitTest.class,
         TicketsServiceUnitTest.class,
-        HallServiceImplUnitTest.class
+        HallServiceImplUnitTest.class,
+        EventDayServiceImplUnitTest.class
 })
 public class ServiceUnitTests {
 }
