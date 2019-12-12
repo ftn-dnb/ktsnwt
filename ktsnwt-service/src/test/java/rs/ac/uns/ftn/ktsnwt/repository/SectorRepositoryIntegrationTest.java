@@ -32,8 +32,14 @@ public class SectorRepositoryIntegrationTest
     }
 
     @Test
-    public void whenFindByNotExistingName_thenReturnEmpty(){
+    public void whenFindByNotExistingName_thenReturnNull(){
         Sector s = sectorRepository.findByName(SectorConstants.NOT_EXISTING_NAME, SectorConstants.EXISTING_DB_HALL_ID);
+        assertNull(s);
+    }
+
+    @Test
+    public void whenFindByNotExistingHallId_thenReturnNull(){
+        Sector s = sectorRepository.findByName(SectorConstants.EXISTING_NAME, SectorConstants.NOT_EXISTING_HALL_ID);
         assertNull(s);
     }
 

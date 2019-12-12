@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.dto.SectorDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.ResourceAlreadyExistsException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.model.Sector;
@@ -44,13 +45,13 @@ public class SectorServiceImpl implements SectorService {
         Hall hall = hallRepository.findById(sectorDTO.getHallId()).get();
 
         if (hall == null) {
-            throw new ApiRequestException("" +
+            throw new ResourceNotFoundException("" +
                     "Hall with that id does not exist."
             );
         }
 
         if (sectorRepository.findByName(sectorDTO.getName(), sectorDTO.getHallId()) != null) {
-            throw new ApiRequestException("" +
+            throw new ResourceAlreadyExistsException("" +
                     "Sector with that name already exists in hall with that id."
             );
         }
@@ -69,13 +70,13 @@ public class SectorServiceImpl implements SectorService {
         Hall hall = hallRepository.findById(sectorDTO.getHallId()).get();
 
         if (hall == null) {
-            throw new ApiRequestException("" +
+            throw new ResourceNotFoundException("" +
                     "Hall with that id does not exist."
             );
         }
 
         if (sectorRepository.findByName(sectorDTO.getName(), sectorDTO.getHallId()) != null) {
-            throw new ApiRequestException("" +
+            throw new ResourceAlreadyExistsException("" +
                     "Sector with that name already exists in hall with that id."
             );
         }

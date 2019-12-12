@@ -318,6 +318,26 @@ public class SectorControllerIntegrationTest {
         assertBadAddingSector(response);
     }
 
+
+    @Test
+    public void whenAddSectorEmptyName(){
+        SectorDTO sector = SectorConstants.createNewSectorDTO();
+        sector.setName("");
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + this.accessToken);
+        HttpEntity<SectorDTO> request = new HttpEntity<>(sector, headers);
+        List<Sector> oldList = sectorRepository.findAll();
+
+        ResponseEntity<SectorDTO> response = restTemplate.exchange(
+                "http://localhost:8080/api/sectors", HttpMethod.POST, request,SectorDTO.class);
+
+        deleteRedundantSector(oldList);
+
+        assertBadAddingSector(response);
+    }
+
+
+
     private void deleteRedundantSector(List<Sector> oldList){
         List<Sector> newList = sectorRepository.findAll();
         if(oldList.size() != newList.size()){
@@ -447,6 +467,26 @@ public class SectorControllerIntegrationTest {
         genericFunctionForCheckingInvalidEditingSectors(beforeEditing, oldList, newSector);
 
     }
+
+
+    @Test
+    public void whenEditSectorEmptyName(){
+        Optional oldOptional = sectorRepository.findById(SectorConstants.EXISTING_DB_ID);
+        List<Sector> oldList = sectorRepository.findAll();
+
+        //sector is present
+        assertNotNull(oldOptional);
+        assertTrue(oldOptional.isPresent());
+
+        Sector newSector = (Sector)oldOptional.get();
+        SectorDTO beforeEditing = new SectorDTO(newSector);
+        beforeEditing.setName("");
+        beforeEditing.setHallId(SectorConstants.NEW_VALID_HALL_ID);
+
+        genericFunctionForCheckingInvalidEditingSectors(beforeEditing, oldList, newSector);
+
+    }
+
 
     @Test
     public void whenEditSectorWithInvalidRows(){

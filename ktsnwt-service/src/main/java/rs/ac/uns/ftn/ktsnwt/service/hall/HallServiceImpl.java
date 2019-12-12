@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.dto.HallDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.ResourceAlreadyExistsException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.model.Location;
@@ -45,11 +46,11 @@ public class HallServiceImpl implements HallService {
         Location location = locationRepository.findById(locationId).get();
 
         if (location == null) {
-            throw new ApiRequestException("Location with this id doesn't exist.");
+            throw new ResourceNotFoundException("Location with this id doesn't exist.");
         }
 
         if (hallRepository.findByName(hallDTO.getName(), hallDTO.getLocationId()) != null) {
-            throw new ApiRequestException("Hall with that name already exists inside given location.");
+            throw new ResourceAlreadyExistsException("Hall with that name already exists inside given location.");
         }
 
         Hall hall = new Hall(hallDTO);
@@ -65,7 +66,7 @@ public class HallServiceImpl implements HallService {
     @Override
     public Hall editHall(HallDTO hallDTO) {
         if (hallRepository.findById(hallDTO.getId()).get() == null) {
-            throw new ApiRequestException("Hall with this id does not exist.");
+            throw new ResourceNotFoundException("Hall with this id does not exist.");
         }
         Hall hall = hallRepository.findById(hallDTO.getId()).get();
         hall.setName(hallDTO.getName());

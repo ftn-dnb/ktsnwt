@@ -7,6 +7,7 @@ public class LocationConstants {
     private LocationConstants() {}
 
     public static final Long MOCK_ID = 1L;
+    public static final String EXISTING_DB_NAME = "SPENS";
 
     public static final Long DB_ID = 1L;
 
