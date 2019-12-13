@@ -10,7 +10,9 @@ import { Component, OnInit, HostListener } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   events: any[] = [];
-  pageNum: number = 0;
+  private pageNum: number = 0;
+  private pageSize: number = 10;
+
 
   constructor(private eventService: EventService,
               private toastr: ToastrService) { 
@@ -21,7 +23,7 @@ export class HomeComponent implements OnInit {
   }
 
   private getEvents(): void {
-    this.eventService.getEventsOnePage(this.pageNum).subscribe(data => {
+    this.eventService.getEventsOnePage(this.pageNum, this.pageSize).subscribe(data => {
       this.events.push(...data);
     }, error => {
       this.toastr.error('There was an error while getting the data for events');
