@@ -1,7 +1,7 @@
 import { ROLE_ADMIN } from './../../config/user-roles-keys';
 import { USERNAME_KEY, USER_ROLE_KEY } from './../../config/local-storage-keys';
 import { AuthService } from './../../services/auth.service';
-import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH, USER_SETTINGS_PATH, LOCATIONS_PATH } from './../../config/router-paths';
+import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH, USER_SETTINGS_PATH, LOCATIONS_PATH, EVENTS_PATH } from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -55,5 +55,9 @@ export class ToolbarComponent implements OnInit {
 
   onClickAllLocations(): void {
     this.router.navigate([LOCATIONS_PATH]);
+  }
+
+  onClickAllEvents(): void {
+    this.router.navigate([EVENTS_PATH]);
   }
 }

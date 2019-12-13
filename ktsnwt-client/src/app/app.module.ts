@@ -16,6 +16,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { AccountConfirmationComponent } from './components/account-confirmation/account-confirmation.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { EventsComponent } from './components/events/events.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
     AccountConfirmationComponent,
     UserSettingsComponent,
     LocationsComponent,
+    EventsComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,8 +11,7 @@ export class EventService {
   constructor(private http: HttpClient) { 
   }
 
-  getEventsOnePage(pageNum: number): Observable<any> {
-    const pageSize = 10;
+  getEventsOnePage(pageNum: number, pageSize: number): Observable<any> {
     return this.http.get(API_EVENTS, {
       params: new HttpParams()
               .set('page', pageNum.toString())

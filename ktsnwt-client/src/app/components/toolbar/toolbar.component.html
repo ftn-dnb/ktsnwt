@@ -15,6 +15,11 @@
                 </button>
     
                 <mat-menu #adminMenu="matMenu">
+                    <button mat-menu-item (click)="onClickAllEvents()">
+                        <mat-icon>event</mat-icon>
+                        <span>Events</span>
+                    </button>
+
                     <button mat-menu-item (click)="onClickAllLocations()">
                         <mat-icon>location_city</mat-icon>
                         <span>Locations</span>
