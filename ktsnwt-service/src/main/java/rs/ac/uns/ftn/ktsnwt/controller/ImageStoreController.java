@@ -3,10 +3,7 @@ package rs.ac.uns.ftn.ktsnwt.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import rs.ac.uns.ftn.ktsnwt.service.imagestore.ImageStoreService;
 
@@ -22,4 +19,11 @@ public class ImageStoreController {
         imageStoreService.changeUserProfileImage(file);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping(value = "/events/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity changeEventImage(@RequestParam("file") MultipartFile file, @PathVariable("id") Long id){
+        imageStoreService.changeEventImage(file, id);
+        return ResponseEntity.ok().build();
+    }
+
 }

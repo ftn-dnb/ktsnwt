@@ -3,19 +3,36 @@ package rs.ac.uns.ftn.ktsnwt.dto;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventType;
 
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 public class EventDTO {
 
     private Long id;
+
+    @NotNull(message = "Name of event must be provided")
     private String name;
+
+    @NotNull(message = "Start date of event must be provided")
     private String startDate;
+
+    @NotNull(message = "End date of event must be provided")
     private String endDate;
+
+    @NotNull(message = "Purchase limit of event must be provided")
     private Integer purchaseLimit;
+
+    @NotNull(message = "Purchase limit of event must be provided")
     private Integer ticketsPerUser;
+
     private String description;
-    //private String imagePath;
+
+    private String imagePath;
+
+    @NotNull(message = "Type of event must be provided")
     private EventType type;
+
+    @NotNull(message = "ID of hall must be provided")
     private Long hallId;
 
     public EventDTO(){
@@ -28,7 +45,7 @@ public class EventDTO {
         this.purchaseLimit = event.getPurchaseLimit();
         this.ticketsPerUser = event.getTicketsPerUser();
         this.description = event.getDescription();
-       //this.imagePath = event.getImagePath();
+        this.imagePath = event.getImagePath();
         this.startDate = event.getStartDate().toString();
         this.endDate = event.getEndDate().toString();
         this.type = event.getType();
@@ -107,5 +124,11 @@ public class EventDTO {
         this.hallId = hallId;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
 
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 }
