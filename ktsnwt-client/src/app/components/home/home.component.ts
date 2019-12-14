@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   events: any[] = [];
   private pageNum: number = 0;
   private pageSize: number = 10;
-
+  private isLastPage: boolean = false;
 
   constructor(private eventService: EventService,
               private toastr: ToastrService) { 
@@ -24,7 +24,8 @@ export class HomeComponent implements OnInit {
 
   private getEvents(): void {
     this.eventService.getEventsOnePage(this.pageNum, this.pageSize).subscribe(data => {
-      this.events.push(...data);
+      this.events.push(...data.content);
+      this.isLastPage = data.last;
     }, error => {
       this.toastr.error('There was an error while getting the data for events');
     });
@@ -33,11 +34,10 @@ export class HomeComponent implements OnInit {
   @HostListener("window:scroll", [])
   onScrollDetectEndOfPage(): void {
     if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-      // TODO: dodati zastitu da se ne salje novi zahtev ako nema vise stranica za ucitavanje
-      // Mada ni ovako ne smeta jer cemo kao povratnu vrednost dobiti [], ali nema razloga
-      // slati novi zahtev za praznu listu
-      this.pageNum++;
-      this.getEvents();
+      if (!this.isLastPage) {
+        this.pageNum++;
+        this.getEvents();
+      }
     }
   }
 

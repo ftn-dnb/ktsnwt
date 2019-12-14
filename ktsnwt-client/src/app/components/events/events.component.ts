@@ -21,17 +21,13 @@ export class EventsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO: Promeniti kasnije totalNumOfEvents da se dobavlja sa servera, ovo je dok 
-    // dobavljanje Page objekta ne implementira na backend-u
-    // Verovatno ce se ovaj broj pokupiti iz prvog zahteva za listom manifestacija
-    this.totalNumOfEvents = 20;
-
     this.getEvents();
   }
 
   private getEvents(): void {
     this.eventService.getEventsOnePage(this.pageNum, +this.pageSize).subscribe(data => {
-      this.events = data;
+      this.totalNumOfEvents = data.totalElements;
+      this.events = data.content;
     }, error => {
       this.toastr.error('There was an error while getting the data about events.');
     });
