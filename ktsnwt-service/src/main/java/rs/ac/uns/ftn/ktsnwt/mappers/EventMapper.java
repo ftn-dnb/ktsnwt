@@ -1,11 +1,13 @@
 package rs.ac.uns.ftn.ktsnwt.mappers;
 
+import org.springframework.stereotype.Component;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class EventMapper {
 
     private EventMapper(){

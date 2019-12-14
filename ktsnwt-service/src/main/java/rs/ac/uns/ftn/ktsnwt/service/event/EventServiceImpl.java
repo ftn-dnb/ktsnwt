@@ -1,7 +1,10 @@
 package rs.ac.uns.ftn.ktsnwt.service.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
@@ -19,10 +22,7 @@ import rs.ac.uns.ftn.ktsnwt.repository.HallRepository;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -32,6 +32,10 @@ public class EventServiceImpl implements EventService {
     @Autowired HallRepository hallRepository;
     @Autowired EventDayRepository eventDayRepository;
     @Autowired TimeProvider timeProvider;
+    @Autowired EventMapper eventMapper;
+    @Value("${user.default-profile-image}")
+    private String defaultEventImage;
+
     @Override
     public Event addEvent(EventDTO event) {
         Date startDate;
@@ -59,6 +63,7 @@ public class EventServiceImpl implements EventService {
         e.setEndDate(new Timestamp(endDate.getTime()));
         Hall h = hallRepository.getById(event.getHallId());
         e.setHall(h);
+        e.setImagePath(defaultEventImage);
         eventRepository.save(e);
         e.setEventDays(makeBasicEventDay(startDate,endDate,e));
 
@@ -86,12 +91,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> filterEvents(SearchEventDTO filter, int page, int size){
+    public Page<EventDTO> filterEvents(SearchEventDTO filter, Pageable pageable) {
         Date startDate;
         Date endDate;
-        if((filter.getStartDate() == null) || (filter.getEndDate() == null)){
-            throw new ApiRequestException("Please chose date");
-        }
 
         try{
             startDate = timeProvider.makeDate(filter.getStartDate());
@@ -101,11 +103,18 @@ public class EventServiceImpl implements EventService {
             throw new ApiRequestException("Invalid date format");
         }
 
-        return eventRepository.filterEvents(startDate,endDate,filter.getType(),filter.getLocation(), PageRequest.of(page,size)).toList();
+        return eventRepository.filterEvents(startDate,endDate,filter.getType(),filter.getLocation(), pageable).map(x -> eventMapper.toDTO(x));
     }
 
     @Override
-    public List<Event> getAllEvents(int page, int size){
-        return eventRepository.findAll(PageRequest.of(page,size)).toList();
+    public Page<EventDTO> getAllEvents(Pageable pageable){
+        return eventRepository.findAll(pageable).map(x -> eventMapper.toDTO(x));
+    }
+
+    @Override
+    public void setNewEventImage(String path, Long id){
+        Event e = eventRepository.findById(id).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
+        e.setImagePath(path);
+        eventRepository.save(e);
     }
 }

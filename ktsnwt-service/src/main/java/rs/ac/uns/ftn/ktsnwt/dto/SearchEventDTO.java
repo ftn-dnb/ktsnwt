@@ -2,11 +2,18 @@ package rs.ac.uns.ftn.ktsnwt.dto;
 
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventType;
 
+import javax.validation.constraints.NotNull;
+
 public class SearchEventDTO {
 
+    @NotNull(message = "Start date must be provided for search")
     private String startDate;
+
+    @NotNull(message = "End date must be provided for search")
     private String endDate;
+
     private EventType type;
+
     private Long location;
 
     public SearchEventDTO(){
