@@ -33,7 +33,7 @@ public class EventController {
 
     @GetMapping("/public/search")
     public ResponseEntity<Page<EventDTO>> searchEvents(Pageable pageable,
-                                                       @RequestBody SearchEventDTO filter){
+                                                       @Valid @RequestBody SearchEventDTO filter){
         return new ResponseEntity<>(eventService.filterEvents(filter,pageable),HttpStatus.OK);
     }
 
