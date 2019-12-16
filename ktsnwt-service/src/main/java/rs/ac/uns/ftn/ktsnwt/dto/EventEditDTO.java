@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 public class EventEditDTO {
 
@@ -8,9 +9,11 @@ public class EventEditDTO {
     Long id;
 
     @NotNull(message = "Purchase limit must be provided")
+    @Positive
     int purchaseLimit;
 
     @NotNull(message = "Number of tickets per user must be provided")
+    @Positive
     int ticketsPerUser;
 
     @NotNull(message = "Description must be provided")
