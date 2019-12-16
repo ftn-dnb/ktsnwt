@@ -20,7 +20,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     Page<Event> findAll(Pageable page);
 
-    @Query("SELECT e FROM Event e WHERE ((e.startDate BETWEEN ?1 AND ?2) AND (e.endDate BETWEEN ?1 AND ?2))"+
-    " AND (?3 is null or e.type = ?3) AND (?4 is null or e.hall.location.id = ?4)")
-    Page<Event> filterEvents(Date startDate, Date endDate, EventType eventType, Long locationId, Pageable page);
+    @Query("SELECT e FROM Event e WHERE (e.endDate < ?1) "+
+    " AND (?2 is null or e.type = ?2) AND (?3 is null or e.hall.location.id = ?3)")
+    Page<Event> filterEvents(Date endDate, EventType eventType, Long locationId, Pageable page);
 }

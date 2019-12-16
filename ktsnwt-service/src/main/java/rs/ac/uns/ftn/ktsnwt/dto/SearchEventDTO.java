@@ -6,8 +6,6 @@ import javax.validation.constraints.NotNull;
 
 public class SearchEventDTO {
 
-    @NotNull(message = "Start date must be provided for search")
-    private String startDate;
 
     @NotNull(message = "End date must be provided for search")
     private String endDate;
@@ -18,14 +16,6 @@ public class SearchEventDTO {
 
     public SearchEventDTO(){
 
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
     }
 
     public String getEndDate() {
