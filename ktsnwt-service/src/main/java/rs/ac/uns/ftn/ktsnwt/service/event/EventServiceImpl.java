@@ -115,4 +115,5 @@ public class EventServiceImpl implements EventService {
         e.setImagePath(path);
         eventRepository.save(e);
     }
+
 }

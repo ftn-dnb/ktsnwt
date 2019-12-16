@@ -14,5 +14,4 @@ public interface EventService {
     Page<EventDTO> filterEvents(SearchEventDTO filter, Pageable pageable);
     Page<EventDTO> getAllEvents(Pageable pageable);
     void setNewEventImage(String path, Long id);
-
 }
