@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.EventEditDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.SearchEventDTO;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
@@ -40,6 +41,10 @@ public class EventController {
     @GetMapping("/public/all")
     public ResponseEntity<Page<EventDTO>> getAllEvents(Pageable pageable){
         return new ResponseEntity<>(eventService.getAllEvents(pageable),HttpStatus.OK);
+    }
+
+    public ResponseEntity<EventDTO> editEvent(@RequestBody EventEditDTO event){
+        return new ResponseEntity<>(eventService.editEvent(event), HttpStatus.OK);
     }
 
 }

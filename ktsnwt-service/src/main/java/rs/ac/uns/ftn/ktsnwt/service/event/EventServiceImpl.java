@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.EventEditDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.SearchEventDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
@@ -116,4 +117,16 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(e);
     }
 
+    @Override
+    public EventDTO editEvent(EventEditDTO event){
+        Event e = eventRepository.findById(event.getId()).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
+
+        e.setPurchaseLimit(event.getPurchaseLimit());
+        e.setTicketsPerUser(event.getTicketsPerUser());
+        e.setDescription(event.getDescription());
+
+        eventRepository.save(e);
+
+        return new EventDTO(e);
+    }
 }
