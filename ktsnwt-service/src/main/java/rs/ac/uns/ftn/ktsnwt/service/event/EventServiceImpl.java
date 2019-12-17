@@ -119,7 +119,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDTO editEvent(EventEditDTO event){
+    public Event editEvent(EventEditDTO event){
         Event e = eventRepository.findById(event.getId()).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
 
         e.setPurchaseLimit(event.getPurchaseLimit());
@@ -128,7 +128,7 @@ public class EventServiceImpl implements EventService {
 
         eventRepository.save(e);
 
-        return new EventDTO(e);
+        return e;
     }
 
     @Override

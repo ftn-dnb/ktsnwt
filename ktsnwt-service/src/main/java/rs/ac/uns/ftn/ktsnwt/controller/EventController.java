@@ -47,7 +47,7 @@ public class EventController {
     @PutMapping ("/editEvent")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<EventDTO> editEvent(@RequestBody EventEditDTO event){
-        return new ResponseEntity<>(eventService.editEvent(event), HttpStatus.OK);
+        return new ResponseEntity<>(EventMapper.toDTO(eventService.editEvent(event)), HttpStatus.OK);
     }
 
     @PutMapping("/addPricing/{id}")
