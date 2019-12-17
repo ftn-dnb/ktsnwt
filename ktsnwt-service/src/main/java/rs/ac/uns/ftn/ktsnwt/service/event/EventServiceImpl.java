@@ -34,6 +34,7 @@ public class EventServiceImpl implements EventService {
     @Autowired EventMapper eventMapper;
     @Autowired SectorRepository sectorRepository;
     @Autowired PricingRepository pricingRepository;
+
     @Value("${user.default-profile-image}")
     private String defaultEventImage;
 
@@ -131,24 +132,25 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDetailedDTO setEventPricing(Long eventId, List<SetSectorPriceDTO> pricing){
+    public Event setEventPricing(Long eventId, List<SetSectorPriceDTO> pricing){
         Event e = eventRepository.findById(eventId).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
 
-        Set<Pricing> realPricing = new HashSet<>();
-
-        for (SetSectorPriceDTO sP: pricing) {
-            Pricing p = new Pricing();
-            p.setPrice(sP.getPrice());
-            p.setSector(sectorRepository.findById(sP.getId()).orElseThrow(() -> new ApiRequestException("Invalid id of sector")));
-            pricingRepository.save(p);
-            realPricing.add(p);
-        }
-
         for (EventDay ed: e.getEventDays()) {
+            Set<Pricing> realPricing = new HashSet<>();
+
+            for (SetSectorPriceDTO sP: pricing) {
+                Pricing p = new Pricing();
+                p.setPrice(sP.getPrice());
+                p.setSector(sectorRepository.findById(sP.getId()).orElseThrow(() -> new ApiRequestException("Invalid id of sector")));
+                p.setEventDay(ed);
+                pricingRepository.save(p);
+                realPricing.add(p);
+            }
+
             ed.setPricings(realPricing);
             eventDayRepository.save(ed);
         }
 
-        return new EventDetailedDTO(e);
+        return e;
     }
 }

@@ -14,5 +14,5 @@ public interface EventService {
     Page<EventDTO> getAllEvents(Pageable pageable);
     void setNewEventImage(String path, Long id);
     EventDTO editEvent(EventEditDTO event);
-    EventDetailedDTO setEventPricing(Long eventId, List<SetSectorPriceDTO> pricing);
+    Event setEventPricing(Long eventId, List<SetSectorPriceDTO> pricing);
 }
