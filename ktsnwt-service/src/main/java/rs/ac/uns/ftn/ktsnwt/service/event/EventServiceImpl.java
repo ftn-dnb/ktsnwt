@@ -7,17 +7,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
-import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
-import rs.ac.uns.ftn.ktsnwt.dto.SearchEventDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.*;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
 import rs.ac.uns.ftn.ktsnwt.model.EventDay;
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
+import rs.ac.uns.ftn.ktsnwt.model.Pricing;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventStatus;
-import rs.ac.uns.ftn.ktsnwt.repository.EventDayRepository;
-import rs.ac.uns.ftn.ktsnwt.repository.EventRepository;
-import rs.ac.uns.ftn.ktsnwt.repository.HallRepository;
+import rs.ac.uns.ftn.ktsnwt.repository.*;
+import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayService;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -33,6 +32,9 @@ public class EventServiceImpl implements EventService {
     @Autowired EventDayRepository eventDayRepository;
     @Autowired TimeProvider timeProvider;
     @Autowired EventMapper eventMapper;
+    @Autowired SectorRepository sectorRepository;
+    @Autowired PricingRepository pricingRepository;
+
     @Value("${user.default-profile-image}")
     private String defaultEventImage;
 
@@ -116,4 +118,39 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(e);
     }
 
+    @Override
+    public Event editEvent(EventEditDTO event){
+        Event e = eventRepository.findById(event.getId()).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
+
+        e.setPurchaseLimit(event.getPurchaseLimit());
+        e.setTicketsPerUser(event.getTicketsPerUser());
+        e.setDescription(event.getDescription());
+
+        eventRepository.save(e);
+
+        return e;
+    }
+
+    @Override
+    public Event setEventPricing(Long eventId, List<SetSectorPriceDTO> pricing){
+        Event e = eventRepository.findById(eventId).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
+
+        for (EventDay ed: e.getEventDays()) {
+            Set<Pricing> realPricing = new HashSet<>();
+
+            for (SetSectorPriceDTO sP: pricing) {
+                Pricing p = new Pricing();
+                p.setPrice(sP.getPrice());
+                p.setSector(sectorRepository.findById(sP.getId()).orElseThrow(() -> new ApiRequestException("Invalid id of sector")));
+                p.setEventDay(ed);
+                pricingRepository.save(p);
+                realPricing.add(p);
+            }
+
+            ed.setPricings(realPricing);
+            eventDayRepository.save(ed);
+        }
+
+        return e;
+    }
 }

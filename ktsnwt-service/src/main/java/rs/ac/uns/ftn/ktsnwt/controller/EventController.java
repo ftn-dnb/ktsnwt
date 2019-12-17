@@ -7,13 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
-import rs.ac.uns.ftn.ktsnwt.dto.SearchEventDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.*;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
+import rs.ac.uns.ftn.ktsnwt.mappers.PricingMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
+import rs.ac.uns.ftn.ktsnwt.model.Pricing;
 import rs.ac.uns.ftn.ktsnwt.service.event.EventService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,4 +44,24 @@ public class EventController {
         return new ResponseEntity<>(eventService.getAllEvents(pageable),HttpStatus.OK);
     }
 
+    @PutMapping ("/editEvent")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<EventDTO> editEvent(@RequestBody EventEditDTO event){
+        return new ResponseEntity<>(EventMapper.toDTO(eventService.editEvent(event)), HttpStatus.OK);
+    }
+
+    @PutMapping("/addPricing/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<EventDetailedDTO> setPricing( @PathVariable("id") Long id,
+                                                        @RequestBody List<SetSectorPriceDTO> pricing){
+        Event e = eventService.setEventPricing(id,pricing);
+
+        EventDetailedDTO dto = new EventDetailedDTO(e);
+
+
+        dto.getOneDay().setPricing(PricingMapper.toPricingDTOList(
+                new ArrayList<>(e.getEventDays().iterator().next().getPricings())));
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 }
