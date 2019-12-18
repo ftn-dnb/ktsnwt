@@ -19,7 +19,7 @@ public class EventDayController {
 
     @PostMapping("/disable/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<String> disableEvent(@PathVariable("id") Long id){
+    public ResponseEntity<String> disableEventDay(@PathVariable("id") Long id){
         eventDayService.disableEventDay(id);
         return new ResponseEntity<>("Event day canceled",HttpStatus.OK);
     }

@@ -30,6 +30,7 @@ public class EventDayConstants {
         EventDay eventDay = new EventDay();
         eventDay.setId(EventDayConstants.MOCK_ID);
         eventDay.setEvent(EventConstants.returnMockedEvent());
+        eventDay.setStatus(EventStatus.ACTIVE);
         return eventDay;
     }
 
