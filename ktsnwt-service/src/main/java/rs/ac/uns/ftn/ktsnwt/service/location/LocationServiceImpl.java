@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.dto.AddressDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.LocationDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.ResourceAlreadyExistsException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Address;
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
@@ -61,7 +62,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public Location addLocation(LocationDTO locationDTO) {
         if (locationRepository.findByName(locationDTO.getName()) != null) {
-            throw new ApiRequestException("Location with that name already exists.");
+            throw new ResourceAlreadyExistsException("Location with that name already exists.");
         }
 
 
@@ -84,7 +85,7 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public Location editLocation(LocationDTO locationDTO) {
         if (locationRepository.findByName(locationDTO.getName()) != null) {
-            throw new ApiRequestException("Location with that name already exists.");
+            throw new ResourceAlreadyExistsException("Location with that name already exists.");
         }
 
         Location location = locationRepository.findById(locationDTO.getId()).get();

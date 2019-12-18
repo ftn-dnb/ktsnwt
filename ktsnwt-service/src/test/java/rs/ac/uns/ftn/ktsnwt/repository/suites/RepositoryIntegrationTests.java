@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.ktsnwt.repository.suites;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import rs.ac.uns.ftn.ktsnwt.repository.HallRepositoryIntegrationTest;
+import rs.ac.uns.ftn.ktsnwt.repository.LocationRepositoryIntegrationTest;
 import rs.ac.uns.ftn.ktsnwt.repository.SectorRepositoryIntegrationTest;
 import rs.ac.uns.ftn.ktsnwt.repository.AddressRepositoryIntegrationTest;
 
@@ -10,7 +11,8 @@ import rs.ac.uns.ftn.ktsnwt.repository.AddressRepositoryIntegrationTest;
 @Suite.SuiteClasses({
         SectorRepositoryIntegrationTest.class,
         AddressRepositoryIntegrationTest.class,
-        HallRepositoryIntegrationTest.class
+        HallRepositoryIntegrationTest.class,
+        LocationRepositoryIntegrationTest.class
 })
 public class RepositoryIntegrationTests {
 }
