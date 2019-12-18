@@ -24,7 +24,7 @@ public class ExceptionsHandler {
         return new ResponseEntity<>(errorMessage, badRequest);
     }
 
-    @ExceptionHandler(value = {ResourceNotFoundException.class, EventDayNotFoundException.class})
+    @ExceptionHandler(value = {ResourceNotFoundException.class, EventDayNotFoundException.class, HallNotFoundException.class})
     public ResponseEntity<ErrorMessage> handleResourceNotFoundException(Exception e) {
         HttpStatus notFound = HttpStatus.NOT_FOUND;
         ErrorMessage errorMessage = new ErrorMessage(e.getMessage(), notFound);

@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.ktsnwt.constants;
 
 
 import rs.ac.uns.ftn.ktsnwt.model.Event;
+import rs.ac.uns.ftn.ktsnwt.model.enums.EventType;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -13,9 +14,28 @@ public class EventConstants {
 
     public static final Long MOCK_ID = 1L;
 
+    public static final String NEW_DB_NAME = "New Concert";
+    public static final EventType NEW_DB_TYPE = EventType.CONCERT;
+    public static final int NEW_DB_TICKETS_PER_USER = 2;
+    public static final int NEW_DB_PURCHASE_LIMIT = 2;
+    public static final String NEW_DB_DESCRIPTION = "This is description for new concert.";
+    public static final String NEW_DB_STARTDATE = "03-03-2019";
+    public static final String NEW_DB_ENDDATE = "04-03-2019";
+    public static final Long NEW_DB_HALL_ID = 1L;
+
     public static Event returnMockedEvent() {
         Event event = new Event();
         event.setId(MOCK_ID);
+        return event;
+    }
+
+    public static Event returnNewEvent() {
+        Event event = new Event();
+        event.setName(NEW_DB_NAME);
+        event.setType(NEW_DB_TYPE);
+        event.setTicketsPerUser(NEW_DB_TICKETS_PER_USER);
+        event.setPurchaseLimit(NEW_DB_PURCHASE_LIMIT);
+        event.setDescription(NEW_DB_DESCRIPTION);
         return event;
     }
 

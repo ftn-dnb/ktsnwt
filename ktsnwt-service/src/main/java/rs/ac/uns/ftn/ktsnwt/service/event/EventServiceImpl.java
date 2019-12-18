@@ -16,11 +16,9 @@ import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.model.Pricing;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventStatus;
 import rs.ac.uns.ftn.ktsnwt.repository.*;
-import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayService;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -31,7 +29,6 @@ public class EventServiceImpl implements EventService {
     @Autowired HallRepository hallRepository;
     @Autowired EventDayRepository eventDayRepository;
     @Autowired TimeProvider timeProvider;
-    @Autowired EventMapper eventMapper;
     @Autowired SectorRepository sectorRepository;
     @Autowired PricingRepository pricingRepository;
 
@@ -86,7 +83,7 @@ public class EventServiceImpl implements EventService {
             ed.setStatus(EventStatus.ACTIVE);
             ed.setDate(new Timestamp(date.getTime()));
             ed.setDescription("ADD DESCRIPTION");
-            eventDayRepository.save(ed);
+            ed = eventDayRepository.save(ed);
             eventDays.add(ed);
         }
         return eventDays;
@@ -103,12 +100,12 @@ public class EventServiceImpl implements EventService {
             throw new ApiRequestException("Invalid date format");
         }
 
-        return eventRepository.filterEvents(endDate,filter.getType(),filter.getLocation(), pageable).map(x -> eventMapper.toDTO(x));
+        return eventRepository.filterEvents(endDate,filter.getType(),filter.getLocation(), pageable).map(x -> EventMapper.toDTO(x));
     }
 
     @Override
     public Page<EventDTO> getAllEvents(Pageable pageable){
-        return eventRepository.findAll(pageable).map(x -> eventMapper.toDTO(x));
+        return eventRepository.findAll(pageable).map(x -> EventMapper.toDTO(x));
     }
 
     @Override
