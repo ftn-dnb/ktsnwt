@@ -41,7 +41,8 @@ public class EventController {
 
     @GetMapping("/public/all")
     public ResponseEntity<Page<EventDTO>> getAllEvents(Pageable pageable){
-        return new ResponseEntity<>(eventService.getAllEvents(pageable),HttpStatus.OK);
+        Page<EventDTO> events = eventService.getAllEvents(pageable).map(x -> EventMapper.toDTO(x));
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
     @PutMapping ("/editEvent")

@@ -5,13 +5,20 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.ktsnwt.constants.EventConstants;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.EventEditDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.EventNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.exception.HallNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
+import rs.ac.uns.ftn.ktsnwt.repository.EventRepository;
 
 import static org.junit.Assert.assertEquals;
 
@@ -21,6 +28,9 @@ public class EventServiceImplIntegrationTest {
 
     @Autowired
     private EventServiceImpl eventService;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @Value("${user.default-profile-image}")
     private String defaultEventImage;
@@ -60,6 +70,7 @@ public class EventServiceImplIntegrationTest {
     }
 
     @Test
+    @Transactional @Rollback(true)
     public void whenAddEventCreateEvent() {
         final Hall hall = new Hall();
         hall.setId(EventConstants.NEW_DB_HALL_ID);
@@ -86,5 +97,55 @@ public class EventServiceImplIntegrationTest {
 
         // TODO: kako proveriti datum ??
 //        assertEquals(, event.getStartDate());
+    }
+
+    @Test(expected = EventNotFoundException.class)
+    public void whenSetNewEventImageThrowEventNotFound() {
+        eventService.setNewEventImage("new-image-path", EventConstants.NON_EXISTING_DB_ID);
+    }
+
+    @Test
+    @Transactional @Rollback(true)
+    public void whenSetNewEventImage() {
+        final String imagePath = "new-image-path";
+        eventService.setNewEventImage(imagePath, EventConstants.DB_1_ID);
+        Event event = eventRepository.findById(EventConstants.DB_1_ID).orElseThrow(() -> new EventNotFoundException("Invalid id"));
+        assertEquals(imagePath, event.getImagePath());
+    }
+
+    @Test(expected = EventNotFoundException.class)
+    public void whenEditEventThrowEventNotFound() {
+        EventEditDTO eventDto = new EventEditDTO();
+        eventDto.setId(EventConstants.NON_EXISTING_DB_ID);
+        eventService.editEvent(eventDto);
+    }
+
+    @Test
+    @Transactional @Rollback(true)
+    public void whenEditEvent() {
+        final String newDescription = "This is new description for event";
+        final int newPurchaseLimit = 14;
+        final int newTicketsPerUser = 14;
+
+        EventEditDTO eventEditDto = new EventEditDTO();
+        eventEditDto.setId(EventConstants.DB_1_ID);
+        eventEditDto.setDescription(newDescription);
+        eventEditDto.setTicketsPerUser(newTicketsPerUser);
+        eventEditDto.setPurchaseLimit(newPurchaseLimit);
+
+        Event editedEvent = eventService.editEvent(eventEditDto);
+
+        assertEquals(newDescription, editedEvent.getDescription());
+        assertEquals(newTicketsPerUser, editedEvent.getTicketsPerUser());
+        assertEquals(newPurchaseLimit, editedEvent.getPurchaseLimit());
+    }
+
+    @Test
+    public void getAllEvents() {
+        Page<Event> returnedEvents = eventService.getAllEvents(PageRequest.of(0, 5));
+
+        assertEquals(2, returnedEvents.getContent().size());
+        assertEquals(EventConstants.DB_1_ID, returnedEvents.getContent().get(0).getId());
+        assertEquals(EventConstants.DB_2_ID, returnedEvents.getContent().get(1).getId());
     }
 }

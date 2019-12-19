@@ -7,17 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.ktsnwt.constants.EventConstants;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.EventEditDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.EventNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.exception.HallNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.repository.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -92,6 +102,7 @@ public class EventServiceImplUnitTest {
     }
 
     @Test
+    @Transactional @Rollback(true)
     public void whenAddEventCreateEvent() {
         final Hall hall = new Hall();
         hall.setId(EventConstants.NEW_DB_HALL_ID);
@@ -121,5 +132,79 @@ public class EventServiceImplUnitTest {
 
         // TODO: kako proveriti datum ??
 //        assertEquals(, event.getStartDate());
+    }
+
+    @Test(expected = EventNotFoundException.class)
+    public void whenSetNewEventImageThrowEventNotFound() {
+        Mockito.when(eventRepository.findById(EventConstants.MOCK_ID)).thenReturn(Optional.empty());
+        eventService.setNewEventImage("new-image-path", EventConstants.MOCK_ID);
+    }
+
+    @Test
+    public void whenSetNewEventImage() {
+        final String imagePath = "new-image-path";
+        Event event = new Event();
+        event.setId(EventConstants.MOCK_ID);
+
+        Mockito.when(eventRepository.findById(EventConstants.MOCK_ID)).thenReturn(Optional.of(event));
+        eventService.setNewEventImage(imagePath, EventConstants.MOCK_ID);
+
+        assertEquals(imagePath, event.getImagePath());
+    }
+
+    @Test(expected = EventNotFoundException.class)
+    public void whenEditEventThrowEventNotFound() {
+        Mockito.when(eventRepository.findById(EventConstants.MOCK_ID)).thenReturn(Optional.empty());
+
+        EventEditDTO eventDto = new EventEditDTO();
+        eventDto.setId(EventConstants.MOCK_ID);
+
+        eventService.editEvent(eventDto);
+    }
+
+    @Test
+    public void whenEditEvent() {
+        Event event = new Event();
+        event.setId(EventConstants.MOCK_ID);
+        event.setTicketsPerUser(2);
+        event.setDescription("Event description");
+        event.setPurchaseLimit(2);
+
+        Mockito.when(eventRepository.findById(EventConstants.MOCK_ID)).thenReturn(Optional.of(event));
+
+        final String newDescription = "This is new description for event";
+        final int newPurchaseLimit = 14;
+        final int newTicketsPerUser = 14;
+
+        EventEditDTO eventEditDto = new EventEditDTO();
+        eventEditDto.setId(EventConstants.MOCK_ID);
+        eventEditDto.setDescription(newDescription);
+        eventEditDto.setTicketsPerUser(newTicketsPerUser);
+        eventEditDto.setPurchaseLimit(newPurchaseLimit);
+
+        Event editedEvent = eventService.editEvent(eventEditDto);
+
+        assertEquals(newDescription, editedEvent.getDescription());
+        assertEquals(newTicketsPerUser, editedEvent.getTicketsPerUser());
+        assertEquals(newPurchaseLimit, editedEvent.getPurchaseLimit());
+    }
+
+    @Test
+    public void getAllEvents() {
+        List<Event> events = new ArrayList<>();
+        Event event1 = new Event(); event1.setId(1L);
+        Event event2 = new Event(); event2.setId(2L);
+        events.add(event1);
+        events.add(event2);
+
+        Pageable pageRequest = PageRequest.of(0, 5);
+
+        Mockito.when(eventRepository.findAll(pageRequest)).thenReturn(new PageImpl<>(events));
+
+        Page<Event> returnedEvents = eventService.getAllEvents(pageRequest);
+
+        assertEquals(events.size(), returnedEvents.getContent().size());
+        assertEquals(events.get(0).getId(), returnedEvents.getContent().get(0).getId());
+        assertEquals(events.get(1).getId(), returnedEvents.getContent().get(1).getId());
     }
 }

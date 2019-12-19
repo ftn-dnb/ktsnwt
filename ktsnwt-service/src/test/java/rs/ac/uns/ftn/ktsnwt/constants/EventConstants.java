@@ -23,6 +23,16 @@ public class EventConstants {
     public static final String NEW_DB_ENDDATE = "04-03-2019";
     public static final Long NEW_DB_HALL_ID = 1L;
 
+    public static final Long NON_EXISTING_DB_ID = 1234567L;
+
+    public static final Long DB_1_ID = 1L;
+    public static final String DB_1_NAME = "Koncert";
+    public static final String DB_1_DESCRIPTION = "Ovo je event";
+    public static final int DB_1_TICKETS_PER_USER = 2;
+    public static final int DB_1_PURCHASE_LIMIT = 2;
+
+    public static final Long DB_2_ID = 2L;
+
     public static Event returnMockedEvent() {
         Event event = new Event();
         event.setId(MOCK_ID);

@@ -3,12 +3,12 @@ package rs.ac.uns.ftn.ktsnwt.service.event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.dto.*;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.EventNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
 import rs.ac.uns.ftn.ktsnwt.model.EventDay;
@@ -104,20 +104,20 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Page<EventDTO> getAllEvents(Pageable pageable){
-        return eventRepository.findAll(pageable).map(x -> EventMapper.toDTO(x));
+    public Page<Event> getAllEvents(Pageable pageable){
+        return eventRepository.findAll(pageable);
     }
 
     @Override
     public void setNewEventImage(String path, Long id){
-        Event e = eventRepository.findById(id).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
+        Event e = eventRepository.findById(id).orElseThrow(() -> new EventNotFoundException("Invalid id of event"));
         e.setImagePath(path);
         eventRepository.save(e);
     }
 
     @Override
     public Event editEvent(EventEditDTO event){
-        Event e = eventRepository.findById(event.getId()).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
+        Event e = eventRepository.findById(event.getId()).orElseThrow(() -> new EventNotFoundException("Invalid id of event"));
 
         e.setPurchaseLimit(event.getPurchaseLimit());
         e.setTicketsPerUser(event.getTicketsPerUser());

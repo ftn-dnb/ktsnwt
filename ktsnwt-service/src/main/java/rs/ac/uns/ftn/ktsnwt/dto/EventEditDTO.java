@@ -19,7 +19,7 @@ public class EventEditDTO {
     @NotNull(message = "Description must be provided")
     String description;
 
-    EventEditDTO(){
+    public EventEditDTO(){
     }
 
     public int getPurchaseLimit() {
