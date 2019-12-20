@@ -9,6 +9,8 @@ import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.dto.*;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.EventNotFoundException;
+import rs.ac.uns.ftn.ktsnwt.exception.HallNotFoundException;
+import rs.ac.uns.ftn.ktsnwt.exception.SectorNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
 import rs.ac.uns.ftn.ktsnwt.model.EventDay;
@@ -51,6 +53,10 @@ public class EventServiceImpl implements EventService {
             throw new ApiRequestException("End date is after start date");
         }
 
+        if (!hallRepository.findById(event.getHallId()).isPresent()) {
+            throw new HallNotFoundException("Hall not found");
+        }
+
         Long count = eventRepository.checkCapturedHall(startDate,endDate,event.getHallId());
 
         if(count > 0){
@@ -60,7 +66,7 @@ public class EventServiceImpl implements EventService {
         Event e = EventMapper.toEntity(event);
         e.setStartDate(new Timestamp(startDate.getTime()));
         e.setEndDate(new Timestamp(endDate.getTime()));
-        Hall h = hallRepository.getById(event.getHallId());
+        Hall h = hallRepository.findById(event.getHallId()).orElse(null);
         e.setHall(h);
         e.setImagePath(defaultEventImage);
         eventRepository.save(e);
@@ -130,7 +136,11 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event setEventPricing(Long eventId, List<SetSectorPriceDTO> pricing){
-        Event e = eventRepository.findById(eventId).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
+        Event e = eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException("Invalid id of event"));
+
+        if (pricing.isEmpty()) {
+            throw new ApiRequestException("Pricing list can not be empty");
+        }
 
         for (EventDay ed: e.getEventDays()) {
             Set<Pricing> realPricing = new HashSet<>();
@@ -138,7 +148,7 @@ public class EventServiceImpl implements EventService {
             for (SetSectorPriceDTO sP: pricing) {
                 Pricing p = new Pricing();
                 p.setPrice(sP.getPrice());
-                p.setSector(sectorRepository.findById(sP.getId()).orElseThrow(() -> new ApiRequestException("Invalid id of sector")));
+                p.setSector(sectorRepository.findById(sP.getId()).orElseThrow(() -> new SectorNotFoundException("Invalid id of sector")));
                 p.setEventDay(ed);
                 pricingRepository.save(p);
                 realPricing.add(p);

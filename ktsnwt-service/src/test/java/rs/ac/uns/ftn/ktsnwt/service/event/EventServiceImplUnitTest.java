@@ -17,18 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.ktsnwt.constants.EventConstants;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.EventEditDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.SetSectorPriceDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.EventNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.exception.HallNotFoundException;
+import rs.ac.uns.ftn.ktsnwt.exception.SectorNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
-import rs.ac.uns.ftn.ktsnwt.model.Event;
-import rs.ac.uns.ftn.ktsnwt.model.Hall;
+import rs.ac.uns.ftn.ktsnwt.model.*;
 import rs.ac.uns.ftn.ktsnwt.repository.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -84,6 +83,7 @@ public class EventServiceImplUnitTest {
         eventDto.setEndDate("04-03-2019");
         eventDto.setHallId(1L);
 
+        Mockito.when(hallRepository.findById(1L)).thenReturn(Optional.of(new Hall()));
         Mockito.when(eventRepository.checkCapturedHall(any(Date.class), any(Date.class), any(Long.class))).thenReturn(3L);
         eventService.addEvent(eventDto);
     }
@@ -118,7 +118,7 @@ public class EventServiceImplUnitTest {
         eventDto.setDescription(EventConstants.NEW_DB_DESCRIPTION);
 
         Mockito.when(eventRepository.checkCapturedHall(new Date(), new Date(), 1L)).thenReturn(0L);
-        Mockito.when(hallRepository.getById(EventConstants.NEW_DB_HALL_ID)).thenReturn(hall);
+        Mockito.when(hallRepository.findById(EventConstants.NEW_DB_HALL_ID)).thenReturn(Optional.of(hall));
 
         Event event = eventService.addEvent(eventDto);
 
@@ -206,5 +206,76 @@ public class EventServiceImplUnitTest {
         assertEquals(events.size(), returnedEvents.getContent().size());
         assertEquals(events.get(0).getId(), returnedEvents.getContent().get(0).getId());
         assertEquals(events.get(1).getId(), returnedEvents.getContent().get(1).getId());
+    }
+
+    @Test(expected = EventNotFoundException.class)
+    public void whenSetEventPricingThrowEventNotFound() {
+        Mockito.when(eventRepository.findById(EventConstants.NON_EXISTING_DB_ID)).thenReturn(Optional.empty());
+        eventService.setEventPricing(EventConstants.NON_EXISTING_DB_ID, null);
+    }
+
+    @Test(expected = ApiRequestException.class)
+    public void whenSetEventPricingEmptyPricingList() {
+        Mockito.when(eventRepository.findById(EventConstants.DB_1_ID)).thenReturn(Optional.of(new Event()));
+        eventService.setEventPricing(EventConstants.DB_1_ID, new ArrayList<>());
+    }
+
+    @Test(expected = SectorNotFoundException.class)
+    public void whenSetEventPricingThrowSectorNotFound() {
+        Event event = new Event();
+        event.setId(EventConstants.MOCK_ID);
+
+        EventDay eventDay1 = new EventDay(); eventDay1.setId(1L);
+        EventDay eventDay2 = new EventDay(); eventDay2.setId(2L);
+        Set<EventDay> eventDays = new HashSet<>();
+        eventDays.add(eventDay1);
+        eventDays.add(eventDay2);
+        event.setEventDays(eventDays);
+
+        final Long nonExistingSectorId = 1234L;
+
+        List<SetSectorPriceDTO> pricing = new ArrayList<>();
+        SetSectorPriceDTO price1 = new SetSectorPriceDTO(); price1.setId(nonExistingSectorId);
+        pricing.add(price1);
+
+        Mockito.when(eventRepository.findById(EventConstants.MOCK_ID)).thenReturn(Optional.of(event));
+        Mockito.when(sectorRepository.findById(nonExistingSectorId)).thenReturn(Optional.empty());
+
+        eventService.setEventPricing(EventConstants.MOCK_ID, pricing);
+    }
+
+    @Test
+    public void whenSetEventPricing() {
+        Event event = new Event();
+        event.setId(EventConstants.MOCK_ID);
+
+        EventDay eventDay1 = new EventDay(); eventDay1.setId(1L);
+        EventDay eventDay2 = new EventDay(); eventDay2.setId(2L);
+        Set<EventDay> eventDays = new HashSet<>();
+        eventDays.add(eventDay1);
+        eventDays.add(eventDay2);
+        event.setEventDays(eventDays);
+
+        List<SetSectorPriceDTO> pricing = new ArrayList<>();
+        SetSectorPriceDTO price1 = new SetSectorPriceDTO(); price1.setId(1L); price1.setPrice(1000);
+        pricing.add(price1);
+
+        Sector sector = new Sector();
+        sector.setId(1L);
+
+        Mockito.when(eventRepository.findById(EventConstants.MOCK_ID)).thenReturn(Optional.of(event));
+        Mockito.when(sectorRepository.findById(any(Long.class))).thenReturn(Optional.of(sector));
+
+        Event returnedEvent = eventService.setEventPricing(EventConstants.MOCK_ID, pricing);
+
+        List<EventDay> eventDaysList = returnedEvent.getEventDays().stream().collect(Collectors.toList());
+
+        for (EventDay ed : eventDaysList) {
+            assertEquals(1, ed.getPricings().size());
+
+            Pricing price = ed.getPricings().stream().findFirst().orElse(null);
+            assertEquals(1000, price.getPrice(), 0.1);
+            assertEquals(sector.getId(), price.getSector().getId());
+        }
     }
 }

@@ -13,12 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.ktsnwt.constants.EventConstants;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.EventEditDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.SetSectorPriceDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.EventNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.exception.HallNotFoundException;
-import rs.ac.uns.ftn.ktsnwt.model.Event;
-import rs.ac.uns.ftn.ktsnwt.model.Hall;
+import rs.ac.uns.ftn.ktsnwt.exception.SectorNotFoundException;
+import rs.ac.uns.ftn.ktsnwt.model.*;
 import rs.ac.uns.ftn.ktsnwt.repository.EventRepository;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
@@ -147,5 +151,51 @@ public class EventServiceImplIntegrationTest {
         assertEquals(2, returnedEvents.getContent().size());
         assertEquals(EventConstants.DB_1_ID, returnedEvents.getContent().get(0).getId());
         assertEquals(EventConstants.DB_2_ID, returnedEvents.getContent().get(1).getId());
+    }
+
+    @Test(expected = EventNotFoundException.class)
+    public void whenSetEventPricingThrowEventNotFound() {
+        eventService.setEventPricing(EventConstants.NON_EXISTING_DB_ID, null);
+    }
+
+    @Test(expected = ApiRequestException.class)
+    public void whenSetEventPricingEmptyPricingList() {
+        eventService.setEventPricing(EventConstants.DB_1_ID, new ArrayList<>());
+    }
+
+    @Test(expected = SectorNotFoundException.class)
+    @Transactional
+    public void whenSetEventPricingThrowSectorNotFound() {
+        final Long nonExistingSectorId = 1234L;
+
+        List<SetSectorPriceDTO> pricing = new ArrayList<>();
+        SetSectorPriceDTO price1 = new SetSectorPriceDTO();
+        price1.setId(nonExistingSectorId);
+        pricing.add(price1);
+
+        eventService.setEventPricing(EventConstants.DB_1_ID, pricing);
+    }
+
+    @Test
+    @Transactional @Rollback(true)
+    public void whenSetEventPricing() {
+        final Long sectorId = 1L;
+        List<SetSectorPriceDTO> pricing = new ArrayList<>();
+        SetSectorPriceDTO price1 = new SetSectorPriceDTO();
+        price1.setId(sectorId);
+        price1.setPrice(1000);
+        pricing.add(price1);
+
+        Event returnedEvent = eventService.setEventPricing(EventConstants.DB_1_ID, pricing);
+
+        List<EventDay> eventDaysList = returnedEvent.getEventDays().stream().collect(Collectors.toList());
+
+        for (EventDay ed : eventDaysList) {
+            assertEquals(1, ed.getPricings().size());
+
+            Pricing price = ed.getPricings().stream().findFirst().orElse(null);
+            assertEquals(1000, price.getPrice(), 0.1);
+            assertEquals(sectorId, price.getSector().getId());
+        }
     }
 }

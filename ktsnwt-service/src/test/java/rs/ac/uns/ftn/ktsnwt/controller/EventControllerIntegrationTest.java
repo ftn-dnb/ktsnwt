@@ -8,17 +8,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.ktsnwt.constants.EventConstants;
 import rs.ac.uns.ftn.ktsnwt.constants.UserConstants;
-import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
-import rs.ac.uns.ftn.ktsnwt.dto.EventEditDTO;
-import rs.ac.uns.ftn.ktsnwt.dto.UserDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.*;
 import rs.ac.uns.ftn.ktsnwt.exception.ErrorMessage;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventType;
+import rs.ac.uns.ftn.ktsnwt.repository.EventRepository;
 import rs.ac.uns.ftn.ktsnwt.security.auth.JwtAuthenticationRequest;
 import rs.ac.uns.ftn.ktsnwt.utils.RestResponsePage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -29,6 +31,9 @@ public class EventControllerIntegrationTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     private String accessToken;
 
@@ -188,6 +193,8 @@ public class EventControllerIntegrationTest {
         assertEquals(eventDto.getPurchaseLimit(), createdEvent.getPurchaseLimit());
         //assertEquals(eventDto.getStartDate(), createdEvent.getStartDate());
         //assertEquals(eventDto.getEndDate(), createdEvent.getEndDate());
+
+        eventRepository.deleteById(createdEvent.getId());
     }
 
     private HttpEntity<EventEditDTO> createEventEditDtoRequest(EventEditDTO eventEditDTO) {
@@ -212,6 +219,7 @@ public class EventControllerIntegrationTest {
     }
 
     @Test
+    @Transactional @Rollback(true)
     public void whenEditEvent() {
         final String newDescription = "This is new description for event";
         final int newPurchaseLimit = 14;
@@ -233,5 +241,67 @@ public class EventControllerIntegrationTest {
         assertEquals(newDescription, editedEvent.getDescription());
         assertEquals(newPurchaseLimit, editedEvent.getPurchaseLimit().intValue());
         assertEquals(newTicketsPerUser, editedEvent.getTicketsPerUser().intValue());
+    }
+
+    private HttpEntity<List<SetSectorPriceDTO>> createEventPricingRequest(List<SetSectorPriceDTO> pricing) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + this.accessToken);
+        return new HttpEntity<>(pricing, headers);
+    }
+
+    @Test
+    public void whenAddPricingThrowEventNotFound() {
+        List<SetSectorPriceDTO> pricings = new ArrayList<>();
+        ResponseEntity<ErrorMessage> response = restTemplate.exchange(
+                "/api/event/addPricing/" + EventConstants.NON_EXISTING_DB_ID, HttpMethod.PUT, createEventPricingRequest(pricings), ErrorMessage.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Invalid id of event", response.getBody().getMessage());
+    }
+
+    @Test
+    public void whenAddPricingEmptyPricingList() {
+        List<SetSectorPriceDTO> pricings = new ArrayList<>();
+        ResponseEntity<ErrorMessage> response = restTemplate.exchange(
+                "/api/event/addPricing/" + EventConstants.DB_1_ID, HttpMethod.PUT, createEventPricingRequest(pricings), ErrorMessage.class);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    public void whenAddPricingThrowSectorNotFound() {
+        List<SetSectorPriceDTO> pricings = new ArrayList<>();
+        SetSectorPriceDTO pricing1 = new SetSectorPriceDTO();
+        pricing1.setId(12344356L); pricing1.setPrice(1000);
+        pricings.add(pricing1);
+
+        ResponseEntity<ErrorMessage> response = restTemplate.exchange(
+                "/api/event/addPricing/" + EventConstants.DB_1_ID, HttpMethod.PUT, createEventPricingRequest(pricings), ErrorMessage.class);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("Invalid id of sector", response.getBody().getMessage());
+    }
+
+    @Test
+    @Transactional @Rollback(true)
+    public void whenAddPricing() {
+        List<SetSectorPriceDTO> pricings = new ArrayList<>();
+        SetSectorPriceDTO pricing1 = new SetSectorPriceDTO();
+        pricing1.setId(1L); pricing1.setPrice(1000);
+        pricings.add(pricing1);
+
+        ResponseEntity<EventDetailedDTO> response = restTemplate.exchange(
+                "/api/event/addPricing/" + EventConstants.DB_1_ID, HttpMethod.PUT, createEventPricingRequest(pricings), EventDetailedDTO.class);
+
+        EventDetailedDTO responseBody = response.getBody();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(responseBody);
+        assertEquals(EventConstants.DB_1_ID, responseBody.getId());
+        assertEquals(EventConstants.DB_1_NAME, responseBody.getName());
+        assertNotNull(responseBody.getOneDay().getPricing().get(0).getId());
+        assertEquals(1000, responseBody.getOneDay().getPricing().get(0).getPrice(), 0.1);
     }
 }
