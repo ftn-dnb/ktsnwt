@@ -13,7 +13,8 @@ import rs.ac.uns.ftn.ktsnwt.controller.*;
         TicketControllerIntegrationTest.class,
         HallControllerIntegrationTest.class,
         LocationControllerIntegrationTest.class,
-        EventDayControllerIntegrationTest.class
+        EventDayControllerIntegrationTest.class,
+        EventControllerIntegrationTest.class
 })
 public class ControllerIntegrationTests {
 }

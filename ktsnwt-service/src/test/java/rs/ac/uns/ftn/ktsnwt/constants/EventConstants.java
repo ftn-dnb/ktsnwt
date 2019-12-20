@@ -25,6 +25,8 @@ public class EventConstants {
 
     public static final Long NON_EXISTING_DB_ID = 1234567L;
 
+    public static final int DB_SIZE = 2;
+
     public static final Long DB_1_ID = 1L;
     public static final String DB_1_NAME = "Koncert";
     public static final String DB_1_DESCRIPTION = "Ovo je event";

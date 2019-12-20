@@ -11,7 +11,6 @@ import rs.ac.uns.ftn.ktsnwt.dto.*;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
 import rs.ac.uns.ftn.ktsnwt.mappers.PricingMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
-import rs.ac.uns.ftn.ktsnwt.model.Pricing;
 import rs.ac.uns.ftn.ktsnwt.service.event.EventService;
 
 import javax.validation.Valid;
