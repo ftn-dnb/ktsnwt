@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import rs.ac.uns.ftn.ktsnwt.constants.EventDayConstants;
 import rs.ac.uns.ftn.ktsnwt.exception.EventDayNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.EventDay;
+import rs.ac.uns.ftn.ktsnwt.model.enums.EventStatus;
 import rs.ac.uns.ftn.ktsnwt.repository.EventDayRepository;
 
 import java.util.Optional;
@@ -38,5 +39,19 @@ public class EventDayServiceImplUnitTest {
     public void whenGetEventDayThrowNotFoundException() {
         Mockito.when(eventDayRepository.findById(EventDayConstants.MOCK_ID)).thenReturn(Optional.empty());
         EventDay eventDay = eventDayService.getEventDay(EventDayConstants.MOCK_ID);
+    }
+
+    @Test(expected = EventDayNotFoundException.class)
+    public void whenDisableEventDayThrowResourceNotFound() {
+        Mockito.when(eventDayRepository.findById(EventDayConstants.MOCK_ID)).thenReturn(Optional.empty());
+        eventDayService.disableEventDay(EventDayConstants.MOCK_ID);
+    }
+
+    @Test
+    public void whenDisableEventDayDisableEventDay() {
+        EventDay eventDay = EventDayConstants.returnMockedEventDay();
+        Mockito.when(eventDayRepository.findById(EventDayConstants.MOCK_ID)).thenReturn(Optional.of(eventDay));
+        eventDayService.disableEventDay(EventDayConstants.MOCK_ID);
+        assertEquals(EventStatus.CANCELED, eventDay.getStatus());
     }
 }

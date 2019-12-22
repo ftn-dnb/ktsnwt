@@ -3,12 +3,14 @@ package rs.ac.uns.ftn.ktsnwt.service.event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.dto.*;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.EventNotFoundException;
+import rs.ac.uns.ftn.ktsnwt.exception.HallNotFoundException;
+import rs.ac.uns.ftn.ktsnwt.exception.SectorNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
 import rs.ac.uns.ftn.ktsnwt.model.EventDay;
@@ -16,11 +18,9 @@ import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.model.Pricing;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventStatus;
 import rs.ac.uns.ftn.ktsnwt.repository.*;
-import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayService;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -31,7 +31,6 @@ public class EventServiceImpl implements EventService {
     @Autowired HallRepository hallRepository;
     @Autowired EventDayRepository eventDayRepository;
     @Autowired TimeProvider timeProvider;
-    @Autowired EventMapper eventMapper;
     @Autowired SectorRepository sectorRepository;
     @Autowired PricingRepository pricingRepository;
 
@@ -54,6 +53,10 @@ public class EventServiceImpl implements EventService {
             throw new ApiRequestException("End date is after start date");
         }
 
+        if (!hallRepository.findById(event.getHallId()).isPresent()) {
+            throw new HallNotFoundException("Hall not found");
+        }
+
         Long count = eventRepository.checkCapturedHall(startDate,endDate,event.getHallId());
 
         if(count > 0){
@@ -63,7 +66,7 @@ public class EventServiceImpl implements EventService {
         Event e = EventMapper.toEntity(event);
         e.setStartDate(new Timestamp(startDate.getTime()));
         e.setEndDate(new Timestamp(endDate.getTime()));
-        Hall h = hallRepository.getById(event.getHallId());
+        Hall h = hallRepository.findById(event.getHallId()).orElse(null);
         e.setHall(h);
         e.setImagePath(defaultEventImage);
         eventRepository.save(e);
@@ -86,7 +89,7 @@ public class EventServiceImpl implements EventService {
             ed.setStatus(EventStatus.ACTIVE);
             ed.setDate(new Timestamp(date.getTime()));
             ed.setDescription("ADD DESCRIPTION");
-            eventDayRepository.save(ed);
+            ed = eventDayRepository.save(ed);
             eventDays.add(ed);
         }
         return eventDays;
@@ -103,24 +106,24 @@ public class EventServiceImpl implements EventService {
             throw new ApiRequestException("Invalid date format");
         }
 
-        return eventRepository.filterEvents(endDate,filter.getType(),filter.getLocation(), pageable).map(x -> eventMapper.toDTO(x));
+        return eventRepository.filterEvents(endDate,filter.getType(),filter.getLocation(), pageable).map(x -> EventMapper.toDTO(x));
     }
 
     @Override
-    public Page<EventDTO> getAllEvents(Pageable pageable){
-        return eventRepository.findAll(pageable).map(x -> eventMapper.toDTO(x));
+    public Page<Event> getAllEvents(Pageable pageable){
+        return eventRepository.findAll(pageable);
     }
 
     @Override
     public void setNewEventImage(String path, Long id){
-        Event e = eventRepository.findById(id).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
+        Event e = eventRepository.findById(id).orElseThrow(() -> new EventNotFoundException("Invalid id of event"));
         e.setImagePath(path);
         eventRepository.save(e);
     }
 
     @Override
     public Event editEvent(EventEditDTO event){
-        Event e = eventRepository.findById(event.getId()).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
+        Event e = eventRepository.findById(event.getId()).orElseThrow(() -> new EventNotFoundException("Invalid id of event"));
 
         e.setPurchaseLimit(event.getPurchaseLimit());
         e.setTicketsPerUser(event.getTicketsPerUser());
@@ -133,7 +136,11 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event setEventPricing(Long eventId, List<SetSectorPriceDTO> pricing){
-        Event e = eventRepository.findById(eventId).orElseThrow(() -> new ApiRequestException("Invalid id of event"));
+        Event e = eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException("Invalid id of event"));
+
+        if (pricing.isEmpty()) {
+            throw new ApiRequestException("Pricing list can not be empty");
+        }
 
         for (EventDay ed: e.getEventDays()) {
             Set<Pricing> realPricing = new HashSet<>();
@@ -141,7 +148,7 @@ public class EventServiceImpl implements EventService {
             for (SetSectorPriceDTO sP: pricing) {
                 Pricing p = new Pricing();
                 p.setPrice(sP.getPrice());
-                p.setSector(sectorRepository.findById(sP.getId()).orElseThrow(() -> new ApiRequestException("Invalid id of sector")));
+                p.setSector(sectorRepository.findById(sP.getId()).orElseThrow(() -> new SectorNotFoundException("Invalid id of sector")));
                 p.setEventDay(ed);
                 pricingRepository.save(p);
                 realPricing.add(p);

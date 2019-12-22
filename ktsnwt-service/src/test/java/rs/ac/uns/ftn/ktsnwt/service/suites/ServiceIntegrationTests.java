@@ -2,7 +2,7 @@ package rs.ac.uns.ftn.ktsnwt.service.suites;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import rs.ac.uns.ftn.ktsnwt.repository.SectorRepositoryIntegrationTest;
+import rs.ac.uns.ftn.ktsnwt.service.event.EventServiceImplIntegrationTest;
 import rs.ac.uns.ftn.ktsnwt.service.hall.HallServiceImplIntegrationTest;
 import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayServiceImplIntegrationTest;
 import rs.ac.uns.ftn.ktsnwt.service.location.LocationServiceImplIntegrationTest;
@@ -20,7 +20,8 @@ import rs.ac.uns.ftn.ktsnwt.service.tickets.TicketsServiceImplIntegrationTest;
         TicketsServiceImplIntegrationTest.class,
         HallServiceImplIntegrationTest.class,
         EventDayServiceImplIntegrationTest.class,
-        LocationServiceImplIntegrationTest.class
+        LocationServiceImplIntegrationTest.class,
+        EventServiceImplIntegrationTest.class
 })
 public class ServiceIntegrationTests {
 }

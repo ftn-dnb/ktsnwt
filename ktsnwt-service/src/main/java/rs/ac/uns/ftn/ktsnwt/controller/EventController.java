@@ -11,7 +11,6 @@ import rs.ac.uns.ftn.ktsnwt.dto.*;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
 import rs.ac.uns.ftn.ktsnwt.mappers.PricingMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
-import rs.ac.uns.ftn.ktsnwt.model.Pricing;
 import rs.ac.uns.ftn.ktsnwt.service.event.EventService;
 
 import javax.validation.Valid;
@@ -41,7 +40,8 @@ public class EventController {
 
     @GetMapping("/public/all")
     public ResponseEntity<Page<EventDTO>> getAllEvents(Pageable pageable){
-        return new ResponseEntity<>(eventService.getAllEvents(pageable),HttpStatus.OK);
+        Page<EventDTO> events = eventService.getAllEvents(pageable).map(x -> EventMapper.toDTO(x));
+        return new ResponseEntity<>(events, HttpStatus.OK);
     }
 
     @PutMapping ("/editEvent")
