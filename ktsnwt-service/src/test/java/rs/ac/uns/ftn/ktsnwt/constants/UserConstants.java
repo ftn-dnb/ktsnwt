@@ -23,6 +23,10 @@ public class UserConstants {
     public static final String MOCK_PASSWORD_OTHER = "123";
 
 
+    public static final String NEW_USERNAME = "123";
+    public static final String NEW_PASSWORD = "123";
+    public static final String DEFAULT_IMAGE_PATH = "http://res.cloudinary.com/dhibcw0v1/image/upload/v1572021937/bgcbrwpatbahnbdkdboy.png";
+
     private UserConstants() {
     }
 
