@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { LOGIN_PATH } from './../../config/router-paths';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -21,24 +21,32 @@ export class UserSettingsComponent implements OnInit {
   basicInfoForm: FormGroup;
   passwordForm: FormGroup;
 
-  constructor(private userService: UserService, 
+  constructor(private fb: FormBuilder,
+              private userService: UserService, 
               private toastr: ToastrService,
               private router: Router,
               private authService: AuthService) { 
+
+    this.createBasicInfoForm();
+    this.createPasswordForm();
   }
 
   ngOnInit() {
     this.getUserData();
+  }
 
-    this.basicInfoForm = new FormGroup({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email])
+  private createBasicInfoForm(): void {
+    this.basicInfoForm = this.fb.group({
+      'firstName': ['', Validators.required],
+      'lastName': ['', Validators.required],
+      'email': ['', [Validators.required, Validators.email]]
     });
+  }
 
-    this.passwordForm = new FormGroup({
-      oldPassword: new FormControl('', Validators.required),
-      newPassword: new FormControl('', Validators.required)
+  private createPasswordForm(): void {
+    this.passwordForm = this.fb.group({
+      'oldPassword': ['', Validators.required],
+      'newPassword': ['', Validators.required]
     });
   }
 
@@ -68,11 +76,6 @@ export class UserSettingsComponent implements OnInit {
   }
 
   onClickSaveEdit(): void {
-    if (!this.basicInfoForm.valid) {
-      this.toastr.warning('All fields must be filled out.');
-      return;
-    }
-
     const data: UserEditInfo = {
       firstName: this.basicInfoForm.controls['firstName'].value,
       lastName: this.basicInfoForm.controls['lastName'].value,

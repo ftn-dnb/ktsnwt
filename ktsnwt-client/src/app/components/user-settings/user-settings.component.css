@@ -48,3 +48,16 @@ form {
     justify-content: center;
     align-items: center;
 }
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0px;
+}
+
+.text-danger {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: red;
+    background-color: red;
+}
