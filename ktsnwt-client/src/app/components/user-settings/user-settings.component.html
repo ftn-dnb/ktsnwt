@@ -12,42 +12,85 @@
             type="file" (change)="onClickImageChange($event)"
             #fileInput
             accept="image/x-png,image/gif,image/jpeg"
-        >
+        />
     </div>
 
-
     <div class="user-info-container">
-        <form [formGroup]="basicInfoForm" (ngSubmit)="onClickSaveEdit()">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-                <input matInput type="text" placeholder="First name" formControlName="firstName" />
-            </mat-form-field>
-    
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-                <input matInput type="text" placeholder="Last name" formControlName="lastName" />
-            </mat-form-field>
-    
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-icon matPrefix class="icon">email</mat-icon>
-                <input matInput type="email" placeholder="E-mail" formControlName="email" />
-            </mat-form-field>
-    
-            <button type="submit" mat-raised-button color="primary">Save</button>
+        <form [formGroup]="basicInfoForm" (submit)="onClickSaveEdit()">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-icon matPrefix class="icon">perm_identity</mat-icon>
+                    <input matInput type="text" placeholder="First name" formControlName="firstName" />
+                </mat-form-field>
+
+                <small class="text-danger"
+                    *ngIf="basicInfoForm.controls.firstName.touched && basicInfoForm.controls.firstName.required">
+                    First name is required
+                </small>
+            </div>
+            
+            <div>
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-icon matPrefix class="icon">perm_identity</mat-icon>
+                    <input matInput type="text" placeholder="Last name" formControlName="lastName" />
+                </mat-form-field>
+
+                <small class="text-danger"
+                    *ngIf="basicInfoForm.controls.lastName.touched && basicInfoForm.controls.lastName.required">
+                    Last name is required
+                </small>
+            </div>
+            
+            <div>
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-icon matPrefix class="icon">email</mat-icon>
+                    <input matInput type="email" placeholder="E-mail" formControlName="email" />
+                </mat-form-field>
+
+                <small class="text-danger"
+                    *ngIf="basicInfoForm.controls.email.touched && basicInfoForm.controls.email.required">
+                    Email is required
+                </small>
+
+                <small class="text-danger"
+                    *ngIf="basicInfoForm.controls.email.touched && basicInfoForm.controls.email.email">
+                    Email is not valid
+                </small>
+            </div>
+            
+            <button type="submit" mat-raised-button color="primary" [disabled]="basicInfoForm.invalid">
+                Save
+            </button>
         </form>
     
-        <form [formGroup]="passwordForm" (ngSubmit)="onClickEditPassword()">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-icon matPrefix class="icon">lock</mat-icon>
-                <input matInput type="password" placeholder="Old password" formControlName="oldPassword" />
-            </mat-form-field>
-    
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-icon matPrefix class="icon">lock</mat-icon>
-                <input matInput type="password" placeholder="New password" formControlName="newPassword" />
-            </mat-form-field>
-    
-            <button type="submit" mat-raised-button color="primary">Change</button>
+        <form [formGroup]="passwordForm" (submit)="onClickEditPassword()">
+            <div>
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-icon matPrefix class="icon">lock</mat-icon>
+                    <input matInput type="password" placeholder="Old password" formControlName="oldPassword" />
+                </mat-form-field>
+
+                <small class="text-danger"
+                    *ngIf="passwordForm.controls.oldPassword.touched && passwordForm.controls.oldPassword.required">
+                    Old password is required
+                </small>
+            </div>
+            
+            <div>
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-icon matPrefix class="icon">lock</mat-icon>
+                    <input matInput type="password" placeholder="New password" formControlName="newPassword" />
+                </mat-form-field>
+
+                <small class="text-danger"
+                    *ngIf="passwordForm.controls.newPassword.touched && passwordForm.controls.newPassword.required">
+                    New password is required
+                </small>
+            </div>
+            
+            <button type="submit" mat-raised-button color="primary" [disabled]="passwordForm.invalid">
+                Change
+            </button>
         </form>
     </div>
 </div>

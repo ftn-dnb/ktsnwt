@@ -1,3 +1,4 @@
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { USER_ID_KEY, USER_ROLE_KEY, USERNAME_KEY, USER_TOKEN_KEY } from './../../config/local-storage-keys';
 import { LoginInfo } from '../../models/login-info';
 import { HOME_PATH, REGISTRATION_PATH } from './../../config/router-paths';
@@ -13,13 +14,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  username: string = '';
-  password: string = '';
+  loginForm: FormGroup;
 
-  constructor(private router: Router,
+  constructor(private fb: FormBuilder,
+              private router: Router,
               private authService: AuthService,
               private toastr: ToastrService) { 
 
+    this.createForm();
   }
 
   ngOnInit() {
@@ -28,10 +30,17 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onClickLogin(): void {
+  private createForm(): void {
+    this.loginForm = this.fb.group({
+      'username': ['', Validators.required],
+      'password': ['', Validators.required]
+    });
+  }
+
+  onLogin(): void {
     const loginInfo: LoginInfo = {
-      username: this.username,
-      password: this.password
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password
     };
 
     this.authService.login(loginInfo).subscribe(data => {
