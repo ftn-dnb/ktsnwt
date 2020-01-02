@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.ktsnwt.service.suites;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import rs.ac.uns.ftn.ktsnwt.service.email.MailSenderServiceIntegrationTest;
 import rs.ac.uns.ftn.ktsnwt.service.event.EventServiceImplIntegrationTest;
 import rs.ac.uns.ftn.ktsnwt.service.hall.HallServiceImplIntegrationTest;
 import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayServiceImplIntegrationTest;
@@ -21,7 +22,8 @@ import rs.ac.uns.ftn.ktsnwt.service.tickets.TicketsServiceImplIntegrationTest;
         HallServiceImplIntegrationTest.class,
         EventDayServiceImplIntegrationTest.class,
         LocationServiceImplIntegrationTest.class,
-        EventServiceImplIntegrationTest.class
+        EventServiceImplIntegrationTest.class,
+        MailSenderServiceIntegrationTest.class
 })
 public class ServiceIntegrationTests {
 }
