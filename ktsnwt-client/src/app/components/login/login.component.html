@@ -1,23 +1,40 @@
 <div class="container">
     <h2>KTS-NWT Login</h2>
+
     
-    <mat-form-field appearance="outline">
-        <mat-icon matPrefix class="icon">account_circle</mat-icon>
-        <input matInput type="text" placeholder="Username" [(ngModel)]="username" />
-    </mat-form-field>
-    
-    <mat-form-field appearance="outline">
-        <mat-icon matPrefix class="icon">lock</mat-icon>
-        <input matInput type="password" placeholder="Password" [(ngModel)]="password" />
-    </mat-form-field>
-    
-    <div>
-        <button mat-button (click)="onClickRegister()" class="button">
-            Register
-        </button>
+    <form [formGroup]="loginForm" (submit)="onLogin()">
+        <div class="input-field">
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">account_circle</mat-icon>
+                <input matInput type="text" placeholder="Username" formControlName="username" />
+            </mat-form-field>
+
+            <small class="text-danger"
+                *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors?.required">
+                Username is required
+            </small>
+        </div>
+
+        <div class="input-field">
+            <mat-form-field appearance="outline">
+                <mat-icon matPrefix class="icon">lock</mat-icon>
+                <input matInput type="password" placeholder="Password" formControlName="password" />
+            </mat-form-field>
+
+            <small class="text-danger"
+                *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.required">
+                Password is required
+            </small>
+        </div>
         
-        <button mat-raised-button color="primary" (click)="onClickLogin()" class="button">
-            Login
-        </button>
-    </div>
+        <div>
+            <button mat-button (click)="onClickRegister()" class="button">
+                Register
+            </button>
+            
+            <button mat-raised-button color="primary" type="submit" class="button" [disabled]="loginForm.invalid">
+                Login
+            </button>
+        </div>
+    </form>
 </div>
