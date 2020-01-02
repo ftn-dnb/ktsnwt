@@ -13,44 +13,91 @@
     
         <br />
         
-        <form [formGroup]="registrationForm" (ngSubmit)="onRegisterSubmit()">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-                <input matInput type="text" placeholder="First name" formControlName="firstName" />
-            </mat-form-field>
-        
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-                <input matInput type="text" placeholder="Last name" formControlName="lastName" />
-            </mat-form-field>
-        
-            <br />
-        
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-icon matPrefix class="icon">account_circle</mat-icon>
-                <input matInput type="text" placeholder="Username" formControlName="username" />
-            </mat-form-field>
-        
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-icon matPrefix class="icon">email</mat-icon>
-                <input matInput type="email" placeholder="E-mail" formControlName="email" />
-            </mat-form-field>
-        
-            <br />
-        
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-icon matPrefix class="icon">lock</mat-icon>
-                <input matInput type="password" placeholder="Password" formControlName="password" />
-            </mat-form-field>
-        
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-icon matPrefix class="icon">lock</mat-icon>
-                <input matInput type="password" placeholder="Repeat password" formControlName="repeatPassword" />
-            </mat-form-field>
-        
-            <br />
-        
-            <button type="submit" mat-raised-button color="primary">
+        <form [formGroup]="registrationForm" (submit)="onRegisterSubmit()">
+            <div class="row">
+                <div class="input-field">
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix class="icon">perm_identity</mat-icon>
+                        <input matInput type="text" placeholder="First name" formControlName="firstName" />
+                    </mat-form-field>
+    
+                    <small class="text-danger"
+                        *ngIf="registrationForm.controls.firstName.touched && registrationForm.controls.firstName.errors?.required">
+                        First name is required
+                    </small>
+                </div>
+            
+                <div class="input-field">
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix class="icon">perm_identity</mat-icon>
+                        <input matInput type="text" placeholder="Last name" formControlName="lastName" />
+                    </mat-form-field>
+    
+                    <small class="text-danger"
+                        *ngIf="registrationForm.controls.lastName.touched && registrationForm.controls.lastName.errors?.required">
+                        Last name is required
+                    </small>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field">
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix class="icon">account_circle</mat-icon>
+                        <input matInput type="text" placeholder="Username" formControlName="username" />
+                    </mat-form-field>
+    
+                    <small class="text-danger"
+                        *ngIf="registrationForm.controls.username.touched && registrationForm.controls.username.errors?.required">
+                        Username is required
+                    </small>
+                </div>
+            
+                <div class="input-field">
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix class="icon">email</mat-icon>
+                        <input matInput type="email" placeholder="E-mail" formControlName="email" />
+                    </mat-form-field>
+    
+                    <small class="text-danger"
+                        *ngIf="registrationForm.controls.email.touched && registrationForm.controls.email.errors?.required">
+                        Email is required
+                    </small>
+    
+                    <small class="text-danger"
+                        *ngIf="registrationForm.controls.email.touched && registrationForm.controls.email.errors?.email">
+                        Email is not valid
+                    </small>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="input-field">
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix class="icon">lock</mat-icon>
+                        <input matInput type="password" placeholder="Password" formControlName="password" />
+                    </mat-form-field>
+    
+                    <small class="text-danger"
+                        *ngIf="registrationForm.controls.password.touched && registrationForm.controls.password.errors?.required">
+                        Password is required
+                    </small>
+                </div>
+            
+                <div class="input-field">
+                    <mat-form-field appearance="outline">
+                        <mat-icon matPrefix class="icon">lock</mat-icon>
+                        <input matInput type="password" placeholder="Repeat password" formControlName="repeatPassword" />
+                    </mat-form-field>
+    
+                    <small class="text-danger"
+                        *ngIf="registrationForm.controls.repeatPassword.touched && registrationForm.controls.repeatPassword.errors?.required">
+                        Repeat password is required
+                    </small>
+                </div>
+            </div>
+            
+            <button type="submit" mat-raised-button color="primary" [disabled]="registrationForm.invalid">
                 Register
             </button>
         </form>

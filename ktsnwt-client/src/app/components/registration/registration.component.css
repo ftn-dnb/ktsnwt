@@ -7,6 +7,11 @@
     text-align: center;
 }
 
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
 .icon {
     margin-right: 10px;
 }
@@ -14,4 +19,13 @@
 .input-field {
     margin-right: 10px;
     margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0px;
+}
+
+.text-danger {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    color: red;
 }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -16,7 +16,8 @@ export class RegistrationComponent implements OnInit {
   isUserInfoSent: boolean = false;
   registrationForm: FormGroup;
 
-  constructor(private authService: AuthService,
+  constructor(private fb: FormBuilder,
+              private authService: AuthService,
               private router: Router,
               private toastr: ToastrService) {
   }
@@ -27,22 +28,21 @@ export class RegistrationComponent implements OnInit {
       this.router.navigate([HOME_PATH]);
     }
 
-    this.registrationForm = new FormGroup({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      username: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
-      repeatPassword: new FormControl('', Validators.required)
+    this.createForm();
+  }
+
+  private createForm(): void {
+    this.registrationForm = this.fb.group({
+      'firstName': ['', Validators.required],
+      'lastName': ['', Validators.required],
+      'username': ['', Validators.required],
+      'email': ['', [Validators.required, Validators.email]],
+      'password': ['', Validators.required],
+      'repeatPassword': ['', Validators.required]
     });
   }
 
   onRegisterSubmit(): void {
-    if (!this.registrationForm.valid) {
-      this.toastr.error('All fields need to be filled.');
-      return;
-    }
-
     const password = this.registrationForm.controls['password'].value;
     const repeatPassword = this.registrationForm.controls['repeatPassword'].value;
 
@@ -53,8 +53,8 @@ export class RegistrationComponent implements OnInit {
     
     const userInfo: UserInfo = {
       username: this.registrationForm.controls['username'].value,
-      password: this.registrationForm.controls['password'].value,
-      repeatPassword: this.registrationForm.controls['repeatPassword'].value,
+      password: password,
+      repeatPassword: repeatPassword,
       email: this.registrationForm.controls['email'].value,
       firstName: this.registrationForm.controls['firstName'].value,
       lastName: this.registrationForm.controls['lastName'].value,
