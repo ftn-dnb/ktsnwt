@@ -1,6 +1,6 @@
 package rs.ac.uns.ftn.ktsnwt.pages;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,6 +20,12 @@ public class LoginPage {
     @FindBy(css = "#login-btn")
     private WebElement loginButton;
 
+    @FindBy(css = "small#username-error")
+    private WebElement usernameErrorMessage;
+
+    @FindBy(css = "small#password-error")
+    private WebElement passwordErrorMessage;
+
     public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -31,6 +37,12 @@ public class LoginPage {
     public void setUsername(String username) {
         this.usernameInputField.clear();
         this.usernameInputField.sendKeys(username);
+    }
+
+    public void setEmptyUsername() {
+        while (!usernameInputField.getText().equals("")) {
+            usernameInputField.sendKeys(Keys.BACK_SPACE);
+        }
     }
 
     public WebElement getPasswordInputField() {
@@ -46,7 +58,15 @@ public class LoginPage {
         return loginButton;
     }
 
+    public WebElement getUsernameErrorMessage() {
+        return usernameErrorMessage;
+    }
+
+    public WebElement getPasswordErrorMessage() {
+        return passwordErrorMessage;
+    }
+
     public void ensureLoginBtnIsDisplayed() {
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(loginButton));
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(usernameInputField));
     }
 }
