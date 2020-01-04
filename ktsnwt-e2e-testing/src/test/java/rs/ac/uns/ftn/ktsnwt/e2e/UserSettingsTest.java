@@ -62,7 +62,9 @@ public class UserSettingsTest {
     @Test
     public void testImageChange() {
         this.gotoUserSettings();
-        // TODO: implement this
+        settingsPage.getImageUplaodButton().sendKeys(Constants.IMAGE_PATH);
+        assertEquals(browser.getCurrentUrl(), Constants.FRONTEND_APP_URL + "settings");
+        assertEquals(settingsPage.getToastMessage().getText(), Constants.USER_SETTINGS_IMAGE_CHANGE_SUCCESS);
     }
 
     @Test
@@ -131,6 +133,18 @@ public class UserSettingsTest {
         assertFalse(settingsPage.getChangePasswordButton().isEnabled());
         assertTrue(Boolean.parseBoolean(settingsPage.getOldPasswordInput().getAttribute("aria-invalid")));
         assertTrue(Boolean.parseBoolean(settingsPage.getNewPasswordInput().getAttribute("aria-invalid")));
+    }
+
+    @Test
+    public void testChangePasswordWrongOldPassword() {
+        this.gotoUserSettings();
+
+        settingsPage.getOldPasswordInput().sendKeys("12213123123");
+        settingsPage.getNewPasswordInput().sendKeys("123");
+        settingsPage.getChangePasswordButton().click();
+
+        assertEquals(settingsPage.getToastMessage().getText(), Constants.USER_SETTINGS_BACKEND_PW_ERROR);
+        assertEquals(browser.getCurrentUrl(), Constants.FRONTEND_APP_URL + "settings");
     }
 
     @Test

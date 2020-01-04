@@ -8,7 +8,7 @@ public class Constants {
 
     public static final String FRONTEND_APP_URL   = "http://localhost:4200/";
     public static final String CHROME_DRIVER_PATH = "C:/chromedriver/chromedriver.exe";
-
+    public static final String IMAGE_PATH = "C:/test.png";
 
     /**
      *   Error messages
@@ -25,6 +25,7 @@ public class Constants {
 
     public static final String USER_SETTINGS_INFO_CHANGE_SUCCESS = "Your profile info has been successfully changed.";
     public static final String USER_SETTINGS_PW_CHANGE_SUCCESS = "Your password has been changed. Please login again.";
+    public static final String USER_SETTINGS_IMAGE_CHANGE_SUCCESS = "Your image has been successfully updated.";
 
     private Constants() {
     }

@@ -36,7 +36,8 @@ public class UserSettingsPage {
     @FindBy(css = "#change-pw-btn")
     private WebElement changePasswordButton;
 
-    // TODO: private WebElement imageUplaodButton;
+    @FindBy(css = "#image-input")
+    private WebElement imageUplaodButton;
 
 
     public UserSettingsPage(WebDriver driver) {
@@ -97,5 +98,9 @@ public class UserSettingsPage {
 
     public WebElement getChangePasswordButton() {
         return changePasswordButton;
+    }
+
+    public WebElement getImageUplaodButton() {
+        return imageUplaodButton;
     }
 }
