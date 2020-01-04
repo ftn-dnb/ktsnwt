@@ -1,6 +1,6 @@
 package rs.ac.uns.ftn.ktsnwt.e2e;
 
-import net.bytebuddy.matcher.CollectionOneToOneMatcher;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -67,17 +67,45 @@ public class UserSettingsTest {
 
     @Test
     public void testChangeBasicInfoEmptyFields() {
+        this.gotoUserSettings();
 
+        // @HACK
+        for (int i = 0; i < 15; i++) {
+            settingsPage.getFirstNameInput().sendKeys(Keys.BACK_SPACE);
+            settingsPage.getLastNameInput().sendKeys(Keys.BACK_SPACE);
+            settingsPage.getEmailInput().sendKeys(Keys.BACK_SPACE);
+        }
+
+        assertFalse(settingsPage.getSaveButton().isEnabled());
+        assertTrue(Boolean.parseBoolean(settingsPage.getFirstNameInput().getAttribute("aria-invalid")));
+        assertTrue(Boolean.parseBoolean(settingsPage.getLastNameInput().getAttribute("aria-invalid")));
+        assertTrue(Boolean.parseBoolean(settingsPage.getEmailInput().getAttribute("aria-invalid")));
     }
 
     @Test
     public void testChangeBasicInfoExistingEmail() {
+        this.gotoUserSettings();
 
+        settingsPage.setFirstName("New Jane");
+        settingsPage.setLastName("New Doe");
+        settingsPage.setEmail("john@doe.com");
+        settingsPage.getSaveButton().click();
+
+        assertEquals(settingsPage.getToastMessage().getText(), Constants.USER_SETTINGS_BACKEND_INFO_ERROR);
+        assertEquals(browser.getCurrentUrl(), Constants.FRONTEND_APP_URL + "settings");
     }
 
     @Test
     public void testChangeBasicInfoInvalidEmail() {
+        this.gotoUserSettings();
 
+        settingsPage.setFirstName("New Jane");
+        settingsPage.setLastName("New Doe");
+        settingsPage.setEmail("this is invalid email");
+        settingsPage.getSaveButton().click();
+
+        assertFalse(settingsPage.getSaveButton().isEnabled());
+        assertTrue(Boolean.parseBoolean(settingsPage.getEmailInput().getAttribute("aria-invalid")));
     }
 
     @Test
