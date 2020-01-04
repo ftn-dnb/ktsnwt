@@ -1,15 +1,14 @@
 <div class="container">
     <h2>KTS-NWT Login</h2>
 
-    
     <form [formGroup]="loginForm" (submit)="onLogin()">
         <div class="input-field">
             <mat-form-field appearance="outline">
                 <mat-icon matPrefix class="icon">account_circle</mat-icon>
-                <input matInput type="text" placeholder="Username" formControlName="username" />
+                <input id="username-input" matInput type="text" placeholder="Username" formControlName="username" />
             </mat-form-field>
 
-            <small class="text-danger"
+            <small id="username-error" class="text-danger"
                 *ngIf="loginForm.controls.username.touched && loginForm.controls.username.errors?.required">
                 Username is required
             </small>
@@ -18,10 +17,10 @@
         <div class="input-field">
             <mat-form-field appearance="outline">
                 <mat-icon matPrefix class="icon">lock</mat-icon>
-                <input matInput type="password" placeholder="Password" formControlName="password" />
+                <input id="password-input" matInput type="password" placeholder="Password" formControlName="password" />
             </mat-form-field>
 
-            <small class="text-danger"
+            <small id="password-error" class="text-danger"
                 *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.required">
                 Password is required
             </small>
@@ -32,7 +31,7 @@
                 Register
             </button>
             
-            <button mat-raised-button color="primary" type="submit" class="button" [disabled]="loginForm.invalid">
+            <button id="login-btn" mat-raised-button color="primary" type="submit" class="button" [disabled]="loginForm.invalid">
                 Login
             </button>
         </div>

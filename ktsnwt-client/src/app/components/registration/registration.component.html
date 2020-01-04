@@ -1,7 +1,9 @@
 <div class="container">
     <ng-template [ngIf]="isUserInfoSent" [ngIfElse]="infoNotSent">
-        <h2>Account activation</h2>
-        <p>Check out your email for activation link. After activation you can use this account.</p>
+        <div id="request-sent">
+            <h2>Account activation</h2>
+            <p>Check out your email for activation link. After activation you can use this account.</p>
+        </div>
     </ng-template>
 
     <ng-template #infoNotSent>
@@ -18,10 +20,10 @@
                 <div class="input-field">
                     <mat-form-field appearance="outline">
                         <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-                        <input matInput type="text" placeholder="First name" formControlName="firstName" />
+                        <input id="firstname-input" matInput type="text" placeholder="First name" formControlName="firstName" />
                     </mat-form-field>
     
-                    <small class="text-danger"
+                    <small id="firstname-error-msg" class="text-danger"
                         *ngIf="registrationForm.controls.firstName.touched && registrationForm.controls.firstName.errors?.required">
                         First name is required
                     </small>
@@ -30,10 +32,10 @@
                 <div class="input-field">
                     <mat-form-field appearance="outline">
                         <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-                        <input matInput type="text" placeholder="Last name" formControlName="lastName" />
+                        <input id="lastname-input" matInput type="text" placeholder="Last name" formControlName="lastName" />
                     </mat-form-field>
     
-                    <small class="text-danger"
+                    <small id="lastname-error-msg" class="text-danger"
                         *ngIf="registrationForm.controls.lastName.touched && registrationForm.controls.lastName.errors?.required">
                         Last name is required
                     </small>
@@ -44,10 +46,10 @@
                 <div class="input-field">
                     <mat-form-field appearance="outline">
                         <mat-icon matPrefix class="icon">account_circle</mat-icon>
-                        <input matInput type="text" placeholder="Username" formControlName="username" />
+                        <input id="username-input" matInput type="text" placeholder="Username" formControlName="username" />
                     </mat-form-field>
     
-                    <small class="text-danger"
+                    <small id="username-error-msg" class="text-danger"
                         *ngIf="registrationForm.controls.username.touched && registrationForm.controls.username.errors?.required">
                         Username is required
                     </small>
@@ -56,15 +58,15 @@
                 <div class="input-field">
                     <mat-form-field appearance="outline">
                         <mat-icon matPrefix class="icon">email</mat-icon>
-                        <input matInput type="email" placeholder="E-mail" formControlName="email" />
+                        <input id="email-input" matInput type="email" placeholder="E-mail" formControlName="email" />
                     </mat-form-field>
     
-                    <small class="text-danger"
+                    <small id="email-error-msg-req" class="text-danger"
                         *ngIf="registrationForm.controls.email.touched && registrationForm.controls.email.errors?.required">
                         Email is required
                     </small>
     
-                    <small class="text-danger"
+                    <small id="email-error-msg" class="text-danger"
                         *ngIf="registrationForm.controls.email.touched && registrationForm.controls.email.errors?.email">
                         Email is not valid
                     </small>
@@ -75,10 +77,10 @@
                 <div class="input-field">
                     <mat-form-field appearance="outline">
                         <mat-icon matPrefix class="icon">lock</mat-icon>
-                        <input matInput type="password" placeholder="Password" formControlName="password" />
+                        <input id="password-input" matInput type="password" placeholder="Password" formControlName="password" />
                     </mat-form-field>
     
-                    <small class="text-danger"
+                    <small id="password-error-msg" class="text-danger"
                         *ngIf="registrationForm.controls.password.touched && registrationForm.controls.password.errors?.required">
                         Password is required
                     </small>
@@ -87,17 +89,17 @@
                 <div class="input-field">
                     <mat-form-field appearance="outline">
                         <mat-icon matPrefix class="icon">lock</mat-icon>
-                        <input matInput type="password" placeholder="Repeat password" formControlName="repeatPassword" />
+                        <input id="repeatpassword-input" matInput type="password" placeholder="Repeat password" formControlName="repeatPassword" />
                     </mat-form-field>
     
-                    <small class="text-danger"
+                    <small id="repeatpassword-error-msg" class="text-danger"
                         *ngIf="registrationForm.controls.repeatPassword.touched && registrationForm.controls.repeatPassword.errors?.required">
                         Repeat password is required
                     </small>
                 </div>
             </div>
             
-            <button type="submit" mat-raised-button color="primary" [disabled]="registrationForm.invalid">
+            <button id="register-btn" type="submit" mat-raised-button color="primary" [disabled]="registrationForm.invalid">
                 Register
             </button>
         </form>

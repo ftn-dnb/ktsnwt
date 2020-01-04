@@ -29,7 +29,7 @@
 
             <!-- REGULAR USER -->
 
-            <button mat-button [matMenuTriggerFor]="userMenu">
+            <button id="user-menu-btn" mat-button [matMenuTriggerFor]="userMenu">
                 <span class="btnText">{{ getUsername() }}</span>
                 <mat-icon>keyboard_arrow_down</mat-icon>
             </button>
@@ -52,11 +52,11 @@
         <ng-template #nonRegisteredUser>
             <span class="spacer"></span>
 
-            <button mat-button class="button" (click)="onClickRegister()">
+            <button id="toolbar-registration-btn" mat-button class="button" (click)="onClickRegister()">
                 Register
             </button>
 
-            <button mat-raised-button class="button" (click)="onClickLogin()">
+            <button id="toolbar-login-btn" mat-raised-button class="button" (click)="onClickLogin()">
                 Login
             </button>
         </ng-template>

@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.ktsnwt.pages;
 
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,6 +13,9 @@ public class HomePage {
     @FindBy(css = "#toolbar-login-btn")
     private WebElement loginButton;
 
+    @FindBy(css = "#toolbar-registration-btn")
+    private WebElement registrationButton;
+
     @FindBy(css = "#user-menu-btn")
     private WebElement userMenuButton;
 
@@ -25,11 +27,19 @@ public class HomePage {
         return loginButton;
     }
 
+    public WebElement getRegistrationButton() {
+        return registrationButton;
+    }
+
     public void ensureLoginIsDisplayed() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(loginButton));
     }
 
     public void ensureLoggedInPageIsDisplayed() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(userMenuButton));
+    }
+
+    public void ensureRegistrationButtonIsDisplayed() {
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(registrationButton));
     }
 }
