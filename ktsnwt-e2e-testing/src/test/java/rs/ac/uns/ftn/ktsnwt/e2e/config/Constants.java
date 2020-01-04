@@ -17,6 +17,13 @@ public class Constants {
     public static final String REGISTRATION_BACKEND_ERROR = "There was an error while adding your account. Try again later.";
     public static final String REGISTRATION_DIFFERENT_PASSWORDS = "Passwords don't match";
 
+    /**
+     *   Success messages
+     */
+
+    public static final String USER_SETTINGS_INFO_CHANGE_SUCCESS = "Your profile info has been successfully changed.";
+    public static final String USER_SETTINGS_PW_CHANGE_SUCCESS = "Your password has been changed. Please login again.";
+
     private Constants() {
     }
 }

@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.ktsnwt.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,6 +20,9 @@ public class HomePage {
     @FindBy(css = "#user-menu-btn")
     private WebElement userMenuButton;
 
+    @FindBy(css = "#user-menu-settings-btn")
+    private WebElement userSettingsButton;
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
     }
@@ -29,6 +33,15 @@ public class HomePage {
 
     public WebElement getRegistrationButton() {
         return registrationButton;
+    }
+
+    public WebElement getUserMenuButton() {
+        return userMenuButton;
+    }
+
+    public WebElement getUserSettingsButton() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#cdk-overlay-0")));
     }
 
     public void ensureLoginIsDisplayed() {

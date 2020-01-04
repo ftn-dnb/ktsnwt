@@ -5,7 +5,7 @@
             (click)="fileInput.click()"
         />
         
-        <h3>{{ user.username }}</h3>
+        <h3 id="username-header">{{ user.username }}</h3>
         
         <input
             style="display: none"
@@ -20,7 +20,7 @@
             <div>
                 <mat-form-field appearance="outline">
                     <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-                    <input matInput type="text" placeholder="First name" formControlName="firstName" />
+                    <input id="firstname-input" matInput type="text" placeholder="First name" formControlName="firstName" />
                 </mat-form-field>
 
                 <small class="text-danger"
@@ -32,7 +32,7 @@
             <div>
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-icon matPrefix class="icon">perm_identity</mat-icon>
-                    <input matInput type="text" placeholder="Last name" formControlName="lastName" />
+                    <input id="lastname-input" matInput type="text" placeholder="Last name" formControlName="lastName" />
                 </mat-form-field>
 
                 <small class="text-danger"
@@ -44,7 +44,7 @@
             <div>
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-icon matPrefix class="icon">email</mat-icon>
-                    <input matInput type="email" placeholder="E-mail" formControlName="email" />
+                    <input id="email-input" matInput type="email" placeholder="E-mail" formControlName="email" />
                 </mat-form-field>
 
                 <small class="text-danger"
@@ -58,7 +58,7 @@
                 </small>
             </div>
             
-            <button type="submit" mat-raised-button color="primary" [disabled]="basicInfoForm.invalid">
+            <button id="save-btn" type="submit" mat-raised-button color="primary" [disabled]="basicInfoForm.invalid">
                 Save
             </button>
         </form>
@@ -67,7 +67,7 @@
             <div>
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-icon matPrefix class="icon">lock</mat-icon>
-                    <input matInput type="password" placeholder="Old password" formControlName="oldPassword" />
+                    <input id="old-pw-input" matInput type="password" placeholder="Old password" formControlName="oldPassword" />
                 </mat-form-field>
 
                 <small class="text-danger"
@@ -79,7 +79,7 @@
             <div>
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-icon matPrefix class="icon">lock</mat-icon>
-                    <input matInput type="password" placeholder="New password" formControlName="newPassword" />
+                    <input id="new-pw-input" matInput type="password" placeholder="New password" formControlName="newPassword" />
                 </mat-form-field>
 
                 <small class="text-danger"
@@ -88,7 +88,7 @@
                 </small>
             </div>
             
-            <button type="submit" mat-raised-button color="primary" [disabled]="passwordForm.invalid">
+            <button id="change-pw-btn" type="submit" mat-raised-button color="primary" [disabled]="passwordForm.invalid">
                 Change
             </button>
         </form>
