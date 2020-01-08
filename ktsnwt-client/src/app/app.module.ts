@@ -17,6 +17,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { AccountConfirmationComponent } from './components/account-confirmation/account-confirmation.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { EventsComponent } from './components/events/events.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { EventsComponent } from './components/events/events.component';
     UserSettingsComponent,
     LocationsComponent,
     EventsComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
