@@ -12,7 +12,7 @@ public interface UserService {
     User findByUsername(String username);
     List<User> findAll();
     User addUser(UserRegistrationDTO userInfo);
-    void activateAccount(String token);
+    boolean activateAccount(String token);
     User getMyProfileData();
     User editUser(UserEditDTO userInfo);
     void changeProfileImage(String imagePath);
