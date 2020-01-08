@@ -3,10 +3,12 @@ INSERT INTO `authorities` (id, name) VALUES (2, 'ROLE_ADMIN');
 
 INSERT INTO `users` (id, email, activated_account, first_name, last_name, last_password_reset_date, password, username, image_path) VALUES (1,'john@doe.com', true, 'John', 'Doe','2017-10-01 21:58:58', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'john.doe', 'http://res.cloudinary.com/dhibcw0v1/image/upload/v1572021937/bgcbrwpatbahnbdkdboy.png');
 INSERT INTO `users` (id, email, activated_account, first_name, last_name, last_password_reset_date, password, username, image_path) VALUES (2,'jane@doe.com', true, 'Jane', 'Doe','2017-09-01 22:40:00', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'jane.doe', 'http://res.cloudinary.com/dhibcw0v1/image/upload/v1572021937/bgcbrwpatbahnbdkdboy.png');
+INSERT INTO `users` (id, email, activated_account, first_name, last_name, last_password_reset_date, password, username, image_path) VALUES (3,'paul@doe.com', false, 'Paul', 'Doe','2017-09-01 22:40:00', '$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra', 'paul.doe', 'http://res.cloudinary.com/dhibcw0v1/image/upload/v1572021937/bgcbrwpatbahnbdkdboy.png');
+
 
 INSERT INTO `user_authority` (user_id, authority_id) VALUES (1, 1);
 INSERT INTO `user_authority` (user_id, authority_id) VALUES (2, 2);
-
+INSERT INTO `user_authority` (user_id, authority_id) VALUES (3, 1);
 
 INSERT INTO `addresses` (id, city, country, google_api_id, latitude, longitude, postal_code, street_name, street_number) VALUES (1, 'Novi Sad', 'Srbija', 12, 12, 12, '21000', 'Sutjeska', 2);
 
@@ -33,3 +35,6 @@ INSERT INTO `pricings` (id, price, event_day_id, sector_id) VALUES (3, 540, 3, 2
 INSERT INTO `tickets` (id, column_num, date_purchased, purchased, row_num, event_day_id, pricing_id, user_id) VALUES (1, 2, '2019-11-20 21:30:22', true, 4, 1, 1, 1);
 INSERT INTO `tickets` (id, column_num, date_purchased, purchased, row_num, event_day_id, pricing_id, user_id) VALUES (2, 3, '2019-11-20 21:30:22', true, 4, 1, 1, 1);
 INSERT INTO `tickets` (id, column_num, date_purchased, purchased, row_num, event_day_id, pricing_id, user_id) VALUES (3, 3, '2019-12-09 21:30:22', false, 4, 3, 3, 1);
+
+INSERT INTO `confirmation_tokens` (id, token, datetime_created, used, user_id) VALUES (1, 'tokenTest','2019-12-09 00:00:00.0', true,1);
+INSERT INTO `confirmation_tokens` (id, token, datetime_created, used, user_id) VALUES (2, 'tokenTest2', '2019-12-09 00:00:00.0', false,3);
