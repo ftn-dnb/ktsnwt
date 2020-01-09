@@ -10,7 +10,8 @@ import rs.ac.uns.ftn.ktsnwt.repository.*;
         AddressRepositoryIntegrationTest.class,
         HallRepositoryIntegrationTest.class,
         LocationRepositoryIntegrationTest.class,
-        EventRepositoryIntegrationTest.class
+        EventRepositoryIntegrationTest.class,
+        ConfirmationTokenRepositoryIntegrationTest.class
 })
 public class RepositoryIntegrationTests {
 }
