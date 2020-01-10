@@ -9,6 +9,8 @@ public class UserConstants {
     public static final String DB_USERNAME = "jane.doe";
     public static final String DB_PASSWORD = "123";
 
+    public static final String DB_USERNAME_NON_EXIST = "jack.doe";
+
 
     public static final Long DB_USER_ID = 1L;
     public static final String DB_USER_USERNAME = "john.doe";
@@ -17,6 +19,8 @@ public class UserConstants {
     public static final Long MOCK_ID = 1L;
     public static final String MOCK_USERNAME = "jane.doe";
     public static final String MOCK_PASSWORD = "123";
+
+    public static final String MOCK_NEW_PASSWORD = "234";
 
     public static final Long MOCK_ID_OTHER = 2L;
     public static final String MOCK_USERNAME_OTHER = "john.doe";

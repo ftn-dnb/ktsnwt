@@ -11,6 +11,7 @@ import rs.ac.uns.ftn.ktsnwt.service.sector.SectorServiceImplUnitTest;
 import rs.ac.uns.ftn.ktsnwt.service.address.AddressServiceImplUnitTest;
 import rs.ac.uns.ftn.ktsnwt.service.pricing.PricingServiceImplUnitTest;
 import rs.ac.uns.ftn.ktsnwt.service.tickets.TicketsServiceUnitTest;
+import rs.ac.uns.ftn.ktsnwt.service.userDetails.CustomUserDetailsServiceUnitTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -22,7 +23,8 @@ import rs.ac.uns.ftn.ktsnwt.service.tickets.TicketsServiceUnitTest;
         EventDayServiceImplUnitTest.class,
         LocationServiceImplUnitTest.class,
         EventServiceImplUnitTest.class,
-        MailSenderServiceUnitTest.class
+        MailSenderServiceUnitTest.class,
+        CustomUserDetailsServiceUnitTest.class
 })
 public class ServiceUnitTests {
 }
