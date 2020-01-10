@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
         try {
             return userRepository.findByUsername(username);
-        } catch (UsernameNotFoundException e) {
+        } catch (NoSuchElementException e ) {
             throw new ResourceNotFoundException("User with username '" + username + "' doesn't exist.");
         }
     }
@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void activateAccount(String token) {
+    public boolean activateAccount(String token) {
         ConfirmationToken confirmationToken = tokenRepository.findByToken(token);
 
         if (confirmationToken == null) {
@@ -128,11 +128,13 @@ public class UserServiceImpl implements UserService {
             userRepository.save(user);
             confirmationToken.setUsed(true);
             tokenRepository.save(confirmationToken);
+            return true;
         } else {
             tokenRepository.delete(confirmationToken);
             userRepository.delete(user);
             throw new ApiRequestException("Confirmation token timed out.");
         }
+
     }
 
     @Override
@@ -159,7 +161,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changeProfileImage(String imagePath) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setImagePath(imagePath);
         userRepository.save(user);
     }

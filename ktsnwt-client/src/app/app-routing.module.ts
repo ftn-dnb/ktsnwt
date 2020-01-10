@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { EventsComponent } from './components/events/events.component';
 import { LocationsComponent } from './components/locations/locations.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: USER_SETTINGS_PATH, component: UserSettingsComponent },
   { path: LOCATIONS_PATH, component: LocationsComponent },
   { path: EVENTS_PATH, component: EventsComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

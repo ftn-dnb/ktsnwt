@@ -11,7 +11,11 @@ import rs.ac.uns.ftn.ktsnwt.service.sector.SectorServiceImplIntegrationTest;
 import rs.ac.uns.ftn.ktsnwt.service.address.AddressServiceImplIntegrationTest;
 import rs.ac.uns.ftn.ktsnwt.service.pricing.PricingServiceImplIntegrationTest;
 import rs.ac.uns.ftn.ktsnwt.service.tickets.TicketsServiceImplIntegrationTest;
+
 import rs.ac.uns.ftn.ktsnwt.service.userDetails.CustomUserDetailsServiceIntegrationTest;
+
+import rs.ac.uns.ftn.ktsnwt.service.user.UserServiceImplIntegrationTest;
+
 
 
 @RunWith(Suite.class)
@@ -25,7 +29,11 @@ import rs.ac.uns.ftn.ktsnwt.service.userDetails.CustomUserDetailsServiceIntegrat
         LocationServiceImplIntegrationTest.class,
         EventServiceImplIntegrationTest.class,
         MailSenderServiceIntegrationTest.class,
-        CustomUserDetailsServiceIntegrationTest.class
+
+        CustomUserDetailsServiceIntegrationTest.class,
+
+        UserServiceImplIntegrationTest.class,
+
 })
 public class ServiceIntegrationTests {
 }
