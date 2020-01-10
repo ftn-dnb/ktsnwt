@@ -15,6 +15,7 @@ public class SecurityContextConstants {
         SecurityContext securityContext = mock(SecurityContext.class);
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getPrincipal()).thenReturn(UserConstants.returnLoggedUser());
+        when(authentication.getName()).thenReturn("jane.doe");
         return securityContext;
     }
 }

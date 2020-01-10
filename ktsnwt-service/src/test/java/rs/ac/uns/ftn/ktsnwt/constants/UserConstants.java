@@ -11,6 +11,11 @@ public class UserConstants {
     public static final Long DB_ID = 2L;
     public static final String DB_USERNAME = "jane.doe";
     public static final String DB_PASSWORD = "123";
+
+
+    public static final String DB_USERNAME_NON_EXIST = "jack.doe";
+
+
     //admin other info
     public static final String DB_EMAIL = "jane@doe.com";
     public static final boolean DB_ACTIVATED_ACCOUNT = true;
@@ -20,6 +25,7 @@ public class UserConstants {
     public static final String DB_PASSWORD_TIME = "2017-09-01 22:40:00";
     public static final Long DB_TICKETS = 2L;
 
+
     public static final Long DB_USER_ID = 1L;
     public static final String DB_USER_USERNAME = "john.doe";
     public static final String DB_USER_PASSWORD = "123";
@@ -27,6 +33,8 @@ public class UserConstants {
     public static final Long MOCK_ID = 1L;
     public static final String MOCK_USERNAME = "jane.doe";
     public static final String MOCK_PASSWORD = "123";
+
+    public static final String MOCK_NEW_PASSWORD = "234";
 
     public static final Long MOCK_ID_OTHER = 2L;
     public static final String MOCK_USERNAME_OTHER = "john.doe";
