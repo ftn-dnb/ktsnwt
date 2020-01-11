@@ -15,6 +15,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.ktsnwt.constants.UserConstants;
+import rs.ac.uns.ftn.ktsnwt.dto.UserEditDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.UserRegistrationDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
@@ -170,7 +171,7 @@ public class UserServiceImplIntegrationTest {
     @Transactional @Rollback(true)
     public void activateAccountTokenUsed(){
         ConfirmationToken token = tokenRepo.findByToken("tokenTest");
-        token.setDatetimeCreated(new Timestamp(new Date().getTime()));// only used case
+        token.setDatetimeCreated(new Date());// only used case
         tokenRepo.save(token);
         boolean result = userService.activateAccount("tokenTest");
     }
@@ -195,7 +196,57 @@ public class UserServiceImplIntegrationTest {
         assertEquals(3, users.size());
         assertTrue(result);
     }
-    //ToDo edit
-    //ToDo changeProfileImage
+    //edit user
+    //taken email
+    @Test(expected = ApiRequestException.class)
+    public void editUserEmailTaken(){
+        UsernamePasswordAuthenticationToken authReq
+                = new UsernamePasswordAuthenticationToken(UserConstants.DB_USERNAME, UserConstants.DB_PASSWORD);
+        Authentication auth = authManager.authenticate(authReq);
 
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(auth);
+
+        UserEditDTO dto = new UserEditDTO();
+        dto.setFirstName(UserConstants.DB_FIRST_NAME);
+        dto.setLastName(UserConstants.DB_LAST_NAME);
+        dto.setEmail("john@doe.com");
+
+        userService.editUser(dto);
+    }
+
+    //success
+    @Test
+    @Transactional @Rollback(true)
+    public void editUserSuccess(){
+        UsernamePasswordAuthenticationToken authReq
+                = new UsernamePasswordAuthenticationToken(UserConstants.DB_USERNAME, UserConstants.DB_PASSWORD);
+        Authentication auth = authManager.authenticate(authReq);
+
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(auth);
+
+        UserEditDTO dto = new UserEditDTO();
+        dto.setFirstName(UserConstants.DB_FIRST_NAME);
+        dto.setLastName(UserConstants.DB_LAST_NAME);
+        dto.setEmail("papa@doe.com");
+
+        userService.editUser(dto);
+    }
+
+    //changeProfileImage
+    @Test
+    @Transactional @Rollback(true)
+    public void changeProfileImage(){
+        UsernamePasswordAuthenticationToken authReq
+                = new UsernamePasswordAuthenticationToken(UserConstants.DB_USERNAME, UserConstants.DB_PASSWORD);
+        Authentication auth = authManager.authenticate(authReq);
+
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(auth);
+
+        assertTrue(userService.changeProfileImage("newPath"));
+        User u = userRepository.findByUsername(UserConstants.DB_USERNAME);
+        assertEquals("newPath", u.getImagePath());
+    }
 }
