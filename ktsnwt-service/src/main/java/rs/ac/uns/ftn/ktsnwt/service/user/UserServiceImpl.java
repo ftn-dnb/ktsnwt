@@ -147,9 +147,12 @@ public class UserServiceImpl implements UserService {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setFirstName(userInfo.getFirstName());
         user.setLastName(userInfo.getLastName());
+        User dbUser = userRepository.findByEmail(userInfo.getEmail());
 
-        if (userRepository.findByEmail(userInfo.getEmail()) != null) {
-            throw new ApiRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+        if(dbUser != null) {
+            if (dbUser.getId() != user.getId()) {
+                throw new ApiRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+            }
         }
 
         user.setEmail(userInfo.getEmail());
