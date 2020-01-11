@@ -163,9 +163,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeProfileImage(String imagePath) {
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public boolean changeProfileImage(String imagePath) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setImagePath(imagePath);
         userRepository.save(user);
+        return true;
     }
 }
