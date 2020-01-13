@@ -6,10 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.ktsnwt.dto.ReportInfoDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.TicketDTO;
-import rs.ac.uns.ftn.ktsnwt.service.location.LocationService;
 import rs.ac.uns.ftn.ktsnwt.service.tickets.TicketsService;
 import rs.ac.uns.ftn.ktsnwt.model.Ticket;
-import java.util.ArrayList;
 import org.springframework.security.access.prepost.PreAuthorize;
 import rs.ac.uns.ftn.ktsnwt.dto.TicketsToReserveDTO;
 import rs.ac.uns.ftn.ktsnwt.mappers.TicketMapper;
@@ -19,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tickets")
 public class TicketController {
+
     @Autowired
     private TicketsService ticketsService;
 
@@ -35,28 +34,23 @@ public class TicketController {
         return new ResponseEntity<>(new TicketDTO(ticket), HttpStatus.OK);
     }
 
-
     @PostMapping("/locationDailyReport/{idLocation}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    ResponseEntity<ReportInfoDTO> onLocationDailyReport(@PathVariable long idLocation, @RequestBody String date){
+    public ResponseEntity<ReportInfoDTO> onLocationDailyReport(@PathVariable long idLocation, @RequestBody String date){
         return new ResponseEntity<>(ticketsService.onLocationDailyReport(idLocation, date), HttpStatus.OK);
     }
 
-
     @PostMapping("/locationMonthlyReport/{idLocation}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    ResponseEntity<ReportInfoDTO> onLocationMonthlyReport(@PathVariable long idLocation, @RequestBody String date){
+    public ResponseEntity<ReportInfoDTO> onLocationMonthlyReport(@PathVariable long idLocation, @RequestBody String date){
         return new ResponseEntity<>(ticketsService.onLocationMonthlyReport(idLocation, date), HttpStatus.OK);
     }
 
-
     @PostMapping("/eventDailyReport/{idEvent}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    ResponseEntity<ReportInfoDTO> onEventDailyReport(@PathVariable long idEvent, @RequestBody String date){
+    public ResponseEntity<ReportInfoDTO> onEventDailyReport(@PathVariable long idEvent, @RequestBody String date){
         return new ResponseEntity<>(ticketsService.onEventDailyReport(idEvent, date), HttpStatus.OK);
-
     }
-
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_USER')")

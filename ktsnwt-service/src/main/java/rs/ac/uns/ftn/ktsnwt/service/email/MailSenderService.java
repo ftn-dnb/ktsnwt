@@ -6,7 +6,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import rs.ac.uns.ftn.ktsnwt.exception.BadAttributeValueException;
 import rs.ac.uns.ftn.ktsnwt.model.ConfirmationToken;
 
 import java.util.concurrent.Future;

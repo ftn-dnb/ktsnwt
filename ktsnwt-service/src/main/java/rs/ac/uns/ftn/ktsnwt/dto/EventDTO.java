@@ -4,7 +4,6 @@ import rs.ac.uns.ftn.ktsnwt.model.Event;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventType;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 
 public class EventDTO {
 
