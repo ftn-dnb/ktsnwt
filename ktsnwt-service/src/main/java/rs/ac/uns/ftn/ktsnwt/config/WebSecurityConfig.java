@@ -23,8 +23,6 @@ import rs.ac.uns.ftn.ktsnwt.security.auth.RestAuthenticationEntryPoint;
 import rs.ac.uns.ftn.ktsnwt.security.auth.TokenAuthenticationFilter;
 import rs.ac.uns.ftn.ktsnwt.service.user.CustomUserDetailsService;
 
-import java.util.Arrays;
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -101,9 +99,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(HttpMethod.POST, "/auth/login");
 
         // TokenAuthenticationFilter will ignore all paths that have 'public' in them
-        web.ignoring().antMatchers(HttpMethod.GET, "/**/public/**");
-        web.ignoring().antMatchers(HttpMethod.POST, "/**/public/**");
-        web.ignoring().antMatchers(HttpMethod.PUT, "/**/public/**");
-        web.ignoring().antMatchers(HttpMethod.DELETE, "/**/public/**");
+        final String publicPath = "/**/public/**";
+        web.ignoring().antMatchers(HttpMethod.GET, publicPath);
+        web.ignoring().antMatchers(HttpMethod.POST, publicPath);
+        web.ignoring().antMatchers(HttpMethod.PUT, publicPath);
+        web.ignoring().antMatchers(HttpMethod.DELETE, publicPath);
     }
 }

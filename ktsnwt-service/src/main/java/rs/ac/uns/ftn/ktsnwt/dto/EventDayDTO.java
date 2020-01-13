@@ -1,11 +1,9 @@
 package rs.ac.uns.ftn.ktsnwt.dto;
 
 import rs.ac.uns.ftn.ktsnwt.model.EventDay;
-import rs.ac.uns.ftn.ktsnwt.model.Pricing;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventStatus;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EventDayDTO {

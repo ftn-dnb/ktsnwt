@@ -2,9 +2,7 @@ package rs.ac.uns.ftn.ktsnwt.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
@@ -14,7 +12,6 @@ import rs.ac.uns.ftn.ktsnwt.dto.UserRegistrationDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.mappers.UserMapper;
-import rs.ac.uns.ftn.ktsnwt.model.Authority;
 import rs.ac.uns.ftn.ktsnwt.model.ConfirmationToken;
 import rs.ac.uns.ftn.ktsnwt.model.User;
 import rs.ac.uns.ftn.ktsnwt.repository.AuthorityRepository;

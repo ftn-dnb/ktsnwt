@@ -2,7 +2,6 @@ package rs.ac.uns.ftn.ktsnwt.service.location;
 
 import rs.ac.uns.ftn.ktsnwt.dto.AddressDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.LocationDTO;
-import rs.ac.uns.ftn.ktsnwt.model.Hall;
 import rs.ac.uns.ftn.ktsnwt.model.Location;
 
 import java.util.List;

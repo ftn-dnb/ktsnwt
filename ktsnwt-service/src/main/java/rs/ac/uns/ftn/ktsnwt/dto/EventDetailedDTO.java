@@ -1,7 +1,6 @@
 package rs.ac.uns.ftn.ktsnwt.dto;
 
 import rs.ac.uns.ftn.ktsnwt.model.Event;
-import rs.ac.uns.ftn.ktsnwt.model.EventDay;
 
 public class EventDetailedDTO {
     private Long id;

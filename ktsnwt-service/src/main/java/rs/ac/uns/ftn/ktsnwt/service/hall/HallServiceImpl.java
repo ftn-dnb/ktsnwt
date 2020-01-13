@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.dto.HallDTO;
-import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceAlreadyExistsException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
@@ -27,7 +26,6 @@ public class HallServiceImpl implements HallService {
     @Override
     public List<Hall> findAllById(Long id, int page, int size) {
         return hallRepository.getByLocationId(id, PageRequest.of(page, size)).toList();
-
     }
 
     public Hall findHallById(Long id) {
@@ -38,7 +36,6 @@ public class HallServiceImpl implements HallService {
                     "Hall not found"
             );
         }
-
     }
 
     @Override
@@ -60,7 +57,6 @@ public class HallServiceImpl implements HallService {
         hallRepository.save(hall);
 
         return hall;
-
     }
 
     @Override
