@@ -97,7 +97,8 @@ public class UserServiceUnitTest {
 
     @Test(expected = ResourceNotFoundException.class)
     public void whenUsernameNotExists(){
-        Mockito.when(userRepository.findByUsername(UserConstants.MOCK_USERNAME)).thenThrow(NoSuchElementException.class);
+        // Mockito.when(userRepository.findByUsername(UserConstants.MOCK_USERNAME)).thenThrow(NoSuchElementException.class);
+        Mockito.when(userRepository.findByUsername(UserConstants.MOCK_USERNAME)).thenReturn(null);
         userService.findByUsername(UserConstants.MOCK_USERNAME);
     }
 

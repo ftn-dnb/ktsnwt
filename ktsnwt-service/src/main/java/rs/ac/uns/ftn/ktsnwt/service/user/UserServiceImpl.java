@@ -61,11 +61,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        try {
-            return userRepository.findByUsername(username);
-        } catch (NoSuchElementException e ) {
+        User user = userRepository.findByUsername(username);
+
+        if (user == null)
             throw new ResourceNotFoundException("User with username '" + username + "' doesn't exist.");
-        }
+
+        return user;
     }
 
     @Override
