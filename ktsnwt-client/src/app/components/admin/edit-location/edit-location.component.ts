@@ -24,6 +24,7 @@ export class EditLocationComponent implements OnInit {
 
   private addressObject;
   private addressContent;
+  private locationSelected = false;
 
   formControl = new FormControl('', [
     Validators.required
@@ -31,9 +32,6 @@ export class EditLocationComponent implements OnInit {
 
   @ViewChild('locationName', {static: false})
   inputName: ElementRef;
-
-  @ViewChild('autocompleteInput', {static: false})
-  autocompleteInput: ElementRef;
 
   constructor(private route: ActivatedRoute,
               private locationService: LocationService,
@@ -57,12 +55,8 @@ export class EditLocationComponent implements OnInit {
     this.longitude = this.location.address.longitude;
   }
 
-  onChange(result: PlaceResult) {
-    this.addressContent = result;
-  }
-
   onEditLocation() {
-    if (this.addressContent) {
+    if (this.locationSelected) {
       this.locationService.changeAddress(this.addressObject, this.location.id).subscribe(
         (data) => { this.location = data; },
         (error) => { console.log(error); }
@@ -116,6 +110,7 @@ export class EditLocationComponent implements OnInit {
   onLocationSelected(location: Location) {
     this.latitude = location.latitude;
     this.longitude = location.longitude;
+    this.locationSelected = true;
   }
 
 }

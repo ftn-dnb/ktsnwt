@@ -9,9 +9,7 @@
   <div fxFlex fxFlexAlign="center"
        class="autocomplete-container">
     <mat-google-maps-autocomplete (onAutocompleteSelected)="onAutocompleteSelected($event)"
-                                  (onLocationSelected)="onLocationSelected($event)"
-                                  (onChange)="onChange($event)"
-                                  #autocompleteInput>
+                                  (onLocationSelected)="onLocationSelected($event)">
     </mat-google-maps-autocomplete>
 
   </div>
