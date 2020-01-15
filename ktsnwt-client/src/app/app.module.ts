@@ -18,6 +18,7 @@ import { AccountConfirmationComponent } from './components/account-confirmation/
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { EventsComponent } from './components/events/events.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { MyReservationsComponent } from './components/my-reservations/my-reservations.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     LocationsComponent,
     EventsComponent,
     PageNotFoundComponent,
+    MyReservationsComponent,
   ],
   imports: [
     BrowserModule,

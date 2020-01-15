@@ -28,7 +28,11 @@
             </div>
 
             <!-- REGULAR USER -->
-
+            <div *ngIf="isPlainUserLoggedIn()">
+              <button mat-button (click)="onClickMyReservations()" >
+                <span class="btnText">My reservations</span>
+              </button>
+            </div>
             <button id="user-menu-btn" mat-button [matMenuTriggerFor]="userMenu">
                 <span class="btnText">{{ getUsername() }}</span>
                 <mat-icon>keyboard_arrow_down</mat-icon>

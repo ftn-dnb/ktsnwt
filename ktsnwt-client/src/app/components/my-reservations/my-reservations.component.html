@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="header">
+    <h1>My reservations</h1>
+  </div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Hall</th>
+      <th>Seat row</th>
+      <th>Seat column</th>
+      <th>Purchased</th>
+      <th>Price</th>
+      <th>Cancel</th>
+      <th>Buy</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let ticket of tickets">
+      <td>{{ticket.id}}</td>
+      <td>{{ticket.eventDayId}}</td>
+      <td>{{ticket.datePurchased | date: 'dd.MM.yyyy.'}}</td>
+      <td>{{ticket.locationName}}</td>
+      <td>{{ticket.hallName}}</td>
+      <td>{{ticket.row}}</td>
+      <td>{{ticket.seat}}</td>
+      <td>
+        <div *ngIf = "!ticket.purchased">
+          No
+        </div>
+        <div *ngIf = "ticket.purchased">
+          Yes
+        </div>
+
+      </td>
+      <td>{{ticket.price}}</td>
+      <td>
+        <div *ngIf = "!ticket.purchased">
+          <button mat-button (click)="onClickCancel(ticket.id)">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </div>
+        <div *ngIf = "ticket.purchased">
+          Bought
+        </div>
+      </td>
+      <td>
+        <div *ngIf="!ticket.purchased">
+          <button mat-button (click)="onClickBuy(ticket.id)">
+            <mat-icon>add_shopping_cart</mat-icon>
+          </button>
+        </div>
+        <div *ngIf = "ticket.purchased">
+          Bought
+        </div>
+      </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+    <td>
+      <mat-select class="page-size-select" [(ngModel)]="pageSize" (ngModelChange)="onPageSizeSelect()">
+        <mat-option value="5">5</mat-option>
+        <mat-option value="10">10</mat-option>
+        <mat-option value="15">15</mat-option>
+      </mat-select>
+    </td>
+    <td>
+      <button mat-button *ngIf="pageNum !== 0" (click)="onClickPrevious()">
+        <mat-icon>navigate_before</mat-icon>
+        <span>Previous</span>
+      </button>
+    </td>
+    <td>
+      <button mat-button *ngIf="pageNum * pageSize < totalNumOfReservations - pageSize" (click)="onClickNext()">
+        <span>Next</span>
+        <mat-icon>navigate_next</mat-icon>
+      </button>
+    </td>
+    </tfoot>
+  </table>
+</div>
