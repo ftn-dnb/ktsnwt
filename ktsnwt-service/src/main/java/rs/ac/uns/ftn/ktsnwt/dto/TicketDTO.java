@@ -1,7 +1,5 @@
 package rs.ac.uns.ftn.ktsnwt.dto;
 
-import rs.ac.uns.ftn.ktsnwt.model.EventDay;
-import rs.ac.uns.ftn.ktsnwt.model.Pricing;
 import rs.ac.uns.ftn.ktsnwt.model.Ticket;
 import rs.ac.uns.ftn.ktsnwt.model.enums.SectorType;
 import java.sql.Timestamp;

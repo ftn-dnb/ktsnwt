@@ -14,4 +14,4 @@ export const API_LOCATION = API_BASE + '/api/locations';
 export const API_LOCATION_ADDRESS = API_BASE + '/api/locations/address';
 
 export const API_EVENTS = API_BASE + '/api/event/public/all';
-
+export const API_MY_RESERVATIONS = API_BASE + '/api/tickets';

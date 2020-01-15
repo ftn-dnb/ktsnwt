@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PricingMapper {
 
-    public PricingMapper() {
+    private PricingMapper() {
     }
 
     public static List<PricingDTO> toPricingDTOList(List<Pricing> pricings){

@@ -3,7 +3,6 @@ package rs.ac.uns.ftn.ktsnwt.model;
 import rs.ac.uns.ftn.ktsnwt.model.enums.EventStatus;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;

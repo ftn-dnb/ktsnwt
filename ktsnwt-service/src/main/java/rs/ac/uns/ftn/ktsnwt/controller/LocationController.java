@@ -1,16 +1,12 @@
 package rs.ac.uns.ftn.ktsnwt.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.ktsnwt.dto.AddressDTO;
-import rs.ac.uns.ftn.ktsnwt.dto.HallDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.LocationDTO;
 import rs.ac.uns.ftn.ktsnwt.mappers.LocationMapper;
-
-import rs.ac.uns.ftn.ktsnwt.model.Hall;
 
 import rs.ac.uns.ftn.ktsnwt.model.Location;
 import rs.ac.uns.ftn.ktsnwt.service.location.LocationService;

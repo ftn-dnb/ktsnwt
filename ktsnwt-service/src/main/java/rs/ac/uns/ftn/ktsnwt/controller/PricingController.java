@@ -6,11 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import rs.ac.uns.ftn.ktsnwt.dto.PricingDTO;
 import rs.ac.uns.ftn.ktsnwt.mappers.PricingMapper;
-import rs.ac.uns.ftn.ktsnwt.model.Pricing;
 import rs.ac.uns.ftn.ktsnwt.service.pricing.PricingService;
-import java.util.ArrayList;
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/pricings")
@@ -26,8 +23,5 @@ public class PricingController {
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<PricingDTO> findById(@PathVariable Long id){
         return new ResponseEntity<>(new PricingDTO(pricingService.getPricing(id)), HttpStatus.OK);
-
     }
-
-
 }

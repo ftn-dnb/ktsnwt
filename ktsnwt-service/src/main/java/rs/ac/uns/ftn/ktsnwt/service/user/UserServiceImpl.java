@@ -2,9 +2,7 @@ package rs.ac.uns.ftn.ktsnwt.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
@@ -14,7 +12,6 @@ import rs.ac.uns.ftn.ktsnwt.dto.UserRegistrationDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.mappers.UserMapper;
-import rs.ac.uns.ftn.ktsnwt.model.Authority;
 import rs.ac.uns.ftn.ktsnwt.model.ConfirmationToken;
 import rs.ac.uns.ftn.ktsnwt.model.User;
 import rs.ac.uns.ftn.ktsnwt.repository.AuthorityRepository;
@@ -61,11 +58,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String username) {
-        try {
-            return userRepository.findByUsername(username);
-        } catch (NoSuchElementException e ) {
+        User user = userRepository.findByUsername(username);
+
+        if (user == null)
             throw new ResourceNotFoundException("User with username '" + username + "' doesn't exist.");
-        }
+
+        return user;
     }
 
     @Override
@@ -147,9 +145,12 @@ public class UserServiceImpl implements UserService {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setFirstName(userInfo.getFirstName());
         user.setLastName(userInfo.getLastName());
+        User dbUser = userRepository.findByEmail(userInfo.getEmail());
 
-        if (userRepository.findByEmail(userInfo.getEmail()) != null) {
-            throw new ApiRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+        if(dbUser != null) {
+            if (dbUser.getId() != user.getId()) {
+                throw new ApiRequestException("Email '" + userInfo.getEmail() + "' is taken.");
+            }
         }
 
         user.setEmail(userInfo.getEmail());
@@ -160,9 +161,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeProfileImage(String imagePath) {
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public boolean changeProfileImage(String imagePath) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         user.setImagePath(imagePath);
         userRepository.save(user);
+        return true;
     }
 }

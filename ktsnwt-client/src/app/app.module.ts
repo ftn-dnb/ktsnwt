@@ -22,6 +22,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { AddLocationComponent } from './components/admin/add-location/add-location.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { EditLocationComponent } from './components/admin/edit-location/edit-location.component';
+import { MyReservationsComponent } from './components/my-reservations/my-reservations.component';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { EditLocationComponent } from './components/admin/edit-location/edit-loc
     PageNotFoundComponent,
     AddLocationComponent,
     EditLocationComponent
+    MyReservationsComponent,
   ],
   imports: [
     BrowserModule,

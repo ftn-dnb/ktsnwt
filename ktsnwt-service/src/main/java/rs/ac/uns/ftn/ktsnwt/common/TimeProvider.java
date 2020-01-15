@@ -7,7 +7,6 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 
 @Component
@@ -35,7 +34,6 @@ public class TimeProvider implements Serializable {
 
     public Date makeDate(String date) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date parseDate = dateFormat.parse(date);
-        return parseDate;
+        return dateFormat.parse(date);
     }
 }

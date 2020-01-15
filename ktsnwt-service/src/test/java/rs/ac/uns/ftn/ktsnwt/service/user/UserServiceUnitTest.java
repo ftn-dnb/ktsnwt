@@ -16,6 +16,7 @@ import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.common.consts.UserRoles;
 import rs.ac.uns.ftn.ktsnwt.constants.SecurityContextConstants;
 import rs.ac.uns.ftn.ktsnwt.constants.UserConstants;
+import rs.ac.uns.ftn.ktsnwt.dto.UserEditDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.UserRegistrationDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
@@ -96,7 +97,8 @@ public class UserServiceUnitTest {
 
     @Test(expected = ResourceNotFoundException.class)
     public void whenUsernameNotExists(){
-        Mockito.when(userRepository.findByUsername(UserConstants.MOCK_USERNAME)).thenThrow(NoSuchElementException.class);
+        // Mockito.when(userRepository.findByUsername(UserConstants.MOCK_USERNAME)).thenThrow(NoSuchElementException.class);
+        Mockito.when(userRepository.findByUsername(UserConstants.MOCK_USERNAME)).thenReturn(null);
         userService.findByUsername(UserConstants.MOCK_USERNAME);
     }
 
@@ -270,6 +272,90 @@ public class UserServiceUnitTest {
         assertEquals(user.getFirstName(), result.getFirstName());
     }
 
-    //ToDo editUser *Boris jos radi
-    //ToDo changeProfileImage
+    //TeditUser
+    //email already used
+    @Test(expected = ApiRequestException.class)
+    public void editUserEmailTaken(){
+        User user1 = new User();
+        user1.setId(1L);
+        user1.setFirstName("Laki");
+        user1.setLastName("Lakic");
+        user1.setEmail("laki@gmail.com");
+
+
+        User user2 = new User();
+        user2.setId(2L);
+        user2.setFirstName("Pera");
+        user2.setLastName("Peric");
+        user2.setEmail("peki@gmail.com");
+
+        UserEditDTO dto = new UserEditDTO();
+        dto.setEmail("peki@gmail.com");
+        dto.setFirstName("Laki");
+        dto.setLastName("Lakic");
+
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(user1);
+        Mockito.when(userRepository.findByEmail("peki@gmail.com")).thenReturn(user2);
+
+        userService.editUser(dto);
+    }
+    //success
+    @Test
+    public void editUserSuccess(){
+        User user1 = new User();
+        user1.setId(1L);
+        user1.setFirstName("Laki");
+        user1.setLastName("Lakic");
+        user1.setEmail("laki@gmail.com");
+
+        UserEditDTO dto = new UserEditDTO();
+        dto.setEmail("peki@gmail.com");
+        dto.setFirstName("Laki");
+        dto.setLastName("Lakic");
+
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(user1);
+        Mockito.when(userRepository.findByEmail("peki@gmail.com")).thenReturn(null);
+
+        User result = userService.editUser(dto);
+        assertEquals(dto.getFirstName(), result.getFirstName());
+        assertEquals(dto.getLastName(), result.getLastName());
+        assertEquals(dto.getEmail(),result.getEmail());
+    }
+
+    @Test
+    public void editUserSuccess2(){
+        User user1 = new User();
+        user1.setId(1L);
+        user1.setFirstName("Laki");
+        user1.setLastName("Lakic");
+        user1.setEmail("laki@gmail.com");
+
+        UserEditDTO dto = new UserEditDTO();
+        dto.setEmail("laki@gmail.com");
+        dto.setFirstName("Maki");
+        dto.setLastName("Terzic");
+
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(user1);
+        Mockito.when(userRepository.findByEmail("peki@gmail.com")).thenReturn(user1);
+
+        User result =  userService.editUser(dto);
+
+        assertEquals(dto.getFirstName(), result.getFirstName());
+        assertEquals(dto.getLastName(), result.getLastName());
+        assertEquals(dto.getEmail(),result.getEmail());
+    }
+
+    //changeProfileImage
+    @Test
+    public void changeProfileImage(){
+        User user1 = new User();
+        user1.setId(1L);
+        user1.setFirstName("Laki");
+        user1.setLastName("Lakic");
+        user1.setEmail("laki@gmail.com");
+        user1.setImagePath("randomPath");
+        Mockito.when(SecurityContextHolder.getContext().getAuthentication().getPrincipal()).thenReturn(user1);
+
+        assertTrue(userService.changeProfileImage("newPath"));
+    }
 }

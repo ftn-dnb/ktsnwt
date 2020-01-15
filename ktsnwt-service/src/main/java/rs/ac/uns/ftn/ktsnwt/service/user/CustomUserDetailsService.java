@@ -43,7 +43,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     /* Return User from database */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
@@ -76,7 +76,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public UserDTO login(JwtAuthenticationRequest authenticationRequest) throws ApiRequestException {
+    public UserDTO login(JwtAuthenticationRequest authenticationRequest) {
         Authentication authentication;
         try {
             authentication = authenticationManager
@@ -101,7 +101,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return userDto;
     }
 
-    public UserTokenState refreshAuthenticationToken(HttpServletRequest request) throws ApiRequestException {
+    public UserTokenState refreshAuthenticationToken(HttpServletRequest request) {
         String token = tokenUtils.getToken(request);
         String username = tokenUtils.getUsernameFromToken(token);
         User user = (User) loadUserByUsername(username);

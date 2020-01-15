@@ -3,7 +3,6 @@ package rs.ac.uns.ftn.ktsnwt.service.imagestore;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
