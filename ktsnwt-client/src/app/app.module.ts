@@ -38,7 +38,7 @@ import { MyReservationsComponent } from './components/my-reservations/my-reserva
     EventsComponent,
     PageNotFoundComponent,
     AddLocationComponent,
-    EditLocationComponent
+    EditLocationComponent,
     MyReservationsComponent,
   ],
   imports: [
