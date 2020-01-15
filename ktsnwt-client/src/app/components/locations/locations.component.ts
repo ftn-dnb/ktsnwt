@@ -39,9 +39,7 @@ export class LocationsComponent implements OnInit {
   }
 
   onClickEdit(locationId: number): void {
-    // TODO: implementirati ovo
-    // Otici na novu stranicu koja sluzi za editovanje
-    console.log("EDIT location with id " + locationId);
+    this.router.navigate(['/edit-location/' + locationId]);
   }
 
   onClickStats(locationId: number): void {

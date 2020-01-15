@@ -21,6 +21,7 @@ import { EventsComponent } from './components/events/events.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AddLocationComponent } from './components/admin/add-location/add-location.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { EditLocationComponent } from './components/admin/edit-location/edit-location.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
     LocationsComponent,
     EventsComponent,
     PageNotFoundComponent,
-    AddLocationComponent
+    AddLocationComponent,
+    EditLocationComponent
   ],
   imports: [
     BrowserModule,

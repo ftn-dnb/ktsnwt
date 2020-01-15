@@ -2,6 +2,11 @@ agm-map {
   height: 300px;
 }
 
-.btnAdd {
-  margin-left: 70px;
+.btn-add {
+  position: absolute;
+  right: 30px;
+}
+
+.container {
+  margin: 30px;
 }

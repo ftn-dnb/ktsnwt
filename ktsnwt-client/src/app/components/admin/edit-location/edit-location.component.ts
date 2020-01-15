@@ -1,18 +1,20 @@
-import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { MapsAPILoader, MouseEvent } from '@agm/core';
-import PlaceResult = google.maps.places.PlaceResult;
-import { Appearance, Location } from '@angular-material-extensions/google-maps-autocomplete';
-import { Title } from '@angular/platform-browser';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { LocationService } from 'src/app/services/location.service';
 import { ToastrService } from 'ngx-toastr';
+import { Title } from '@angular/platform-browser';
+import PlaceResult = google.maps.places.PlaceResult;
+import { Appearance, Location } from '@angular-material-extensions/google-maps-autocomplete';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-add-location',
-  templateUrl: './add-location.component.html',
-  styleUrls: ['./add-location.component.css']
+  selector: 'app-edit-location',
+  templateUrl: './edit-location.component.html',
+  styleUrls: ['./edit-location.component.css']
 })
-export class AddLocationComponent implements OnInit {
+export class EditLocationComponent implements OnInit {
+
+  location: any;
 
   public appearance = Appearance;
   public zoom: number;
@@ -27,58 +29,57 @@ export class AddLocationComponent implements OnInit {
     Validators.required
   ]);
 
-  constructor(private titleService: Title,
-              private locationService: LocationService,
-              private toastr: ToastrService) {
-  }
-
   @ViewChild('locationName', {static: false})
   inputName: ElementRef;
 
   @ViewChild('autocompleteInput', {static: false})
   autocompleteInput: ElementRef;
 
-  ngOnInit() {
-    this.titleService.setTitle('Home | @angular-material-extensions/google-maps-autocomplete');
-    this.setCurrentPosition();
+  constructor(private route: ActivatedRoute,
+              private locationService: LocationService,
+              private titleService: Title,
+              private toastr: ToastrService) { }
 
+  ngOnInit(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.locationService.getLocationById(id).subscribe(
+      (data) => {
+        this.location = data;
+        this.setCurrentPosition();
+      },
+      (error) => { console.log(error); }
+    );
   }
 
   private setCurrentPosition() {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-        this.zoom = 12;
-      });
-    }
-  }
-
-  onAddLocation() {
-    if (this.formControl.hasError('required') || !this.addressContent) {
-      this.toastr.error('Location must have a name.');
-      console.log(this.autocompleteInput);
-      return;
-    }
-    const data = {
-      name: this.inputName.nativeElement.value,
-      address: this.addressObject
-    };
-
-    this.locationService.addLocation(data).subscribe(
-      result => {
-        console.log(result),
-        this.toastr.success('Location successfully added.');
-      },
-      error => {
-        console.log(error);
-        this.toastr.error('Location with that name already exists.');
-      }
-    );
+    this.zoom = 10;
+    this.latitude = this.location.address.latitude;
+    this.longitude = this.location.address.longitude;
   }
 
   onChange(result: PlaceResult) {
     this.addressContent = result;
+  }
+
+  onEditLocation() {
+    if (this.addressContent) {
+      this.locationService.changeAddress(this.addressObject, this.location.id).subscribe(
+        (data) => { this.location = data; },
+        (error) => { console.log(error); }
+      );
+    }
+
+    if (this.inputName.nativeElement.value) {
+      const locationData = {
+        id: this.location.id,
+        name: this.inputName.nativeElement.value
+      };
+      this.locationService.editLocation(locationData).subscribe(
+        (data) => { this.location = data; },
+        (error) => { console.log(error); }
+      );
+    }
+
   }
 
   onAutocompleteSelected(result: PlaceResult) {

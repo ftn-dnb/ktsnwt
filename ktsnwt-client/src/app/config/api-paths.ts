@@ -9,6 +9,9 @@ export const API_USER_IMAGE = API_BASE + '/api/images/users';
 
 export const API_LOCATIONS_ALL = API_BASE + '/api/locations/all';
 export const API_LOCATION_ADD = API_BASE + '/api/locations';
+export const API_LOCATION_GET_ID = API_BASE + '/api/locations';
+export const API_LOCATION = API_BASE + '/api/locations';
+export const API_LOCATION_ADDRESS = API_BASE + '/api/locations/address';
 
 export const API_EVENTS = API_BASE + '/api/event/public/all';
 
