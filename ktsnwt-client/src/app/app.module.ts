@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material';
+import { AgmCoreModule } from '@agm/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,8 @@ import { AccountConfirmationComponent } from './components/account-confirmation/
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { EventsComponent } from './components/events/events.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { AddLocationComponent } from './components/admin/add-location/add-location.component';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     LocationsComponent,
     EventsComponent,
     PageNotFoundComponent,
+    AddLocationComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,11 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
     FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyASA1PH4V5-ZK3mRpFF5Yn2ZbtnMl7UnIc',
+      libraries: ['places']
+    }),
+    MatGoogleMapsAutocompleteModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true },

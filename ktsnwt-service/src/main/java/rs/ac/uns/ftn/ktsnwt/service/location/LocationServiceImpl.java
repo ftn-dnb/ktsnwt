@@ -14,6 +14,7 @@ import rs.ac.uns.ftn.ktsnwt.model.Location;
 import rs.ac.uns.ftn.ktsnwt.repository.AddressRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.LocationRepository;
 
+import javax.persistence.NonUniqueResultException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -61,7 +62,11 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location addLocation(LocationDTO locationDTO) {
-        if (locationRepository.findByName(locationDTO.getName()) != null) {
+        try {
+            if (locationRepository.findByName(locationDTO.getName()) != null) {
+                throw new ResourceAlreadyExistsException("Location with that name already exists.");
+            }
+        } catch (NonUniqueResultException ex) {
             throw new ResourceAlreadyExistsException("Location with that name already exists.");
         }
 

@@ -1,6 +1,7 @@
 import { ToastrService } from 'ngx-toastr';
 import { LocationService } from './../../services/location.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-locations',
@@ -15,7 +16,8 @@ export class LocationsComponent implements OnInit {
   totalNumOfLocations: number = 0;
 
   constructor(private locationService: LocationService,
-              private toastr: ToastrService) { 
+              private toastr: ToastrService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -33,9 +35,7 @@ export class LocationsComponent implements OnInit {
   }
 
   onClickAddLocation(): void {
-    // TODO: Implementirati ovo
-    // Samo sa ruterom otici na novu stranicu koja vrsi dodavanje nove lokacije.
-    console.log("TODO: Implement adding new location");
+    this.router.navigate(['/add-location']);
   }
 
   onClickEdit(locationId: number): void {
