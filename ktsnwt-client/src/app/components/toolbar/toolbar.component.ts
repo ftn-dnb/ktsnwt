@@ -1,7 +1,15 @@
-import { ROLE_ADMIN } from './../../config/user-roles-keys';
+import {ROLE_ADMIN, ROLE_USER} from './../../config/user-roles-keys';
 import { USERNAME_KEY, USER_ROLE_KEY } from './../../config/local-storage-keys';
 import { AuthService } from './../../services/auth.service';
-import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH, USER_SETTINGS_PATH, LOCATIONS_PATH, EVENTS_PATH } from './../../config/router-paths';
+import {
+  HOME_PATH,
+  LOGIN_PATH,
+  REGISTRATION_PATH,
+  USER_SETTINGS_PATH,
+  LOCATIONS_PATH,
+  EVENTS_PATH,
+  MY_RESERVATIONS_PATH
+} from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -32,9 +40,20 @@ export class ToolbarComponent implements OnInit {
     return localStorage.getItem(USER_ROLE_KEY) === ROLE_ADMIN;
   }
 
+
+  isPlainUserLoggedIn(): boolean {
+    return localStorage.getItem(USER_ROLE_KEY) === ROLE_USER;
+  }
+
   onTitleClick(): void {
     this.router.navigate([HOME_PATH]);
   }
+
+
+  onClickMyReservations(): void {
+    this.router.navigate([MY_RESERVATIONS_PATH]);
+  }
+
 
   onClickLogin(): void {
     this.router.navigate([LOGIN_PATH]);
