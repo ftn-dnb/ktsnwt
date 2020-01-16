@@ -67,6 +67,13 @@ public class TicketController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/buy/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity buyTicket(@PathVariable Long id) {
+        ticketsService.buyTicket(id);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/cancel/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity cancelTicket(@PathVariable Long id) {
