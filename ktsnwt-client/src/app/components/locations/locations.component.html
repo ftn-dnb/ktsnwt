@@ -27,7 +27,9 @@
                 <td>{{location.name}}</td>
                 <td>{{location.address.city}}</td>
                 <td>{{location.address.country}}</td>
-                <td>{{location.address.streetName + ' ' + location.address.streetNumber}}</td>
+                <td *ngIf="location.address.streetName && location.address.streetNumber">{{location.address.streetName + ' ' + location.address.streetNumber}}</td>
+                <td *ngIf="location.address.streetName && !location.address.streetNumber">{{location.address.streetName}}</td>
+                <td *ngIf="!location.address.streetName">----------------------</td>
                 <td>{{location.halls.length}}</td>
                 <td>
                     <button mat-button (click)="onClickEdit(location.id)" class = "editBtn">

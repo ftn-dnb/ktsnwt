@@ -27,6 +27,7 @@ INSERT INTO `events` (id, description, end_date, image_path, name, purchase_limi
 INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (1, '2019-11-29 21:58:58.0', 'dan 1', 'DAY1', 0, 1);
 INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (2, '2019-11-30 21:58:58.0', 'dan 2', 'DAY2', 0, 1);
 INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (3, '2019-12-09 00:00:00.0', 'Prvi dan zanimljiv', 'Prvi dan', 0, 2);
+INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (4, '2020-12-09 00:00:00.0', 'Drugi dan zanimljiv', 'Drugi dan', 0, 2);
 
 INSERT INTO `pricings` (id, price, event_day_id, sector_id) VALUES (1, 199, 1, 1);
 INSERT INTO `pricings` (id, price, event_day_id, sector_id) VALUES (2, 399, 1, 2);
@@ -35,6 +36,7 @@ INSERT INTO `pricings` (id, price, event_day_id, sector_id) VALUES (3, 540, 3, 2
 INSERT INTO `tickets` (id, column_num, date_purchased, purchased, row_num, event_day_id, pricing_id, user_id) VALUES (1, 2, '2019-11-20 21:30:22', true, 4, 1, 1, 1);
 INSERT INTO `tickets` (id, column_num, date_purchased, purchased, row_num, event_day_id, pricing_id, user_id) VALUES (2, 3, '2019-11-20 21:30:22', true, 4, 1, 1, 1);
 INSERT INTO `tickets` (id, column_num, date_purchased, purchased, row_num, event_day_id, pricing_id, user_id) VALUES (3, 3, '2019-12-09 21:30:22', false, 4, 3, 3, 1);
+INSERT INTO `tickets` (id, column_num, date_purchased, purchased, row_num, event_day_id, pricing_id, user_id) VALUES (4, 3, '2019-12-09 21:30:22', false, 4, 4, 3, 1);
 
 INSERT INTO `confirmation_tokens` (id, token, datetime_created, used, user_id) VALUES (1, 'tokenTest','2019-12-09 00:00:00.0', true,1);
 INSERT INTO `confirmation_tokens` (id, token, datetime_created, used, user_id) VALUES (2, 'tokenTest2', '2019-12-09 00:00:00.0', false,3);

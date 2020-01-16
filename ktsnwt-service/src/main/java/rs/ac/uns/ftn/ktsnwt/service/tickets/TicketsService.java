@@ -14,4 +14,5 @@ public interface TicketsService {
     List<Ticket> getUsersTickets(int page, int size);
     void reserveTickets(TicketsToReserveDTO ticketsInfo);
     void cancelTicket(Long id);
+    Ticket buyTicket(Long id);
 }

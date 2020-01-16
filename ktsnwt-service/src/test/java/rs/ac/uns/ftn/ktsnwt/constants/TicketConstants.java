@@ -42,6 +42,10 @@ public class TicketConstants {
     public static final Long DB_PRICING_ID_2 = 1L;
     public static final Long DB_USER_ID_2 = 1L;
 
+    public static final Long DB_ID_3 = 3L;
+
+    public static final Long DB_ID_4 = 4L;
+
     public static final int NEW_DB_COLUMN_NUM = 3;
     public static final String NEW_DB_DATE = "2019-12-09 21:30:22.0";
     public static final boolean NEW_DB_PURCHASED = false;
