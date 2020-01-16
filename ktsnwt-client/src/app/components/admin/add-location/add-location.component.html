@@ -1,0 +1,30 @@
+<div class="container" fxLayout="column" fxLayoutAlign="center">
+
+  <div fxFlex>
+    <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+      <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    </agm-map>
+  </div>
+
+  <div fxFlex fxFlexAlign="center"
+       class="autocomplete-container">
+    <mat-google-maps-autocomplete (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                                  (onLocationSelected)="onLocationSelected($event)"
+                                  (onChange)="onChange($event)"
+                                  #autocompleteInput>
+    </mat-google-maps-autocomplete>
+  </div>
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Enter location name" [formControl]="formControl" #locationName>
+    <mat-error *ngIf="formControl.hasError('required')">
+      Please enter a value
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" class="btn-add" (click)="onAddLocation()">
+    <mat-icon class="icon">add_circle</mat-icon>
+    <span>Add new location</span>
+  </button>
+
+</div>

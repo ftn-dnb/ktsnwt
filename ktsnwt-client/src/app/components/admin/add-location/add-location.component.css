@@ -1,0 +1,12 @@
+agm-map {
+  height: 300px;
+}
+
+.btn-add {
+  position: absolute;
+  right: 30px;
+}
+
+.container {
+  margin: 30px;
+}

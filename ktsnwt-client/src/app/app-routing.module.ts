@@ -4,21 +4,18 @@ import { LocationsComponent } from './components/locations/locations.component';
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
-import {
-  HOME_PATH,
-  LOGIN_PATH,
-  REGISTRATION_PATH,
-  VERIFY_ACCOUNT_PATH,
-  USER_SETTINGS_PATH,
-  LOCATIONS_PATH,
-  EVENTS_PATH,
-  MY_RESERVATIONS_PATH
-} from './config/router-paths';
+import { AddLocationComponent } from './components/admin/add-location/add-location.component';
+import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH, VERIFY_ACCOUNT_PATH, USER_SETTINGS_PATH, LOCATIONS_PATH, EVENTS_PATH, ADD_LOCATION_PATH, EDIT_LOCATION_PATH, MY_RESERVATIONS_PATH } from './config/router-paths';
+
 import { HomeComponent } from './components/home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AccountConfirmationComponent } from './components/account-confirmation/account-confirmation.component';
+
+import { EditLocationComponent } from './components/admin/edit-location/edit-location.component';
+
 import {MyReservationsComponent} from './components/my-reservations/my-reservations.component';
+
 
 
 const routes: Routes = [
@@ -29,6 +26,8 @@ const routes: Routes = [
   { path: USER_SETTINGS_PATH, component: UserSettingsComponent },
   { path: LOCATIONS_PATH, component: LocationsComponent },
   { path: EVENTS_PATH, component: EventsComponent },
+  { path: ADD_LOCATION_PATH, component: AddLocationComponent},
+  { path: EDIT_LOCATION_PATH, component: EditLocationComponent },
   { path: MY_RESERVATIONS_PATH, component: MyReservationsComponent},
   { path: '**', component: PageNotFoundComponent },
 ];
