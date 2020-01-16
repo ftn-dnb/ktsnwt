@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.ktsnwt.controller;
 
-import com.sun.mail.iap.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,11 +15,12 @@ import rs.ac.uns.ftn.ktsnwt.dto.ReportInfoDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.TicketDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.TicketsToReserveDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.UserDTO;
+import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
+import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.security.auth.JwtAuthenticationRequest;
 import rs.ac.uns.ftn.ktsnwt.service.tickets.TicketsServiceImpl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -199,5 +199,35 @@ public class TicketControllerIntegrationTest {
         int sizeAfterCancellation = ticketsService.findAll(0, 5).size();
 
         assertEquals(sizeBeforeCancellation - 1, sizeAfterCancellation);
+    }
+
+    @Test
+    public void whenBuyTicket_ticketNotFound() {
+        ResponseEntity<ResourceNotFoundException> response = restTemplate.exchange(
+                "/api/tickets/buy/" + TicketConstants.NON_EXISTING_ID, HttpMethod.GET, createHttpEntity(), ResourceNotFoundException.class
+        );
+
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void whenBuyTicket_ticketAlreadyBought() {
+        ResponseEntity<ApiRequestException> response = restTemplate.exchange(
+                "/api/tickets/buy/" + TicketConstants.DB_ID_1, HttpMethod.GET, createHttpEntity(), ApiRequestException.class
+        );
+
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    public void whenBuyTicket() {
+        ResponseEntity<?> response = restTemplate.exchange(
+                "/api/tickets/buy/" + TicketConstants.DB_ID_3, HttpMethod.GET, createHttpEntity(), void.class
+        );
+
+        assertNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }

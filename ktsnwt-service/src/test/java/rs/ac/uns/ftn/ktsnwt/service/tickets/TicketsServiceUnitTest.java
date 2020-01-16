@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.service.tickets;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 
 import org.junit.Before;
@@ -287,5 +288,38 @@ public class TicketsServiceUnitTest {
             Mockito.when(ticketRepositoryMocked.findById(ticket.getId())).thenReturn(Optional.of(ticket));
             ticketsService.cancelTicket(ticket.getId());
         } catch (ParseException e) {}
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void whenBuyTicket_ticketNotFound() {
+        final Long ticketId = 1L;
+        Mockito.when(ticketRepositoryMocked.findById(ticketId)).thenReturn(Optional.empty());
+        ticketsService.buyTicket(ticketId);
+    }
+
+    @Test(expected = ApiRequestException.class)
+    public void whenBuyTicket_ticketAlreadyBought() {
+        final Long ticketId = 1L;
+        Ticket ticket = new Ticket();
+        ticket.setId(ticketId);
+        ticket.setPurchased(true);
+
+        Mockito.when(ticketRepositoryMocked.findById(ticketId)).thenReturn(Optional.of(ticket));
+        ticketsService.buyTicket(ticketId);
+    }
+
+    @Test
+    public void whenBuyTicket() {
+        final Long ticketId = 1L;
+        Ticket ticket = new Ticket();
+        ticket.setId(ticketId);
+        ticket.setPurchased(false);
+
+        Mockito.when(ticketRepositoryMocked.findById(ticketId)).thenReturn(Optional.of(ticket));
+        Mockito.when(ticketRepositoryMocked.save(any(Ticket.class))).thenReturn(ticket);
+
+        Ticket purchasedTicket = ticketsService.buyTicket(ticketId);
+        assertEquals(ticketId, purchasedTicket.getId());
+        assertTrue(purchasedTicket.isPurchased());
     }
 }

@@ -20,7 +20,7 @@ import rs.ac.uns.ftn.ktsnwt.constants.UserConstants;
 import rs.ac.uns.ftn.ktsnwt.dto.ReportInfoDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.TicketsToReserveDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
-import rs.ac.uns.ftn.ktsnwt.model.EventDay;
+import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Ticket;
 import rs.ac.uns.ftn.ktsnwt.repository.TicketRepository;
 import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayService;
@@ -30,6 +30,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -139,4 +140,21 @@ public class TicketsServiceImplIntegrationTest {
         assertEquals(sizeBeforeCancellation - 1, sizeAfterCancellation);
     }
 
+    @Test(expected = ResourceNotFoundException.class)
+    public void whenBuyTicket_ticketNotFound() {
+        ticketsService.buyTicket(TicketConstants.NON_EXISTING_ID);
+    }
+
+    @Test(expected = ApiRequestException.class)
+    public void whenBuyTicket_ticketAlreadyBought() {
+        ticketsService.buyTicket(TicketConstants.DB_ID_1);
+    }
+
+    @Test
+    @Transactional @Rollback(true)
+    public void whenBuyTicket() {
+        Ticket purchasedTicket = ticketsService.buyTicket(TicketConstants.DB_ID_3);
+        assertEquals(TicketConstants.DB_ID_3, purchasedTicket.getId());
+        assertTrue(purchasedTicket.isPurchased());
+    }
 }
