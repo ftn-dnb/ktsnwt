@@ -66,7 +66,7 @@ public class TicketControllerIntegrationTest {
         ResponseEntity<TicketDTO[]> response = restTemplate.exchange(
                 "/api/tickets/all?page=0&size=5", HttpMethod.GET, createHttpEntity(), TicketDTO[].class
         );
-        assertEquals(3, response.getBody().length);
+        assertEquals(4, response.getBody().length);
     }
 
     @Test
@@ -163,7 +163,7 @@ public class TicketControllerIntegrationTest {
         ResponseEntity<TicketDTO[]> response = restTemplate.exchange(
                 "/api/tickets?page=0&size=5", HttpMethod.GET, createHttpEntity(), TicketDTO[].class
         );
-        assertEquals(3, response.getBody().length);
+        assertEquals(4, response.getBody().length);
     }
 
     @Test
@@ -218,13 +218,27 @@ public class TicketControllerIntegrationTest {
         );
 
         assertNotNull(response.getBody());
+        assertEquals("This ticket is already purchased.", response.getBody().getMessage());
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
+
+
+    @Test
+    public void whenBuyTicket_timeRanOut() {
+        ResponseEntity<ApiRequestException> response = restTemplate.exchange(
+                "/api/tickets/buy/" + TicketConstants.DB_ID_3, HttpMethod.GET, createHttpEntity(), ApiRequestException.class
+        );
+
+        assertNotNull(response.getBody());
+        assertEquals("You can't buy this ticket because time has run out.", response.getBody().getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
 
     @Test
     public void whenBuyTicket() {
         ResponseEntity<?> response = restTemplate.exchange(
-                "/api/tickets/buy/" + TicketConstants.DB_ID_3, HttpMethod.GET, createHttpEntity(), void.class
+                "/api/tickets/buy/" + TicketConstants.DB_ID_4, HttpMethod.GET, createHttpEntity(), void.class
         );
 
         assertNull(response.getBody());

@@ -150,11 +150,16 @@ public class TicketsServiceImplIntegrationTest {
         ticketsService.buyTicket(TicketConstants.DB_ID_1);
     }
 
+    @Test(expected = ApiRequestException.class)
+    public void whenBuyTicket_timeRunOut() {
+        ticketsService.buyTicket(TicketConstants.DB_ID_1);
+    }
+
     @Test
     @Transactional @Rollback(true)
     public void whenBuyTicket() {
-        Ticket purchasedTicket = ticketsService.buyTicket(TicketConstants.DB_ID_3);
-        assertEquals(TicketConstants.DB_ID_3, purchasedTicket.getId());
+        Ticket purchasedTicket = ticketsService.buyTicket(TicketConstants.DB_ID_4);
+        assertEquals(TicketConstants.DB_ID_4, purchasedTicket.getId());
         assertTrue(purchasedTicket.isPurchased());
     }
 }

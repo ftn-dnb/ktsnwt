@@ -220,6 +220,9 @@ public class TicketsServiceImpl implements TicketsService {
         if (ticket.isPurchased())
             throw new ApiRequestException("This ticket is already purchased.");
 
+        if (ticket.getEventDay().getDate().before(new Date()))
+            throw new ApiRequestException("You can't buy this ticket because time has run out.");
+
         ticket.setPurchased(true);
         Ticket savedTicket = ticketRepository.save(ticket);
 
