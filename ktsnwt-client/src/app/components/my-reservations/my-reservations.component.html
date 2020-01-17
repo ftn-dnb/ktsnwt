@@ -50,7 +50,7 @@
       </td>
       <td>
         <div *ngIf="!ticket.purchased">
-          <button mat-button (click)="onClickBuy(ticket.id)">
+          <button mat-button (click)="onClickBuy(ticket.id, ticket.price, ticket.datePurchased)">
             <mat-icon>add_shopping_cart</mat-icon>
           </button>
         </div>

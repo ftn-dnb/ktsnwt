@@ -1,7 +1,7 @@
 import { MatButtonModule, MatCheckboxModule, MatInputModule, 
     MatIconModule, MatToolbarModule, MatMenuModule, MatTableModule,
     MatSlideToggleModule, MatCardModule, MatTooltipModule, MatPaginatorModule,
-    MatSelectModule,
+    MatSelectModule, MatDialogModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 
@@ -9,12 +9,12 @@ import { NgModule } from '@angular/core';
     imports: [MatButtonModule, MatCheckboxModule, MatInputModule, 
         MatIconModule, MatToolbarModule, MatMenuModule, MatTableModule,
         MatSlideToggleModule, MatCardModule, MatTooltipModule, MatPaginatorModule,
-        MatSelectModule,
+        MatSelectModule, MatDialogModule
     ],
     exports: [MatButtonModule, MatCheckboxModule, MatInputModule, 
         MatIconModule, MatToolbarModule, MatMenuModule, MatTableModule,
         MatSlideToggleModule, MatCardModule, MatTooltipModule, MatPaginatorModule,
-        MatSelectModule,
+        MatSelectModule, MatDialogModule
     ]
 })
 export class MaterialModule {
