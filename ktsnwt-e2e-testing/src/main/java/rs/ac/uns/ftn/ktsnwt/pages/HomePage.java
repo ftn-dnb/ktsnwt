@@ -31,6 +31,10 @@ public class HomePage {
         this.driver = driver;
     }
 
+    public WebElement getAdminMenuButton() {
+        return adminMenuButton;
+    }
+
     public WebElement getLoginButton() {
         return loginButton;
     }
