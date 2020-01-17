@@ -63,10 +63,7 @@ public class HomePage {
     public void ensureRegistrationButtonIsDisplayed() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(registrationButton));
     }
-
     public void ensureAdminMenuButtonIsDisplayed() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(adminMenuButton));
     }
-
-
 }
