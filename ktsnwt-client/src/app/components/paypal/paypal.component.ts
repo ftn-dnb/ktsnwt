@@ -1,6 +1,5 @@
 import { TicketService } from './../../services/ticket.service';
 import { TicketBuyingData } from './../../models/ticket-buying-data';
-import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
 declare var paypal;
@@ -8,7 +7,6 @@ declare var paypal;
 @Component({
   selector: 'app-paypal',
   templateUrl: './paypal.component.html',
-  styleUrls: ['./paypal.component.css']
 })
 export class PaypalComponent implements OnInit {
 
