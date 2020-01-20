@@ -23,6 +23,7 @@ import { AddLocationComponent } from './components/admin/add-location/add-locati
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { EditLocationComponent } from './components/admin/edit-location/edit-location.component';
 import { MyReservationsComponent } from './components/my-reservations/my-reservations.component';
+import { AddEventComponent } from './components/add-event/add-event.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { MyReservationsComponent } from './components/my-reservations/my-reserva
     AddLocationComponent,
     EditLocationComponent,
     MyReservationsComponent,
+    AddEventComponent,
   ],
   imports: [
     BrowserModule,

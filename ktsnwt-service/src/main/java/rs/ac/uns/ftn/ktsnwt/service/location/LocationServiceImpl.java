@@ -15,6 +15,7 @@ import rs.ac.uns.ftn.ktsnwt.repository.LocationRepository;
 import javax.persistence.NonUniqueResultException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -115,5 +116,10 @@ public class LocationServiceImpl implements LocationService {
         locationRepository.save(location);
 
         return location;
+    }
+
+    @Override
+    public List<String> locationNames() {
+        return locationRepository.findAll().stream().map(Location::getName).collect(Collectors.toList());
     }
 }
