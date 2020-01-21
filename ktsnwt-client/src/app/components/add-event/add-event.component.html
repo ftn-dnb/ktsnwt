@@ -1,6 +1,6 @@
 <div class = "container">
     <form [formGroup]="addEventForm" (submit)="onAddEventSubmit()">
-        <div class="column">
+        <div class="row">
             <div class="input-field">
                 <mat-form-field appearance="outline">
                     <!--<mat-icon matPrefix class="icon">event</mat-icon>-->
@@ -45,7 +45,11 @@
                 </small>
 
             </div>
+        </div>
 
+
+
+        <div class="row">
             <div class="input-field">
                 <mat-form-field appearance="outline">
                     <input id="purchase-limit-input" matInput type="number" placeholder="Purchase limit" formControlName="purchaseLimit" min="1"/>
@@ -79,19 +83,6 @@
                 </small>
 
             </div>
-
-            <div class="input-field-description">
-                <mat-form-field appearance="outline">
-                    <textarea id="description-input" matInput type="text" placeholder="Description" formControlName="description">
-                    </textarea>
-                </mat-form-field>
-
-                <small id="description-error-msg-req" class="text-danger"
-                *ngIf="addEventForm.controls.description.touched && addEventForm.controls.description.errors?.required">
-                Description is required
-                </small>
-            </div>
-
             <div class="input-field">
                 <mat-form-field appearance="outline">
                     <mat-select id="type-input" formControlName="type" placeholder="Event type">
@@ -106,6 +97,11 @@
                 Event type is required
                 </small>
             </div>
+
+        </div>
+
+        <div class="row">
+
 
             <div class="input-field">
                 <mat-form-field appearance="outline">
@@ -127,10 +123,27 @@
                 Hall id is required
                 </small>
             </div>
-
         </div>
-        
-        <button id="add-btn" type="submit" mat-raised-button color="primary" [disabled]="addEventForm.invalid">
+
+        <div class= "row">
+            <div class="input-field-description">
+                <mat-form-field appearance="outline">
+                    <textarea id="description-input" matInput type="text" placeholder="Description" formControlName="description">
+                    </textarea>
+                </mat-form-field>
+
+                <small id="description-error-msg-req" class="text-danger"
+                *ngIf="addEventForm.controls.description.touched && addEventForm.controls.description.errors?.required">
+                Description is required
+                </small>
+            </div>
+
+            <div class="image-container">
+                <input type='file' id="upload" (change)="onClickImageChange($event)" />
+            </div>
+        </div>
+
+        <button class="submit-button" id="add-btn" type="submit" mat-raised-button color="primary" [disabled]="addEventForm.invalid">
             Add event
         </button>
     </form>

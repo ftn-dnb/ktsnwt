@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 import { EventInfo } from 'src/app/models/event-info';
 import { EventService } from 'src/app/services/event.service';
 import { formatDate } from '@angular/common';
-import { validateEndDateBeforeStartDate } from 'src/app/validators/end-date-custom-validator';
+import { EVENTS_PATH } from 'src/app/config/router-paths';
+
 
 
 @Component({
@@ -25,6 +26,8 @@ export class AddEventComponent implements OnInit {
   locationNames: string[] = [];
   filteredNames: Observable<string[]>;
   nameControl = new FormControl();
+  imagePath = '';
+  uploadData: FormData;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
@@ -69,10 +72,17 @@ export class AddEventComponent implements OnInit {
 
     this.eventService.addNewEvent(eventInfo).subscribe(data => {
       console.log(data);
+      if (this.imagePath !== '') {
+        this.eventService.editEventImage(this.uploadData, data.id).subscribe(resultData => {
+        }, errorImage => {
+          this.toastr.error('There was an error while uploading picture');
+        });
+      }
+      this.toastr.success('New event has been successfully added.');
+      this.router.navigate([EVENTS_PATH]);
     }, error => {
       this.toastr.warning(error.error.message, 'Warning');
     });
-    // return;
   }
 
   findLocationByName(): void {
@@ -115,5 +125,12 @@ export class AddEventComponent implements OnInit {
       }
     }
     return null;
+  }
+
+  onClickImageChange(event): void {
+    const image = event.target.files[0];
+    this.uploadData = new FormData();
+    this.uploadData.append('file', image, image.name);
+    this.imagePath = image.name;
   }
 }

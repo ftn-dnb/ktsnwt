@@ -1,4 +1,4 @@
-import { API_EVENTS, API_EVENTS_ADD } from './../config/api-paths';
+import { API_EVENTS, API_EVENTS_ADD, API_EVENTS_IMAGE } from './../config/api-paths';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -22,5 +22,9 @@ export class EventService {
 
   addNewEvent(eventInfo: EventInfo): Observable<any> {
     return this.http.post(API_EVENTS_ADD, eventInfo);
+  }
+
+  editEventImage(image: FormData, id: number): Observable<any> {
+    return this.http.post(API_EVENTS_IMAGE + id, image);
   }
 }
