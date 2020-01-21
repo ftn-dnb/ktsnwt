@@ -1,0 +1,152 @@
+<div class = "container">
+    <form [formGroup]="addEventForm" (submit)="onAddEventSubmit()">
+        <div class="row">
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <!--<mat-icon matPrefix class="icon">event</mat-icon>-->
+                    <input id="name-input" matInput type="text" placeholder="Event name" formControlName="name"/>
+                </mat-form-field>
+
+                <small id="name-error-msg-req" class="text-danger"
+                *ngIf="addEventForm.controls.name.touched && addEventForm.controls.name.errors?.required">
+                Event name is required
+                </small>
+            </div>
+
+            <div class="input-date">
+                <mat-form-field appearance="outline">
+                    <input matInput [matDatepicker]="myDatepicker" id="start-date-input" formControlName="startDate" placeholder="Start date">
+                    <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #myDatepicker></mat-datepicker>
+                </mat-form-field>
+
+                <small id="end-date-error-msg" class="text-danger"
+                *ngIf="addEventForm.controls.endDate.touched && addEventForm.hasError('beforeTodayStart')">
+                    End date can't be before today
+                </small>
+
+            </div>
+
+            <div class="input-date">
+                <mat-form-field appearance="outline">
+                    <input matInput [matDatepicker]="myDatepicker2" id="end-date-input" formControlName="endDate" placeholder="End date">
+                    <mat-datepicker-toggle matSuffix [for]="myDatepicker2"></mat-datepicker-toggle>
+                    <mat-datepicker #myDatepicker2></mat-datepicker>
+                </mat-form-field>
+
+                <small id="end-date-error-msg" class="text-danger"
+                *ngIf="addEventForm.controls.endDate.touched && addEventForm.hasError('endBefore')">
+                    End date can't be before start date
+                </small>
+
+                <small id="end-date-error-msg" class="text-danger"
+                *ngIf="addEventForm.controls.endDate.touched && addEventForm.hasError('beforeTodayEnd')">
+                    End date can't be before today
+                </small>
+
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <input id="purchase-limit-input" matInput type="number" placeholder="Purchase limit" formControlName="purchaseLimit" min="1"/>
+                </mat-form-field>
+
+                <small id="number-error-msg-req" class="text-danger"
+                *ngIf="addEventForm.controls.purchaseLimit.touched && addEventForm.controls.purchaseLimit.errors?.required">
+                Purchase limit is required
+                </small>
+
+                <small id="number-error-msg-negative" class="text-danger"
+                *ngIf="addEventForm.controls.purchaseLimit.touched && addEventForm.controls.purchaseLimit.errors?.min">
+                Purchase must be greater than 0
+                </small>
+
+            </div>
+
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <input id="tickets-per-user-input" matInput type="number" placeholder="Tickets per user" formControlName="ticketsPerUser" min="1"/>
+                </mat-form-field>
+
+                <small id="number-error-msg-req" class="text-danger"
+                *ngIf="addEventForm.controls.ticketsPerUser.touched && addEventForm.controls.ticketsPerUser.errors?.required">
+                Ticket per user limit is required
+                </small>
+
+                <small id="number-error-msg-negative" class="text-danger"
+                *ngIf="addEventForm.controls.ticketsPerUser.touched && addEventForm.controls.ticketsPerUser.errors?.min">
+                Tickets per user must be greater than 0
+                </small>
+
+            </div>
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <mat-select id="type-input" formControlName="type" placeholder="Event type">
+                        <mat-option value="SPORT">SPORT</mat-option>
+                        <mat-option value="CONCERT">CONCERT</mat-option>
+                        <mat-option value="THEATER">THEATER</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <small id="type-error-msg-req" class="text-danger"
+                *ngIf="addEventForm.controls.type.touched && addEventForm.controls.type.errors?.required">
+                Event type is required
+                </small>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <input id="location-input" matInput type="text" placeholder="Location name" [(ngModel)]="locationName" (ngModelChange)="findLocationByName()" [ngModelOptions]="{standalone: true}"/>
+                </mat-form-field>
+            </div>
+
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <mat-select id="hall-id-input" formControlName="hallId" placeholder="Hall name">
+                        <mat-option *ngFor="let hall of halls" [value]="hall.id">
+                            {{hall.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <small id="hall-id-error-msg-req" class="text-danger"
+                *ngIf="addEventForm.controls.hallId.touched && addEventForm.controls.hallId.errors?.required">
+                Hall id is required
+                </small>
+            </div>
+        </div>
+
+        <div class= "row">
+            <div class="input-field-description">
+                <mat-form-field appearance="outline">
+                    <textarea id="description-input" matInput type="text" placeholder="Description" formControlName="description">
+                    </textarea>
+                </mat-form-field>
+
+                <small id="description-error-msg-req" class="text-danger"
+                *ngIf="addEventForm.controls.description.touched && addEventForm.controls.description.errors?.required">
+                Description is required
+                </small>
+            </div>
+
+            <div class="image-container">
+                <input type='file' id="upload" (change)="onClickImageChange($event)" />
+            </div>
+        </div>
+
+        <button class="submit-button" id="add-btn" type="submit" mat-raised-button color="primary" [disabled]="addEventForm.invalid">
+            Add event
+        </button>
+    </form>
+
+</div>
+

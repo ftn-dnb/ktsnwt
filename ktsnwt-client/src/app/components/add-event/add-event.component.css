@@ -1,0 +1,44 @@
+.container {
+    flex-direction: column;
+    display: flex;
+    
+    margin-top: 20px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.input-field,.input-date{
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0px;
+    width: 200px;
+}
+
+.input-field-description {
+    margin-right: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0px;
+    width: 420px;
+}
+
+.submit-button{
+    margin-left:325px;
+}
+
+.image-container {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+.text-danger {
+    margin-top: -10px;
+    margin-bottom: 10px;
+    color: red;
+}

@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EventService } from './../../services/event.service';
 import { Component, OnInit } from '@angular/core';
+import { ADD_EVENT_PATH } from 'src/app/config/router-paths';
 
 @Component({
   selector: 'app-events',
@@ -34,8 +35,7 @@ export class EventsComponent implements OnInit {
   }
 
   onClickAddEvent(): void {
-    // TODO: Implementirati odlazak na zasebnu stranicu za dodavanje manifestacija
-    console.log("ADD EVENT");
+    this.router.navigate([ADD_EVENT_PATH]);
   }
 
   onClickDetails(eventId: number): void {

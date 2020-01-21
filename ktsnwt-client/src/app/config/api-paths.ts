@@ -11,8 +11,14 @@ export const API_LOCATIONS_ALL = API_BASE + '/api/locations/all';
 export const API_LOCATION_ADD = API_BASE + '/api/locations';
 export const API_LOCATION_GET_ID = API_BASE + '/api/locations';
 export const API_LOCATION = API_BASE + '/api/locations';
+export const API_LOCATION_GET_NAME = API_LOCATION + '/name/';
+export const API_LOCATION_GET_NAMES = API_LOCATION + '/names/all';
 export const API_LOCATION_ADDRESS = API_BASE + '/api/locations/address';
 
 export const API_EVENTS = API_BASE + '/api/event/public/all';
 export const API_MY_RESERVATIONS = API_BASE + '/api/tickets';
+export const API_EVENTS_ADD = API_BASE + '/api/event/addEvent';
+export const API_EVENTS_IMAGE = API_BASE + '/api/images/events/';
+
 export const API_BUY_TICKET = API_BASE + '/api/tickets/buy';
+

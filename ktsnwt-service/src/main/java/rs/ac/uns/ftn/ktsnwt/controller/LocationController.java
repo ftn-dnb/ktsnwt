@@ -56,4 +56,9 @@ public class LocationController {
         Location location = locationService.changeAddress(id, addressDTO);
         return new ResponseEntity<>(LocationMapper.toDto(location), HttpStatus.OK);
     }
+
+    @GetMapping("/names/all")
+    public ResponseEntity<List<String>> getAllLocationNames(){
+        return new ResponseEntity<>(locationService.locationNames(), HttpStatus.OK);
+    }
 }
