@@ -22,9 +22,10 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { AddLocationComponent } from './components/admin/add-location/add-location.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { EditLocationComponent } from './components/admin/edit-location/edit-location.component';
-import { MyReservationsComponent } from './components/my-reservations/my-reservations.component';
 import { AddEventComponent } from './components/add-event/add-event.component';
-
+import { MyReservationsComponent, PaymentDialog } from './components/my-reservations/my-reservations.component';
+import { PaypalComponent } from './components/paypal/paypal.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,8 @@ import { AddEventComponent } from './components/add-event/add-event.component';
     EditLocationComponent,
     MyReservationsComponent,
     AddEventComponent,
+    PaypalComponent,
+    PaymentDialog,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,10 @@ import { AddEventComponent } from './components/add-event/add-event.component';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true },
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false} }
+  ],
+  entryComponents: [
+    PaymentDialog,
   ],
   bootstrap: [AppComponent]
 })

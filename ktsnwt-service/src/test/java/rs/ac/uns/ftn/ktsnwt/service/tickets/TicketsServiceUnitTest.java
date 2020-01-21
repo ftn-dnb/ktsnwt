@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.service.tickets;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 
 import org.junit.Before;
@@ -8,20 +9,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.ConfigFileApplicationContextInitializer;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.constants.*;
@@ -29,6 +24,7 @@ import rs.ac.uns.ftn.ktsnwt.dto.ReportInfoDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.TicketsToReserveDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
+import rs.ac.uns.ftn.ktsnwt.model.EventDay;
 import rs.ac.uns.ftn.ktsnwt.model.Ticket;
 import rs.ac.uns.ftn.ktsnwt.model.User;
 import rs.ac.uns.ftn.ktsnwt.repository.TicketRepository;
@@ -287,5 +283,57 @@ public class TicketsServiceUnitTest {
             Mockito.when(ticketRepositoryMocked.findById(ticket.getId())).thenReturn(Optional.of(ticket));
             ticketsService.cancelTicket(ticket.getId());
         } catch (ParseException e) {}
+    }
+
+    @Test(expected = ResourceNotFoundException.class)
+    public void whenBuyTicket_ticketNotFound() {
+        final Long ticketId = 1L;
+        Mockito.when(ticketRepositoryMocked.findById(ticketId)).thenReturn(Optional.empty());
+        ticketsService.buyTicket(ticketId);
+    }
+
+    @Test(expected = ApiRequestException.class)
+    public void whenBuyTicket_ticketAlreadyBought() {
+        final Long ticketId = 1L;
+        Ticket ticket = new Ticket();
+        ticket.setId(ticketId);
+        ticket.setPurchased(true);
+
+        Mockito.when(ticketRepositoryMocked.findById(ticketId)).thenReturn(Optional.of(ticket));
+        ticketsService.buyTicket(ticketId);
+    }
+
+    @Test(expected = ApiRequestException.class)
+    public void whenBuyTicket_timeRunOut() {
+        final Long ticketId = 1L;
+        Ticket ticket = new Ticket();
+        ticket.setId(ticketId);
+        ticket.setPurchased(false);
+
+        EventDay eventDay = new EventDay();
+        eventDay.setDate(new Timestamp(System.currentTimeMillis()));
+        ticket.setEventDay(eventDay);
+
+        Mockito.when(ticketRepositoryMocked.findById(ticketId)).thenReturn(Optional.of(ticket));
+        ticketsService.buyTicket(ticketId);
+    }
+
+    @Test
+    public void whenBuyTicket() {
+        final Long ticketId = 1L;
+        Ticket ticket = new Ticket();
+        ticket.setId(ticketId);
+        ticket.setPurchased(false);
+
+        EventDay eventDay = new EventDay();
+        eventDay.setDate(new Timestamp(System.currentTimeMillis() + 10000000));
+        ticket.setEventDay(eventDay);
+
+        Mockito.when(ticketRepositoryMocked.findById(ticketId)).thenReturn(Optional.of(ticket));
+        Mockito.when(ticketRepositoryMocked.save(any(Ticket.class))).thenReturn(ticket);
+
+        Ticket purchasedTicket = ticketsService.buyTicket(ticketId);
+        assertEquals(ticketId, purchasedTicket.getId());
+        assertTrue(purchasedTicket.isPurchased());
     }
 }

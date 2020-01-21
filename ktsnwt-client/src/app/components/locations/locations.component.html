@@ -1,14 +1,14 @@
 <div class="container">
     <div class="header">
-        <h1>Locations</h1>
+        <h1 id = "title">Locations</h1>
 
-        <button mat-raised-button color="primary" class="btnAdd" (click)="onClickAddLocation()">
-            <mat-icon class="icon">add_circle</mat-icon>
+        <button id = "addNew" mat-raised-button color="primary" class="btnAdd" (click)="onClickAddLocation()">
+            <mat-icon id = "addCircle" class="icon">add_circle</mat-icon>
             <span>Add new</span>
         </button>
     </div>
 
-    <table class="table">
+    <table class="table" id = "table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -32,13 +32,13 @@
                 <td *ngIf="!location.address.streetName">----------------------</td>
                 <td>{{location.halls.length}}</td>
                 <td>
-                    <button mat-button (click)="onClickEdit(location.id)">
-                        <mat-icon>edit</mat-icon>
+                    <button mat-button (click)="onClickEdit(location.id)" class = "editBtn">
+                        <mat-icon>edit</mat-icon>             
                     </button>
                 </td>
                 <td>
-                    <button mat-button (click)="onClickStats(location.id)">
-                        <mat-icon>assessment</mat-icon>
+                    <button mat-button (click)="onClickStats(location.id)" class = "statsBtn">
+                        <mat-icon>assessment</mat-icon>                    
                     </button>
                 </td>
             </tr>
@@ -46,20 +46,20 @@
         <tfoot>
             <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
             <td>
-                <mat-select class="page-size-select" [(ngModel)]="pageSize" (ngModelChange)="onPageSizeSelect()">
+                <mat-select id="size" class="page-size-select" [(ngModel)]="pageSize" (ngModelChange)="onPageSizeSelect()">
                     <mat-option value="5">5</mat-option>
                     <mat-option value="10">10</mat-option>
                     <mat-option value="15">15</mat-option>
                 </mat-select>
             </td>
             <td>
-                <button mat-button *ngIf="pageNum !== 0" (click)="onClickPrevious()">
+                <button mat-button id = "previous" *ngIf="pageNum !== 0" (click)="onClickPrevious()">
                     <mat-icon>navigate_before</mat-icon>
                     <span>Previous</span>
                 </button>
             </td>
             <td>
-                <button mat-button *ngIf="pageNum * pageSize < totalNumOfLocations - pageSize" (click)="onClickNext()">
+                <button mat-button id="next" *ngIf="pageNum * pageSize < totalNumOfLocations - pageSize" (click)="onClickNext()">
                     <span>Next</span>
                     <mat-icon>navigate_next</mat-icon>
                 </button>

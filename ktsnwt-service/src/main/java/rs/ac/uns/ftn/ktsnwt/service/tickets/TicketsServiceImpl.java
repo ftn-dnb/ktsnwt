@@ -210,4 +210,22 @@ public class TicketsServiceImpl implements TicketsService {
         ticketRepository.delete(ticket);
     }
 
+    @Override
+    public Ticket buyTicket(Long id) {
+        Ticket ticket = ticketRepository.findById(id).orElse(null);
+
+        if (ticket == null)
+            throw new ResourceNotFoundException("Ticket with ID " + id + " doesn't exist.");
+
+        if (ticket.isPurchased())
+            throw new ApiRequestException("This ticket is already purchased.");
+
+        if (ticket.getEventDay().getDate().before(new Date()))
+            throw new ApiRequestException("You can't buy this ticket because time has run out.");
+
+        ticket.setPurchased(true);
+        Ticket savedTicket = ticketRepository.save(ticket);
+
+        return savedTicket;
+    }
 }

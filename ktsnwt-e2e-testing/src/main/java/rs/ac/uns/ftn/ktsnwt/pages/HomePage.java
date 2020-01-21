@@ -23,8 +23,16 @@ public class HomePage {
     @FindBy(css = "#user-menu-settings-btn")
     private WebElement userSettingsButton;
 
+    @FindBy(css = "#adminMenuBtn")
+    private WebElement adminMenuButton;
+
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
+    }
+
+    public WebElement getAdminMenuButton() {
+        return adminMenuButton;
     }
 
     public WebElement getLoginButton() {
@@ -54,5 +62,8 @@ public class HomePage {
 
     public void ensureRegistrationButtonIsDisplayed() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(registrationButton));
+    }
+    public void ensureAdminMenuButtonIsDisplayed() {
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(adminMenuButton));
     }
 }

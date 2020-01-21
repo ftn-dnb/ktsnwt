@@ -33,22 +33,22 @@
                 <td>{{event.ticketsPerUser}}</td>
                 <td>{{event.type}}</td>
                 <td>
-                    <button mat-button (click)="onClickDetails(event.id)">
+                    <button mat-button (click)="onClickDetails(event.id)" class = "btnDetails">
                         <mat-icon>more</mat-icon>             
                     </button>
                 </td>
                 <td>
-                    <button mat-button (click)="onClickEdit(event.id)">
+                    <button mat-button (click)="onClickEdit(event.id)" class = "btnEdit">
                         <mat-icon>edit</mat-icon>                    
                     </button>
                 </td>
                 <td>
-                    <button mat-button (click)="onClickStats(event.id)">
+                    <button mat-button (click)="onClickStats(event.id)" class = "btnStats">
                         <mat-icon>assessment</mat-icon>                    
                     </button>
                 </td>
                 <td>
-                    <button mat-button (click)="onClickArchive(event.id)">
+                    <button mat-button (click)="onClickArchive(event.id)" class = "btnArchive">
                         <mat-icon>archive</mat-icon>                    
                     </button>
                 </td>
@@ -57,20 +57,20 @@
         <tfoot>
             <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
             <td>
-                <mat-select class="page-size-select" [(ngModel)]="pageSize" (ngModelChange)="onPageSizeSelect()">
+                <mat-select class="page-size-select" [(ngModel)]="pageSize" id = "sizeBtn" (ngModelChange)="onPageSizeSelect()">
                     <mat-option value="5">5</mat-option>
                     <mat-option value="10">10</mat-option>
                     <mat-option value="15">15</mat-option>
                 </mat-select>
             </td>
             <td>
-                <button mat-button *ngIf="pageNum !== 0" (click)="onClickPrevious()">
+                <button mat-button *ngIf="pageNum !== 0" (click)="onClickPrevious()" id = "previousBtn">
                     <mat-icon>navigate_before</mat-icon>
                     <span>Previous</span>
                 </button>
             </td>
             <td>
-                <button mat-button *ngIf="pageNum * pageSize < totalNumOfEvents - pageSize" (click)="onClickNext()">
+                <button mat-button *ngIf="pageNum * pageSize < totalNumOfEvents - pageSize" id = "nextBtn" (click)="onClickNext()">
                     <span>Next</span>
                     <mat-icon>navigate_next</mat-icon>
                 </button>
