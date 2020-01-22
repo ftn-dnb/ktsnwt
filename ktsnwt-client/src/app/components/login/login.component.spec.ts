@@ -54,6 +54,7 @@ describe('LoginComponent', () => {
     expect(component.loginForm.invalid).toBeTruthy();
   });
 
+  // TODO: FIX
   it('should be true when submitted', () => {
     component.loginForm.controls['username'].setValue('jane.doe');
     component.loginForm.controls['password'].setValue('123');
