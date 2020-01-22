@@ -15,6 +15,8 @@ import { Component, OnInit } from '@angular/core';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  loginSuccess: boolean = false;
+  loginError: boolean = false;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -49,8 +51,12 @@ export class LoginComponent implements OnInit {
       localStorage.setItem(USERNAME_KEY, data.username);
       localStorage.setItem(USER_TOKEN_KEY, data.token.accessToken);
   
+      this.loginSuccess = true;
+      this.loginError = false;
       this.router.navigate([HOME_PATH]);
     }, error => {
+      this.loginSuccess = false;
+      this.loginError = true;
       this.toastr.warning(error.error.message, 'Warning');
     });
   }
