@@ -7,10 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.common.TimeProvider;
 import rs.ac.uns.ftn.ktsnwt.dto.*;
-import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
-import rs.ac.uns.ftn.ktsnwt.exception.EventNotFoundException;
-import rs.ac.uns.ftn.ktsnwt.exception.HallNotFoundException;
-import rs.ac.uns.ftn.ktsnwt.exception.SectorNotFoundException;
+import rs.ac.uns.ftn.ktsnwt.exception.*;
 import rs.ac.uns.ftn.ktsnwt.mappers.EventMapper;
 import rs.ac.uns.ftn.ktsnwt.model.Event;
 import rs.ac.uns.ftn.ktsnwt.model.EventDay;
@@ -159,5 +156,14 @@ public class EventServiceImpl implements EventService {
         }
 
         return e;
+    }
+
+    @Override
+    public Event getEventById(Long id) {
+        try {
+            return eventRepository.findById(id).get();
+        }   catch (NoSuchElementException e){
+            throw  new ResourceNotFoundException("Event with id'" + id + "' doesn't exist.");
+        }
     }
 }

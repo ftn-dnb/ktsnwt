@@ -1,6 +1,8 @@
 import { ToastrService } from 'ngx-toastr';
 import { EventService } from './../../services/event.service';
 import { Component, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { SHOW_EVENT_DETAILED } from 'src/app/config/router-paths';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +17,8 @@ export class HomeComponent implements OnInit {
   private isLastPage: boolean = false;
 
   constructor(private eventService: EventService,
-              private toastr: ToastrService) { 
+              private toastr: ToastrService,
+              private router: Router,) {
   }
 
   ngOnInit() {
@@ -44,5 +47,6 @@ export class HomeComponent implements OnInit {
   onClickSeeMore(eventId: number): void {
     // TODO: Uz pomoc rutera se navigirati na zasebnu stranicu za dati event
     console.log(eventId);
+    this.router.navigate([SHOW_EVENT_DETAILED, eventId], );
   }
 }

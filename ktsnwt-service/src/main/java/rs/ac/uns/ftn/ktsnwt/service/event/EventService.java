@@ -15,4 +15,5 @@ public interface EventService {
     void setNewEventImage(String path, Long id);
     Event editEvent(EventEditDTO event);
     Event setEventPricing(Long eventId, List<SetSectorPriceDTO> pricing);
+    Event getEventById(Long id);
 }
