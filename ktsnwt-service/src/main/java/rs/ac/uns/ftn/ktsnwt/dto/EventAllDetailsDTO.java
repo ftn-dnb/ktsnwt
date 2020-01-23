@@ -20,6 +20,7 @@ public class EventAllDetailsDTO {
     private HallDTO hall;
     private List<EventDayDTO> days;
     private List<PricingDTO> pricing;
+    private LocationDTO location;
 
     public EventAllDetailsDTO(){
 
@@ -36,6 +37,7 @@ public class EventAllDetailsDTO {
         this.imagePath = e.getImagePath();
         this.type = e.getType();
         this.hall  = new HallDTO(e.getHall());
+        this.location = new LocationDTO(e.getHall().getLocation());
         this.days = e.getEventDays().stream().map(EventDayDTO::new).collect(Collectors.toList());
     }
 
@@ -111,14 +113,6 @@ public class EventAllDetailsDTO {
         this.type = type;
     }
 
-    public HallDTO getHall() {
-        return hall;
-    }
-
-    public void setHall(HallDTO hall) {
-        this.hall = hall;
-    }
-
     public List<EventDayDTO> getDays() {
         return days;
     }
@@ -133,6 +127,22 @@ public class EventAllDetailsDTO {
 
     public void setPricing(List<PricingDTO> pricing) {
         this.pricing = pricing;
+    }
+
+    public LocationDTO getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationDTO location) {
+        this.location = location;
+    }
+
+    public HallDTO getHall() {
+        return hall;
+    }
+
+    public void setHall(HallDTO hall) {
+        this.hall = hall;
     }
 }
 

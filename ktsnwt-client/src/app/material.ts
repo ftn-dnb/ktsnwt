@@ -2,7 +2,7 @@ import { MatButtonModule, MatCheckboxModule, MatInputModule,
     MatIconModule, MatToolbarModule, MatMenuModule, MatTableModule,
     MatSlideToggleModule, MatCardModule, MatTooltipModule, MatPaginatorModule,
     MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule,
-    MatDialogModule
+    MatDialogModule, MatListModule, MatTabsModule,
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 
@@ -11,14 +11,14 @@ import { NgModule } from '@angular/core';
         MatIconModule, MatToolbarModule, MatMenuModule, MatTableModule,
         MatSlideToggleModule, MatCardModule, MatTooltipModule, MatPaginatorModule,
         MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule,
-        MatDialogModule, 
+        MatDialogModule, MatListModule, MatTabsModule,
 
     ],
     exports: [MatButtonModule, MatCheckboxModule, MatInputModule,
         MatIconModule, MatToolbarModule, MatMenuModule, MatTableModule,
         MatSlideToggleModule, MatCardModule, MatTooltipModule, MatPaginatorModule,
         MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule,
-        MatDialogModule,
+        MatDialogModule, MatListModule, MatTabsModule,
 
     ]
 })

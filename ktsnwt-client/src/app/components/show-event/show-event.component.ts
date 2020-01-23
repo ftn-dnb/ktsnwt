@@ -12,7 +12,8 @@ import { ThrowStmt } from '@angular/compiler';
 export class ShowEventComponent implements OnInit {
 
   routeSub: Subscription;
-  eventData: any; // namestiti da bude tip Event
+  eventData: any = {};
+   // namestiti da bude tip Event
   constructor(private route: ActivatedRoute,
               private eventService: EventService,
               ) {}
