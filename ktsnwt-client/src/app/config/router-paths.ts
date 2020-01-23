@@ -9,4 +9,6 @@ export const ADD_LOCATION_PATH = 'add-location';
 export const EDIT_LOCATION_PATH = 'edit-location/:id';
 export const MY_RESERVATIONS_PATH = 'my-reservations';
 export const ADD_EVENT_PATH = 'add-event';
+export const SHOW_EVENT_DETAILED_ID = 'show-event/:id';
+export const SHOW_EVENT_DETAILED = 'show-event/';
 

@@ -19,6 +19,7 @@ export const API_EVENTS = API_BASE + '/api/event/public/all';
 export const API_MY_RESERVATIONS = API_BASE + '/api/tickets';
 export const API_EVENTS_ADD = API_BASE + '/api/event/addEvent';
 export const API_EVENTS_IMAGE = API_BASE + '/api/images/events/';
+export const API_EVENTS_GET_ONE_BY_ID = API_BASE + '/api/event/public/';
 
 export const API_BUY_TICKET = API_BASE + '/api/tickets/buy';
 

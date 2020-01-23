@@ -26,6 +26,7 @@ import { AddEventComponent } from './components/add-event/add-event.component';
 import { MyReservationsComponent, PaymentDialog } from './components/my-reservations/my-reservations.component';
 import { PaypalComponent } from './components/paypal/paypal.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+import { ShowEventComponent } from './components/show-event/show-event.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
     AddEventComponent,
     PaypalComponent,
     PaymentDialog,
+    ShowEventComponent,
   ],
   imports: [
     BrowserModule,

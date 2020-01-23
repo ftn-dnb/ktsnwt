@@ -8,7 +8,7 @@ import { AddLocationComponent } from './components/admin/add-location/add-locati
 import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH,
          VERIFY_ACCOUNT_PATH, USER_SETTINGS_PATH, LOCATIONS_PATH,
          EVENTS_PATH, ADD_LOCATION_PATH, EDIT_LOCATION_PATH,
-         MY_RESERVATIONS_PATH, ADD_EVENT_PATH } from './config/router-paths';
+         MY_RESERVATIONS_PATH, ADD_EVENT_PATH, SHOW_EVENT_DETAILED_ID} from './config/router-paths';
 
 import { HomeComponent } from './components/home/home.component';
 import { NgModule } from '@angular/core';
@@ -19,7 +19,7 @@ import { EditLocationComponent } from './components/admin/edit-location/edit-loc
 
 import {MyReservationsComponent} from './components/my-reservations/my-reservations.component';
 import { AddEventComponent } from './components/add-event/add-event.component';
-
+import { ShowEventComponent } from './components/show-event/show-event.component';
 
 
 const routes: Routes = [
@@ -34,6 +34,7 @@ const routes: Routes = [
   { path: EDIT_LOCATION_PATH, component: EditLocationComponent },
   { path: MY_RESERVATIONS_PATH, component: MyReservationsComponent},
   { path: ADD_EVENT_PATH, component: AddEventComponent},
+  { path: SHOW_EVENT_DETAILED_ID, component : ShowEventComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 
