@@ -11,7 +11,7 @@ import { Injectable } from '@angular/core';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
   }
 
   isUserLoggedIn(): boolean {
@@ -20,6 +20,10 @@ export class AuthService {
 
   login(loginInfo: LoginInfo): Observable<any> {
     return this.http.post(API_LOGIN, loginInfo);
+  }
+
+  checkForAdmin(): boolean {
+    return localStorage.getItem(USER_ROLE_KEY) === 'ROLE_ADMIN';
   }
 
   logout(): void {

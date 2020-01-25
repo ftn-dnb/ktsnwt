@@ -27,6 +27,7 @@ import { MyReservationsComponent, PaymentDialog } from './components/my-reservat
 import { PaypalComponent } from './components/paypal/paypal.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { ShowEventComponent } from './components/show-event/show-event.component';
+import { PageNotAuthorizedComponent } from './components/page-not-authorized/page-not-authorized.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ShowEventComponent } from './components/show-event/show-event.component
     LocationsComponent,
     EventsComponent,
     PageNotFoundComponent,
+    PageNotAuthorizedComponent,
     AddLocationComponent,
     EditLocationComponent,
     MyReservationsComponent,
