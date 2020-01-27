@@ -1,8 +1,10 @@
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EventService } from './../../services/event.service';
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { ADD_EVENT_PATH } from 'src/app/config/router-paths';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {PaymentDialog} from '../my-reservations/my-reservations.component';
 
 @Component({
   selector: 'app-events',
@@ -18,7 +20,8 @@ export class EventsComponent implements OnInit {
 
   constructor(private eventService: EventService,
               private toastr: ToastrService,
-              private router: Router) { 
+              private router: Router,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -49,7 +52,7 @@ export class EventsComponent implements OnInit {
   }
 
   onClickStats(eventId: number): void {
-    // TODO: implementirati odlazak na stranicu za prikaz statistike za datu manifestaciju
+    this.openDialog(eventId);
     console.log("STATS", eventId);
   }
 
@@ -72,4 +75,38 @@ export class EventsComponent implements OnInit {
     this.pageNum--;
     this.getEvents();
   }
+
+  private openDialog(eventId: number) {
+    this.dialog.open(EventReportDialog, {
+      maxHeight: '500px',
+      data: eventId
+    });
+  }
+}
+
+
+
+@Component({
+  selector: 'event-report-dialog',
+  template: `
+      
+      <h3 id="title"> Report for event: {{this.data}}</h3>
+      <app-event-report [eventId]="this.data" ></app-event-report>
+      <button mat-button (click)="onClickExit()">
+        <mat-icon>close</mat-icon>
+        <span>Cancel</span>
+      </button>
+    `
+})
+export class EventReportDialog {
+
+  constructor(private toast: ToastrService,
+              public dialogRef: MatDialogRef<EventReportDialog>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+
+  onClickExit(): void {
+    this.dialogRef.close();
+  }
+
 }
