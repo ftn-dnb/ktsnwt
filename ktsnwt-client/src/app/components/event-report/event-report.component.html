@@ -1,0 +1,20 @@
+<div id = "datepicker_div">
+  <mat-form-field>
+    <input matInput readonly [max]="maxDate" [(ngModel)]="pickedDate"  [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+<div id = "search_div">
+  <button mat-button id = "search" (click)="onClickSearch()">
+    <span>Search</span>
+    <mat-icon>search</mat-icon>
+  </button>
+</div>
+<div [hidden]="isDivHidden" id="income_div">
+  Income: <span id="income">{{this.income}} </span>
+</div>
+<div [hidden]="isDivHidden" id="sold_tickets_div">
+  Number of sold tickets: <span id="sold_tickets"> {{this.soldTickets}}</span>
+</div>
+<p id = "result"></p>

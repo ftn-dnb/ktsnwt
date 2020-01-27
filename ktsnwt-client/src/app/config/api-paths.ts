@@ -22,4 +22,5 @@ export const API_EVENTS_IMAGE = API_BASE + '/api/images/events/';
 export const API_EVENTS_GET_ONE_BY_ID = API_BASE + '/api/event/public/';
 
 export const API_BUY_TICKET = API_BASE + '/api/tickets/buy';
+export const API_EVENT_DAILY_REPORT = API_BASE + '/api/tickets/eventDailyReport/';
 

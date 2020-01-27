@@ -28,6 +28,9 @@ import { PaypalComponent } from './components/paypal/paypal.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 import { ShowEventComponent } from './components/show-event/show-event.component';
 import { PageNotAuthorizedComponent } from './components/page-not-authorized/page-not-authorized.component';
+import { EventReportComponent } from './components/event-report/event-report.component';
+import { EventReportDialog } from './components/events/events.component';
+
 
 @NgModule({
   declarations: [
@@ -49,6 +52,8 @@ import { PageNotAuthorizedComponent } from './components/page-not-authorized/pag
     PaypalComponent,
     PaymentDialog,
     ShowEventComponent,
+    EventReportComponent,
+    EventReportDialog
   ],
   imports: [
     BrowserModule,
@@ -67,10 +72,10 @@ import { PageNotAuthorizedComponent } from './components/page-not-authorized/pag
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true },
-    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false} }
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true} }
   ],
   entryComponents: [
-    PaymentDialog,
+    PaymentDialog, EventReportDialog
   ],
   bootstrap: [AppComponent]
 })
