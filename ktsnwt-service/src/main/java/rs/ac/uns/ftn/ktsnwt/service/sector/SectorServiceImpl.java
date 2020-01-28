@@ -74,11 +74,11 @@ public class SectorServiceImpl implements SectorService {
             );
         }
 
-        if (sectorRepository.findByName(sectorDTO.getName(), sectorDTO.getHallId()) != null) {
-            throw new ResourceAlreadyExistsException("" +
-                    "Sector with that name already exists in hall with that id."
-            );
-        }
+        //if (sectorRepository.findByName(sectorDTO.getName(), sectorDTO.getHallId()) != null) {
+        //    throw new ResourceAlreadyExistsException("" +
+        //            "Sector with that name already exists in hall with that id."
+        //    );
+        //}
 
         Sector sector = sectorRepository.findById(sectorDTO.getId()).get();
 
@@ -86,6 +86,7 @@ public class SectorServiceImpl implements SectorService {
         sector.setCapacity(sectorDTO.getCapacity());
         sector.setNumColumns(sectorDTO.getNumColumns());
         sector.setNumRows(sectorDTO.getNumRows());
+        sector.setType(sectorDTO.getType());
 
         sectorRepository.save(sector);
 

@@ -1,0 +1,98 @@
+svg {
+  display: block;
+  border: 1px solid #000;
+  margin: 30px auto;
+  width: 90%;
+}
+
+#inner {
+  display: block;
+  height: 100%;
+  width: 100%;
+  fill: #1d74aa;
+}
+
+rect {
+  fill: #888888;
+}
+
+[stage] {
+  fill: #000;
+}
+
+[zoom-control] {
+  cursor: pointer;
+  fill: #bdbcbc;
+}
+
+[seat] {
+  fill: #494646;
+  border: 1px solid #000;
+}
+
+[seat][locked] {
+  fill: #494646;
+}
+
+[seat][locked="reserved"] {
+  fill: #00bfff;
+}
+
+[seat][selected] {
+  fill: #ffe100;
+}
+
+[seat]:not([selected]):not([locked]):hover {
+  fill: #8a7c7c;
+  cursor: pointer;
+}
+
+.container {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.table {
+  background: white;
+  border: 1px black;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: 20px;
+}
+
+.table td, th {
+  padding: 10px;
+}
+
+.btnAdd {
+  margin-left: 70px;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.page-size-select {
+  width: 70px;
+}
+
+.sector-divs {
+  float: left;
+  width: 30%;
+  margin: 10px;
+  margin-left: 20px;
+}
+
+.btnTop {
+  margin:0 auto;
+  display:block;
+}

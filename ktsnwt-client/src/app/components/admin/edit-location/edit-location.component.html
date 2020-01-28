@@ -18,9 +18,46 @@
     <input matInput placeholder="Enter location name" #locationName>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" class="btn-edit" (click)="onEditLocation()">
+  <button mat-raised-button color="primary" class="btn-settings" (click)="onEditLocation()">
     <mat-icon class="icon">edit</mat-icon>
-    <span>Edit location</span>
+    <span>  Edit location</span>
   </button>
 
+
+  <div class="container-table">
+    <table class="table" id = "table">
+      <thead>
+          <tr>
+            <th>Hall name</th>
+            <th>Active sectors</th>
+            <th>Edit hall</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let hall of location?.halls">
+            <td>{{hall.name}}</td>
+            <td>{{hall.sectors.length}}</td>
+            <td>
+              <button mat-button (click)="onClickEdit(hall.id)" class = "editBtn">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="example-container">
+    <mat-form-field>
+      <input matInput placeholder="Enter hall name" #hallName>
+    </mat-form-field>
+    <button mat-raised-button color="primary" class="btn-settings" (click)="onAddHall()">
+      <mat-icon class="icon">add</mat-icon>
+      <span>  Add hall</span>
+    </button>
+  </div>
+
+  <div class="div-settings">
+
+  </div>
 </div>
