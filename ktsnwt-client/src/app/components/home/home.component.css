@@ -21,3 +21,14 @@
 .card-actions button span {
     margin-right: 5px;
 }
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.row img {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
