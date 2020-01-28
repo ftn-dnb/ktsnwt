@@ -1,4 +1,4 @@
-import { LocationsComponent } from './components/locations/locations.component';
+import {LocationReportDialog, LocationsComponent} from './components/locations/locations.component';
 import { AddTokenInterceptor } from './config/http-interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -31,6 +31,10 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material';
 import { ShowEventComponent } from './components/show-event/show-event.component';
 import { HallSettingsComponent } from './components/admin/hall-settings/hall-settings.component';
 import { SeatingDirective } from './directives/seating.directive';
+import { PageNotAuthorizedComponent } from './components/page-not-authorized/page-not-authorized.component';
+import { EventReportComponent } from './components/event-report/event-report.component';
+import { EventReportDialog } from './components/events/events.component';
+import { LocationReportComponent } from './components/location-report/location-report.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +48,7 @@ import { SeatingDirective } from './directives/seating.directive';
     LocationsComponent,
     EventsComponent,
     PageNotFoundComponent,
+    PageNotAuthorizedComponent,
     AddLocationComponent,
     EditLocationComponent,
     MyReservationsComponent,
@@ -53,6 +58,10 @@ import { SeatingDirective } from './directives/seating.directive';
     ShowEventComponent,
     HallSettingsComponent,
     SeatingDirective,
+    EventReportComponent,
+    EventReportDialog,
+    LocationReportComponent,
+    LocationReportDialog
   ],
   imports: [
     BrowserModule,
@@ -71,10 +80,10 @@ import { SeatingDirective } from './directives/seating.directive';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true },
-    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false} }
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true} }
   ],
   entryComponents: [
-    PaymentDialog,
+    PaymentDialog, EventReportDialog, LocationReportDialog
   ],
   bootstrap: [AppComponent]
 })

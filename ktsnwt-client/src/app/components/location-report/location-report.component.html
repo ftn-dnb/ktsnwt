@@ -1,0 +1,67 @@
+<mat-tab-group (focusChange)="onFocusChange()">
+  <mat-tab label="Monthly"  >
+    <div style="padding: 20px" id="selectMonth">
+      <mat-select id="month" placeholder="Select month" [(value)]="pickedMonth" >
+        <mat-option value="Jan">Jan</mat-option>
+        <mat-option value="Feb">Feb</mat-option>
+        <mat-option value="Mar">Mar</mat-option>
+        <mat-option value="Apr">Apr</mat-option>
+        <mat-option value="May">May</mat-option>
+        <mat-option value="Jun">Jun</mat-option>
+        <mat-option value="Jul">Jul</mat-option>
+        <mat-option value="Aug">Aug</mat-option>
+        <mat-option value="Sep">Sep</mat-option>
+        <mat-option value="Oct">Oct</mat-option>
+        <mat-option value="Nov">Nov</mat-option>
+        <mat-option value="Dec">Dec</mat-option>
+      </mat-select>
+    </div>
+    <div id="selctYear" style="padding: 20px">
+      <mat-select placeholder="Select year" id="year" [(value)]="pickedYear">
+        <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
+      </mat-select>
+    </div>
+
+    <div id = "search_divM" style="padding: 30px">
+      <button mat-button id = "searchM" (click)="onClickSearchM()" >
+        <span>Search</span>
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+    <div  style="padding: 30px">
+      <div [hidden]="isDivHiddenM" id="income_divM">
+        Income: <span id="incomeM">{{this.incomeM}} </span>
+      </div>
+      <div [hidden]="isDivHiddenM" id="sold_tickets_divM">
+        Number of sold tickets: <span id="sold_ticketsM"> {{this.soldTicketsM}}</span>
+      </div>
+    </div>
+
+  </mat-tab>
+
+  <mat-tab label="Daily">
+    <div id = "datepicker_div"  style="padding: 30px">
+      <mat-form-field>
+        <input matInput readonly [max]="maxDate" [(ngModel)]="pickedDate"  [matDatepicker]="picker" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div id = "search_div"  style="padding: 15px">
+      <button mat-button id = "search" (click)="onClickSearch()">
+        <span>Search</span>
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+    <div style="padding: 30px">
+      <div [hidden]="isDivHidden" id="income_div">
+        Income: <span id="income">{{this.income}} </span>
+      </div>
+      <div [hidden]="isDivHidden" id="sold_tickets_div">
+        Number of sold tickets: <span id="sold_tickets"> {{this.soldTickets}}</span>
+      </div>
+    </div>
+
+
+  </mat-tab>
+</mat-tab-group>

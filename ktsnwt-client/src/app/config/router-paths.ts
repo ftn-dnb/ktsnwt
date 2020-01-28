@@ -12,3 +12,5 @@ export const ADD_EVENT_PATH = 'add-event';
 export const SHOW_EVENT_DETAILED_ID = 'show-event/:id';
 export const SHOW_EVENT_DETAILED = 'show-event/';
 export const HALL_SETTINGS = 'hall-settings/:id';
+export const NOT_FOUND = 'not-found';
+export const NOT_AUTHORIZED = 'not-authorized';

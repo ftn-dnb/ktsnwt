@@ -7,14 +7,21 @@
             <mat-card-subtitle>{{event.startDate | date: 'dd.MM.yyyy.'}} - {{event.endDate | date: 'dd.MM.yyyy.'}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <!-- TODO: Dodati jos informacija o event-u ovde
-            Kada se namesti da se posalju sa backenda (kao sto su lokacija, hala ...) -->
-            
-            <!-- TODO: Izmedju ostalog ubaciti i sliku eventa ovde -->
+            <div class="row">
+                <img src="{{event.imagePath}}" />
 
-            <p>{{event.description}}</p>
-            
+                <div>
+                    <p>
+                        <strong>Type:</strong> {{event.type | titlecase}}
+                    </p>
+        
+                    <p>
+                        <strong>Description:</strong> {{event.description}}
+                    </p>
+                </div>
+            </div>
         </mat-card-content>
+
         <mat-card-actions class="card-actions">
             <button mat-button (click)="onClickSeeMore(event.id)">
                 <span>See more</span>
