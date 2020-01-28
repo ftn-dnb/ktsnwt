@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material';
 import { AgmCoreModule } from '@agm/core';
 
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
@@ -25,13 +27,14 @@ import { EditLocationComponent } from './components/admin/edit-location/edit-loc
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { MyReservationsComponent, PaymentDialog } from './components/my-reservations/my-reservations.component';
 import { PaypalComponent } from './components/paypal/paypal.component';
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material';
 import { ShowEventComponent } from './components/show-event/show-event.component';
+import { HallSettingsComponent } from './components/admin/hall-settings/hall-settings.component';
+import { SeatingDirective } from './directives/seating.directive';
 import { PageNotAuthorizedComponent } from './components/page-not-authorized/page-not-authorized.component';
 import { EventReportComponent } from './components/event-report/event-report.component';
 import { EventReportDialog } from './components/events/events.component';
 import { LocationReportComponent } from './components/location-report/location-report.component';
-
 
 @NgModule({
   declarations: [
@@ -53,6 +56,8 @@ import { LocationReportComponent } from './components/location-report/location-r
     PaypalComponent,
     PaymentDialog,
     ShowEventComponent,
+    HallSettingsComponent,
+    SeatingDirective,
     EventReportComponent,
     EventReportDialog,
     LocationReportComponent,

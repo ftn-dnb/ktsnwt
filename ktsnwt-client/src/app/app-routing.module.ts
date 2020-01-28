@@ -8,7 +8,9 @@ import { AddLocationComponent } from './components/admin/add-location/add-locati
 import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH,
          VERIFY_ACCOUNT_PATH, USER_SETTINGS_PATH, LOCATIONS_PATH,
          EVENTS_PATH, ADD_LOCATION_PATH, EDIT_LOCATION_PATH,
-         MY_RESERVATIONS_PATH, ADD_EVENT_PATH, SHOW_EVENT_DETAILED_ID, NOT_FOUND, NOT_AUTHORIZED } from './config/router-paths';
+         MY_RESERVATIONS_PATH, ADD_EVENT_PATH, SHOW_EVENT_DETAILED_ID,
+         HALL_SETTINGS, MY_RESERVATIONS_PATH, ADD_EVENT_PATH, SHOW_EVENT_DETAILED_ID, NOT_FOUND, NOT_AUTHORIZED } from './config/router-paths';
+
 
 import { HomeComponent } from './components/home/home.component';
 import { NgModule } from '@angular/core';
@@ -20,10 +22,14 @@ import { EditLocationComponent } from './components/admin/edit-location/edit-loc
 import {MyReservationsComponent} from './components/my-reservations/my-reservations.component';
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { ShowEventComponent } from './components/show-event/show-event.component';
+
+import { HallSettingsComponent } from './components/admin/hall-settings/hall-settings.component';
+
 import { EditLocationGuard } from './services/auth/edit-location.guard';
 import { ShowEventGuard } from './services/auth/show-event.guard';
 import { PageNotAuthorizedComponent } from './components/page-not-authorized/page-not-authorized.component';
 import { AuthGuard } from './services/auth/auth.guard';
+
 
 
 const routes: Routes = [
@@ -53,6 +59,9 @@ const routes: Routes = [
     component: EditLocationComponent
   },
   { path: MY_RESERVATIONS_PATH, component: MyReservationsComponent},
+  { path: ADD_EVENT_PATH, component: AddEventComponent},
+  { path: SHOW_EVENT_DETAILED_ID, component : ShowEventComponent },
+  { path: HALL_SETTINGS, component: HallSettingsComponent },
   {
     path: ADD_EVENT_PATH,
     canActivate: [AuthGuard],

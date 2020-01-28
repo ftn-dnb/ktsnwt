@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from 'src/app/services/location.service';
 import { ToastrService } from 'ngx-toastr';
 import { Title } from '@angular/platform-browser';
 import PlaceResult = google.maps.places.PlaceResult;
 import { Appearance, Location } from '@angular-material-extensions/google-maps-autocomplete';
 import { FormControl, Validators } from '@angular/forms';
+import { MatDialog, MAT_SELECT_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/material';
 
 @Component({
   selector: 'app-edit-location',
@@ -33,10 +34,15 @@ export class EditLocationComponent implements OnInit {
   @ViewChild('locationName', {static: false})
   inputName: ElementRef;
 
+  @ViewChild('hallName', {static: false})
+  hallName: ElementRef;
+
   constructor(private route: ActivatedRoute,
               private locationService: LocationService,
               private titleService: Title,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private router: Router,
+              public dialog: MatDialog) { }
 
   ngOnInit(): void {
     const id = +this.route.snapshot.paramMap.get('id');
@@ -73,7 +79,55 @@ export class EditLocationComponent implements OnInit {
         (error) => { console.log(error); }
       );
     }
+  }
 
+  onClickEdit(hallId: number) {
+    this.router.navigate(['/hall-settings/' + hallId]);
+  }
+
+  onAddHall(): void {
+    if (this.hallName.nativeElement.value) {
+      const hallData = {
+        locationId: this.location.id,
+        name: this.hallName.nativeElement.value
+      };
+      this.locationService.addHall(hallData).subscribe(
+        (data) => {
+          let sectorData = {
+            name: 'left',
+            hallId: data.id,
+            numColumns: 0,
+            numRows: 0,
+            capacity: 0,
+            type: 0
+          };
+          this.locationService.addSector(sectorData).subscribe(
+            (data) => {
+              sectorData.name = 'right';
+              this.locationService.addSector(sectorData).subscribe(
+                (data) => {
+                  sectorData.name = 'main';
+                  this.locationService.addSector(sectorData).subscribe(
+                    (data) => {
+                      this.locationService.getLocationById(this.location.id).subscribe(
+                        (locationData) => {
+                          this.location = locationData;
+                          this.setCurrentPosition();
+                        },
+                        (error) => { console.log(error); }
+                      );
+                    }
+                  );
+                }
+              );
+            }
+          );
+        },
+        (error) => {
+          this.toastr.error(error);
+        }
+      );
+    }
   }
 
   onAutocompleteSelected(result: PlaceResult) {
