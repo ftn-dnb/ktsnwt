@@ -1,4 +1,4 @@
-import { LocationsComponent } from './components/locations/locations.component';
+import {LocationReportDialog, LocationsComponent} from './components/locations/locations.component';
 import { AddTokenInterceptor } from './config/http-interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -30,6 +30,7 @@ import { ShowEventComponent } from './components/show-event/show-event.component
 import { PageNotAuthorizedComponent } from './components/page-not-authorized/page-not-authorized.component';
 import { EventReportComponent } from './components/event-report/event-report.component';
 import { EventReportDialog } from './components/events/events.component';
+import { LocationReportComponent } from './components/location-report/location-report.component';
 
 
 @NgModule({
@@ -53,7 +54,9 @@ import { EventReportDialog } from './components/events/events.component';
     PaymentDialog,
     ShowEventComponent,
     EventReportComponent,
-    EventReportDialog
+    EventReportDialog,
+    LocationReportComponent,
+    LocationReportDialog
   ],
   imports: [
     BrowserModule,
@@ -75,7 +78,7 @@ import { EventReportDialog } from './components/events/events.component';
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true} }
   ],
   entryComponents: [
-    PaymentDialog, EventReportDialog
+    PaymentDialog, EventReportDialog, LocationReportDialog
   ],
   bootstrap: [AppComponent]
 })

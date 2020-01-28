@@ -1,7 +1,9 @@
 import { ToastrService } from 'ngx-toastr';
 import { LocationService } from './../../services/location.service';
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
+import {EventReportDialog} from "../events/events.component";
 
 @Component({
   selector: 'app-locations',
@@ -17,7 +19,8 @@ export class LocationsComponent implements OnInit {
 
   constructor(private locationService: LocationService,
               private toastr: ToastrService,
-              private router: Router) {
+              private router: Router,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -45,6 +48,7 @@ export class LocationsComponent implements OnInit {
   onClickStats(locationId: number): void {
     // TODO: implementirati ovo
     // Otici na novu stranicu koja sluzi za prikazivanje statistike
+    this.openDialog(locationId);
     console.log("STATS location with id " + locationId);
   }
 
@@ -62,4 +66,38 @@ export class LocationsComponent implements OnInit {
     this.pageNum--;
     this.getLocations();
   }
+
+
+  private openDialog(locationId: number) {
+    this.dialog.open(LocationReportDialog, {
+      maxHeight: '500px',
+      data: locationId
+    });
+  }
+}
+
+@Component({
+  selector: 'location-report-dialog',
+  template: `
+      
+      <h3 id="title"> Report for location: {{this.data}}</h3>
+      <app-location-report [locationId]="this.data" ></app-location-report>
+
+      <button mat-button (click)="onClickExit()">
+        <mat-icon>close</mat-icon>
+        <span>Cancel</span>
+      </button>
+    `
+})
+export class LocationReportDialog {
+
+  constructor(private toast: ToastrService,
+              public dialogRef: MatDialogRef<LocationReportDialog>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+
+  onClickExit(): void {
+    this.dialogRef.close();
+  }
+
 }
