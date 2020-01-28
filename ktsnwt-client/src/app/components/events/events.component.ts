@@ -2,9 +2,8 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EventService } from './../../services/event.service';
 import {Component, Inject, OnInit} from '@angular/core';
-import { ADD_EVENT_PATH } from 'src/app/config/router-paths';
+import { ADD_EVENT_PATH, SHOW_EVENT_DETAILED } from 'src/app/config/router-paths';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {PaymentDialog} from '../my-reservations/my-reservations.component';
 
 @Component({
   selector: 'app-events',
@@ -42,8 +41,7 @@ export class EventsComponent implements OnInit {
   }
 
   onClickDetails(eventId: number): void {
-    // TODO: Implementirati odlazak na stranicu gde se prikazuju informacije o 1 manifestaciji
-    console.log("DETAILS", eventId);
+    this.router.navigate([SHOW_EVENT_DETAILED, eventId]);
   }
 
   onClickEdit(eventId: number): void {
@@ -53,7 +51,6 @@ export class EventsComponent implements OnInit {
 
   onClickStats(eventId: number): void {
     this.openDialog(eventId);
-    console.log("STATS", eventId);
   }
 
   onClickArchive(eventId: number): void {
