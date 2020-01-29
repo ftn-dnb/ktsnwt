@@ -20,9 +20,9 @@
                     <mat-datepicker #myDatepicker></mat-datepicker>
                 </mat-form-field>
 
-                <small id="end-date-error-msg" class="text-danger"
+                <small id="start-date-error-msg" class="text-danger"
                 *ngIf="addEventForm.controls.endDate.touched && addEventForm.hasError('beforeTodayStart')">
-                    End date can't be before today
+                    Start date can't be before today
                 </small>
 
             </div>
@@ -39,7 +39,7 @@
                     End date can't be before start date
                 </small>
 
-                <small id="end-date-error-msg" class="text-danger"
+                <small id="end-date-error-msg-today" class="text-danger"
                 *ngIf="addEventForm.controls.endDate.touched && addEventForm.hasError('beforeTodayEnd')">
                     End date can't be before today
                 </small>
@@ -55,12 +55,12 @@
                     <input id="purchase-limit-input" matInput type="number" placeholder="Purchase limit" formControlName="purchaseLimit" min="1"/>
                 </mat-form-field>
 
-                <small id="number-error-msg-req" class="text-danger"
+                <small id="purchase-error-msg-req" class="text-danger"
                 *ngIf="addEventForm.controls.purchaseLimit.touched && addEventForm.controls.purchaseLimit.errors?.required">
                 Purchase limit is required
                 </small>
 
-                <small id="number-error-msg-negative" class="text-danger"
+                <small id="purchase-error-msg-negative" class="text-danger"
                 *ngIf="addEventForm.controls.purchaseLimit.touched && addEventForm.controls.purchaseLimit.errors?.min">
                 Purchase must be greater than 0
                 </small>
@@ -86,9 +86,9 @@
             <div class="input-field">
                 <mat-form-field appearance="outline">
                     <mat-select id="type-input" formControlName="type" placeholder="Event type">
-                        <mat-option value="SPORT">SPORT</mat-option>
-                        <mat-option value="CONCERT">CONCERT</mat-option>
-                        <mat-option value="THEATER">THEATER</mat-option>
+                        <mat-option class="type_option" value="SPORT">SPORT</mat-option>
+                        <mat-option class="type_option" value="CONCERT">CONCERT</mat-option>
+                        <mat-option class="type_option" value="THEATER">THEATER</mat-option>
                     </mat-select>
                 </mat-form-field>
 
@@ -112,7 +112,7 @@
             <div class="input-field">
                 <mat-form-field appearance="outline">
                     <mat-select id="hall-id-input" formControlName="hallId" placeholder="Hall name">
-                        <mat-option *ngFor="let hall of halls" [value]="hall.id">
+                        <mat-option class="hall_option" *ngFor="let hall of halls" [value]="hall.id">
                             {{hall.name}}
                         </mat-option>
                     </mat-select>
