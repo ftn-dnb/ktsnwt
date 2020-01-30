@@ -51,7 +51,10 @@ export class AddEventComponent implements OnInit {
       description: ['', Validators.required],
       type: ['', Validators.required],
       locationName: [],
-      hallId: ['', Validators.required]
+      hallId: ['', Validators.required],
+      left: ['', ],
+      center: ['', ],
+      right: ['', ],
     }, { validator: [this.dateValidateToday, this.endDateBeforeStartDate]});
   }
 
@@ -72,6 +75,18 @@ export class AddEventComponent implements OnInit {
 
     this.eventService.addNewEvent(eventInfo).subscribe(data => {
       console.log(data);
+      this.halls.forEach(hall => {
+        console.log(hall);
+        if (hall.id === this.addEventForm.controls.hallId.value) {
+            const pricing = [{id: hall.sectors[0].id,
+                            price: this.addEventForm.controls.left.value},
+                          {id: hall.sectors[1].id,
+                            price: this.addEventForm.controls.center.value},
+                          {id: hall.sectors[2].id,
+                            price: this.addEventForm.controls.right.value}];
+            this.eventService.setEventPricing(data.id, pricing).subscribe();
+        }
+      });
       if (this.imagePath !== '') {
         this.eventService.editEventImage(this.uploadData, data.id).subscribe(resultData => {
         }, errorImage => {
