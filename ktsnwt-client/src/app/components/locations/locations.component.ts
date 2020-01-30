@@ -1,9 +1,9 @@
 import { ToastrService } from 'ngx-toastr';
 import { LocationService } from './../../services/location.service';
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material";
-import {EventReportDialog} from "../events/events.component";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material";
+import { Location } from '../../models/response/location';
 
 @Component({
   selector: 'app-locations',
@@ -12,7 +12,7 @@ import {EventReportDialog} from "../events/events.component";
 })
 export class LocationsComponent implements OnInit {
 
-  locations: [] = [];
+  locations: Location[] = [];
   pageSize: string = '5';
   pageNum: number = 0;
   totalNumOfLocations: number = 0;
@@ -24,14 +24,13 @@ export class LocationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO: Promeniti ovo u poziv funkcije koja ce dobaviti koliko lokacija postoji u bazi. (kad se implementira na back-u)
-    this.totalNumOfLocations = 20;
     this.getLocations();
   }
 
   private getLocations(): void {
     this.locationService.getLocationsOnePage(this.pageNum, +this.pageSize).subscribe(data => {
-      this.locations = data;
+      this.locations = data.content;
+      this.totalNumOfLocations = data.totalElements;
     }, error => {
       this.toastr.error('There was an error while getting locations data.');
     });
@@ -46,10 +45,7 @@ export class LocationsComponent implements OnInit {
   }
 
   onClickStats(locationId: number): void {
-    // TODO: implementirati ovo
-    // Otici na novu stranicu koja sluzi za prikazivanje statistike
     this.openDialog(locationId);
-    console.log("STATS location with id " + locationId);
   }
 
   onPageSizeSelect(): void {

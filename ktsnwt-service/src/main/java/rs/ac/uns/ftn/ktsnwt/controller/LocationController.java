@@ -1,6 +1,8 @@
 package rs.ac.uns.ftn.ktsnwt.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +29,10 @@ public class LocationController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<LocationDTO>> getAllLocations(@RequestParam(name = "page") int page,
+    public ResponseEntity<Page<LocationDTO>> getAllLocations(@RequestParam(name = "page") int page,
                                                              @RequestParam(name = "size") int size) {
-        List<Location> locations = locationService.findAll(page, size);
-        return new ResponseEntity<>(LocationMapper.toListDto(locations), HttpStatus.OK);
+        Page<LocationDTO> locations = locationService.findAll(PageRequest.of(page, size)).map(loc -> LocationMapper.toDto(loc));
+        return new ResponseEntity<>(locations, HttpStatus.OK);
     }
 
     @GetMapping("/name/{name}")

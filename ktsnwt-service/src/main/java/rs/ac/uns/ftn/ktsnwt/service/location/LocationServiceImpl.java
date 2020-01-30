@@ -1,7 +1,9 @@
 package rs.ac.uns.ftn.ktsnwt.service.location;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.dto.AddressDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.LocationDTO;
@@ -27,9 +29,13 @@ public class LocationServiceImpl implements LocationService {
     private AddressRepository addressRepository;
 
     @Override
-
     public List<Location> findAll() {
         return locationRepository.findAll();
+    }
+
+    @Override
+    public Page<Location> findAll(Pageable pageable) {
+        return locationRepository.findAll(pageable);
     }
 
     @Override
