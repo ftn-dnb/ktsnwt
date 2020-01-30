@@ -39,9 +39,7 @@ export class LocationReportComponent implements OnInit {
     if (this.pickedDate === '') {
       return;
     }
-    console.log('picked date : ' + this.transformDate(this.pickedDate));
     this.service.getDailyReport(this.transformDate(this.pickedDate), this.locationId).subscribe(data => {
-      console.log(data.valueOf().ticketsSold);
       this.isDivHidden = false;
       this.income = data.valueOf().income;
       this.soldTickets = data.valueOf().ticketsSold;
@@ -57,9 +55,7 @@ export class LocationReportComponent implements OnInit {
     if (this.pickedMonth === '' || this.pickedYear === '') {
       return;
     }
-    console.log('picked date : ' + this.pickedYear + '-' + this.transformMonth(this.pickedMonth));
     this.service.getMonthlyReport( this.pickedYear + '-' + this.transformMonth(this.pickedMonth), this.locationId).subscribe(data => {
-      console.log(data.valueOf().ticketsSold);
       this.isDivHiddenM = false;
       this.incomeM = data.valueOf().income;
       this.soldTicketsM = data.valueOf().ticketsSold;
@@ -70,8 +66,6 @@ export class LocationReportComponent implements OnInit {
   fillYears() {
     for ( let i = 0; i < 12; i++) {
       this.years.push(this.currentYear - i);
-      console.log(this.years.values());
-
     }
 
   }
