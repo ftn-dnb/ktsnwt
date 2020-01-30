@@ -26,3 +26,8 @@ INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES 
 
 INSERT INTO `pricings` (id, price, event_day_id, sector_id) VALUES (1, 199, 1, 1);
 INSERT INTO `pricings` (id, price, event_day_id, sector_id) VALUES (2, 399, 1, 2);
+
+insert into `tickets` (id, column_num, date_purchased, purchased, row_num, event_day_id, pricing_id, user_id) values (1, 1, '2019-11-24 21:58:58', true, 1, 1, 1, 1);
+insert into `tickets` (id, column_num, date_purchased, purchased, row_num, event_day_id, pricing_id, user_id) values (2, 1, '2019-11-24 21:58:58', true, 2, 1, 1, 1);
+insert into `tickets` (id, column_num, date_purchased, purchased, row_num, event_day_id, pricing_id, user_id) values (3, 1, '2019-11-24 21:58:58', true, 4, 1, 1, 2);
+insert into `tickets` (id, column_num, date_purchased, purchased, row_num, event_day_id, pricing_id, user_id) values (4, 1, '2019-11-24 21:58:58', true, 1, 2, 2, 1);

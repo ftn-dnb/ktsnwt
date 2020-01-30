@@ -34,6 +34,12 @@ public class TicketController {
         return new ResponseEntity<>(new TicketDTO(ticket), HttpStatus.OK);
     }
 
+    @GetMapping("/event-day-id/{id}")
+    public ResponseEntity<List<TicketDTO>> getTicketsByEventDayId(@PathVariable Long id) {
+        List<Ticket> tickets = ticketsService.getTicketsByEventDayId(id);
+        return new ResponseEntity<>(TicketMapper.toListDto(tickets), HttpStatus.OK);
+    }
+
     @PostMapping("/locationDailyReport/{idLocation}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ReportInfoDTO> onLocationDailyReport(@PathVariable long idLocation, @RequestBody String date){
