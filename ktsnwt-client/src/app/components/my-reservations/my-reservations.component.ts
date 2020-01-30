@@ -27,11 +27,8 @@ export class MyReservationsComponent implements OnInit {
 
   private getAllTickets(): void {
     this.ticketService.getReservationsOnePage(this.pageNum, +this.pageSize).subscribe(data => {
-      
-      // TODO: Nacin dobavljanja treba ispraviti kada se na back-u namesti da se salje pageable a ne obinca lista 
-
-      this.tickets = data.valueOf();
-      this.totalNumOfReservations = this.tickets.length;
+      this.tickets = data.content;
+      this.totalNumOfReservations = data.totalElements;
     }, error => {
       this.toastr.error('There was an error while getting the data about reservations.');
     });

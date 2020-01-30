@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -110,9 +111,8 @@ public class TicketsServiceImplIntegrationTest {
 
     @Test
     public void givenValidPageAndSizeParameters_returnUsersTickets() {
-
-        ArrayList<Ticket> tickets = new ArrayList<>(ticketsService.getUsersTickets(0, 3));
-        assertEquals(3, tickets.size());
+        Page<Ticket> tickets = ticketsService.getUsersTickets(0, 3);
+        assertEquals(3, tickets.getContent().size());
     }
 
     @Test

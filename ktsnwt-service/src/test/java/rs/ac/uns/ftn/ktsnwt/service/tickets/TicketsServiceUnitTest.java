@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContext;
@@ -132,8 +133,8 @@ public class TicketsServiceUnitTest {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         assertEquals("jane.doe", user.getUsername());
 
-        List<Ticket> userTickets = ticketsService.getUsersTickets(0, 2);
-        assertEquals(2, userTickets.size());
+        Page<Ticket> userTickets = ticketsService.getUsersTickets(0, 2);
+        assertEquals(2, userTickets.getContent().size());
     }
 
     @Test

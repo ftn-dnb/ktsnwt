@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,10 +61,10 @@ public class TicketController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<TicketDTO>> getUsersTickets(@RequestParam(name = "page") int page,
+    public ResponseEntity<Page<TicketDTO>> getUsersTickets(@RequestParam(name = "page") int page,
                                                            @RequestParam(name = "size") int size) {
-        List<Ticket> tickets = ticketsService.getUsersTickets(page, size);
-        return new ResponseEntity<>(TicketMapper.toListDto(tickets), HttpStatus.OK);
+        Page<TicketDTO> tickets = ticketsService.getUsersTickets(page, size).map(ticket -> TicketMapper.toDto(ticket));
+        return new ResponseEntity<>(tickets, HttpStatus.OK);
     }
 
     @PostMapping("/reserve")
