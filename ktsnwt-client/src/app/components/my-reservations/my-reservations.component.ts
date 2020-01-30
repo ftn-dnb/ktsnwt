@@ -1,8 +1,8 @@
+import { TicketService } from './../../services/ticket.service';
 import { TicketBuyingData } from './../../models/ticket-buying-data';
+import { Ticket } from './../../models/ticket';
 import { Component, OnInit, Inject } from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
-import {Router} from '@angular/router';
-import {MyReservationsService} from '../../services/my-reservations.service';
+import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -12,14 +12,13 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 })
 export class MyReservationsComponent implements OnInit {
 
-  tickets: any[] = [];
+  tickets: Ticket[] = [];
   pageSize: string = '5';
   pageNum: number = 0;
   totalNumOfReservations: number = 0;
 
-  constructor(private myReservationsService: MyReservationsService,
+  constructor(private ticketService: TicketService,
               private toastr: ToastrService,
-              private router: Router,
               public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -27,7 +26,10 @@ export class MyReservationsComponent implements OnInit {
   }
 
   private getAllTickets(): void {
-    this.myReservationsService.getReservationsOnePage(this.pageNum, +this.pageSize).subscribe(data => {
+    this.ticketService.getReservationsOnePage(this.pageNum, +this.pageSize).subscribe(data => {
+      
+      // TODO: Nacin dobavljanja treba ispraviti kada se na back-u namesti da se salje pageable a ne obinca lista 
+
       this.tickets = data.valueOf();
       this.totalNumOfReservations = this.tickets.length;
     }, error => {
@@ -36,7 +38,12 @@ export class MyReservationsComponent implements OnInit {
   }
 
   onClickCancel(id: any) {
-    console.log('cancel' + id);
+    this.ticketService.cancelTicket(id).subscribe(data => {
+      this.toastr.success('Your ticket has been canceled!');
+      this.getAllTickets();
+    }, error => {
+      this.toastr.error(error.error.message);
+    });
   }
 
   onClickBuy(id: number, price: number, date: string) {
