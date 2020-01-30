@@ -29,6 +29,7 @@ import { EditLocationGuard } from './services/auth/edit-location.guard';
 import { ShowEventGuard } from './services/auth/show-event.guard';
 import { PageNotAuthorizedComponent } from './components/page-not-authorized/page-not-authorized.component';
 import { AuthGuard } from './services/auth/auth.guard';
+import { AuthLoginGuard } from './services/auth/auth-login.guard';
 
 
 
@@ -37,7 +38,10 @@ const routes: Routes = [
   { path: LOGIN_PATH, component: LoginComponent },
   { path: REGISTRATION_PATH, component: RegistrationComponent },
   { path: VERIFY_ACCOUNT_PATH, component: AccountConfirmationComponent },
-  { path: USER_SETTINGS_PATH, component: UserSettingsComponent },
+  {
+    path: USER_SETTINGS_PATH,
+    canActivate: [AuthLoginGuard],
+    component: UserSettingsComponent },
   {
     path: LOCATIONS_PATH,
     canActivate: [AuthGuard],
@@ -55,13 +59,25 @@ const routes: Routes = [
   },
   {
     path: EDIT_LOCATION_PATH,
-    canActivate: [EditLocationGuard],
+    canActivate: [EditLocationGuard, AuthGuard],
     component: EditLocationComponent
   },
-  { path: MY_RESERVATIONS_PATH, component: MyReservationsComponent},
-  { path: ADD_EVENT_PATH, component: AddEventComponent},
+  {
+    path: MY_RESERVATIONS_PATH,
+    canActivate: [AuthLoginGuard],
+    component: MyReservationsComponent
+  },
+  {
+    path: ADD_EVENT_PATH,
+    canActivate: [AuthGuard],
+    component: AddEventComponent
+  },
   { path: SHOW_EVENT_DETAILED_ID, component : ShowEventComponent },
-  { path: HALL_SETTINGS, component: HallSettingsComponent },
+  {
+    path: HALL_SETTINGS,
+    canActivate: [AuthGuard],
+    component: HallSettingsComponent
+  },
   {
     path: ADD_EVENT_PATH,
     canActivate: [AuthGuard],
@@ -69,7 +85,7 @@ const routes: Routes = [
   },
   {
     path: SHOW_EVENT_DETAILED_ID,
-    canActivate: [ShowEventGuard],
+    canActivate: [ShowEventGuard, AuthGuard],
     component : ShowEventComponent,
   },
   { path: NOT_FOUND, component: PageNotFoundComponent },
