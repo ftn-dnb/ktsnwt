@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.ktsnwt.service.tickets;
 
+import org.springframework.data.domain.Page;
 import rs.ac.uns.ftn.ktsnwt.dto.ReportInfoDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.TicketsToReserveDTO;
 import rs.ac.uns.ftn.ktsnwt.model.Ticket;
@@ -12,7 +13,7 @@ public interface TicketsService {
     ReportInfoDTO onLocationDailyReport(long idLocation, String date);
     ReportInfoDTO onLocationMonthlyReport(long idLocation, String date);
     ReportInfoDTO onEventDailyReport(long idEvent, String date);
-    List<Ticket> getUsersTickets(int page, int size);
+    Page<Ticket> getUsersTickets(int page, int size);
     void reserveTickets(TicketsToReserveDTO ticketsInfo);
     void cancelTicket(Long id);
     Ticket buyTicket(Long id);

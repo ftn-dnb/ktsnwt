@@ -11,6 +11,10 @@ public class TicketMapper {
     private TicketMapper() {
     }
 
+    public static TicketDTO toDto(Ticket ticket) {
+        return new TicketDTO(ticket);
+    }
+
     public static List<TicketDTO> toListDto(List<Ticket> tickets) {
         return tickets.stream().map(TicketDTO::new).collect(Collectors.toList());
     }
