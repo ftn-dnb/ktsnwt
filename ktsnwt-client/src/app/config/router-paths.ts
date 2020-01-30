@@ -14,3 +14,5 @@ export const SHOW_EVENT_DETAILED = 'show-event/';
 export const HALL_SETTINGS = 'hall-settings/:id';
 export const NOT_FOUND = 'not-found';
 export const NOT_AUTHORIZED = 'not-authorized';
+export const RESERVE_TICKET = 'reserve/';
+export const RESERVE_TICKET_ID = 'reserve/:eventId/:eventDay';

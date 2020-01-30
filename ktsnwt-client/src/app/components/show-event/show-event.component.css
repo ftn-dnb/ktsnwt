@@ -31,3 +31,7 @@
     flex-direction:column;
     display: flex;
 }
+
+#reserve_div{
+  alignment: center;
+}

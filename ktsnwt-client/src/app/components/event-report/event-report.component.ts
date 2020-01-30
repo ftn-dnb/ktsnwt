@@ -29,9 +29,7 @@ export class EventReportComponent implements OnInit {
     if (this.pickedDate === '') {
       return;
     }
-    console.log('picked date : ' + this.transformDate(this.pickedDate));
     this.service.getDailyReport(this.transformDate(this.pickedDate), this.eventId).subscribe(data => {
-      console.log(data.valueOf().ticketsSold);
       this.isDivHidden = false;
       this.income = data.valueOf().income;
       this.soldTickets = data.valueOf().ticketsSold;

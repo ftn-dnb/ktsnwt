@@ -25,10 +25,10 @@
         </div>
     
         <div class="row">
-            <mat-tab-group>
-                <mat-tab *ngFor="let day of eventData.days;" [label]=day.name>
+            <mat-tab-group (selectedTabChange)="tabChanged($event)">
+                <mat-tab *ngFor="let day of eventData.days;" [label]=day.name >
                     <mat-list>
-                        <mat-list-item>
+                        <mat-list-item >
                             <strong>Date:&nbsp;</strong>{{day.date | date:'dd.MM.yyyy'}}
                         </mat-list-item>
                         <mat-list-item>
@@ -38,6 +38,11 @@
                         <mat-list-item>
                             <strong>Description:&nbsp;</strong> {{day.description}}
                         </mat-list-item>
+                      <div *ngIf="isPlainUserLoggedIn()" id="reserve_div">
+                        <button mat-button id = "reserve" (click) = "onClickReserve()">
+                            <span>Reserve</span>
+                          </button>
+                      </div>
                     </mat-list>
                 </mat-tab>
             </mat-tab-group>

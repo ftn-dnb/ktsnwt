@@ -35,6 +35,7 @@ import { PageNotAuthorizedComponent } from './components/page-not-authorized/pag
 import { EventReportComponent } from './components/event-report/event-report.component';
 import { EventReportDialog } from './components/events/events.component';
 import { LocationReportComponent } from './components/location-report/location-report.component';
+import { ReservationsComponent } from './components/reservations/reservations.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { LocationReportComponent } from './components/location-report/location-r
     EventReportComponent,
     EventReportDialog,
     LocationReportComponent,
-    LocationReportDialog
+    LocationReportDialog,
+    ReservationsComponent
   ],
   imports: [
     BrowserModule,

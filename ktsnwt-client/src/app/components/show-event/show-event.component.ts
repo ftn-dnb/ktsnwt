@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Subscription } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
-import { ThrowStmt } from '@angular/compiler';
+import {MatTabChangeEvent} from '@angular/material';
+import {RESERVE_TICKET} from '../../config/router-paths';
+import {USER_ROLE_KEY} from '../../config/local-storage-keys';
+import {ROLE_USER} from '../../config/user-roles-keys';
 
 @Component({
   selector: 'app-show-event',
@@ -11,23 +14,39 @@ import { ThrowStmt } from '@angular/compiler';
 })
 export class ShowEventComponent implements OnInit {
 
+  selectedDayOrdinal: number;
   routeSub: Subscription;
   eventData: any = {};
    // namestiti da bude tip Event
   constructor(private route: ActivatedRoute,
               private eventService: EventService,
+              private router: Router
               ) {}
 
-  ngOnInit() {
-    this.routeSub = this.route.params.subscribe( params => {
+    ngOnInit() {
+      this.routeSub = this.route.params.subscribe( params => {
         this.getEventData(params.id as number);
-    });
-  }
+      });
+    }
 
   private getEventData(id: number): void {
     this.eventService.getEventById(id).subscribe(data => {
       this.eventData = data;
       console.log(this.eventData);
     });
+  }
+
+
+  tabChanged($event: MatTabChangeEvent) {
+    this.selectedDayOrdinal = $event.index;
+  }
+
+  onClickReserve() {
+    console.log(this.selectedDayOrdinal + " " + this.eventData.id);
+    this.router.navigate([RESERVE_TICKET, this.eventData.id, this.selectedDayOrdinal]);
+  }
+
+  isPlainUserLoggedIn() {
+    return localStorage.getItem(USER_ROLE_KEY) === ROLE_USER;
   }
 }

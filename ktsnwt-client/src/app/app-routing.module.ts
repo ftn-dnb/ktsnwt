@@ -5,11 +5,13 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
 import { AddLocationComponent } from './components/admin/add-location/add-location.component';
-import { HOME_PATH, LOGIN_PATH, REGISTRATION_PATH,
-         VERIFY_ACCOUNT_PATH, USER_SETTINGS_PATH, LOCATIONS_PATH,
-         EVENTS_PATH, ADD_LOCATION_PATH, EDIT_LOCATION_PATH,
-         MY_RESERVATIONS_PATH, ADD_EVENT_PATH, SHOW_EVENT_DETAILED_ID,
-         HALL_SETTINGS, NOT_FOUND, NOT_AUTHORIZED } from './config/router-paths';
+import {
+  HOME_PATH, LOGIN_PATH, REGISTRATION_PATH,
+  VERIFY_ACCOUNT_PATH, USER_SETTINGS_PATH, LOCATIONS_PATH,
+  EVENTS_PATH, ADD_LOCATION_PATH, EDIT_LOCATION_PATH,
+  MY_RESERVATIONS_PATH, ADD_EVENT_PATH, SHOW_EVENT_DETAILED_ID,
+  HALL_SETTINGS, NOT_FOUND, NOT_AUTHORIZED, RESERVE_TICKET, RESERVE_TICKET_ID
+} from './config/router-paths';
 
 
 import { HomeComponent } from './components/home/home.component';
@@ -30,6 +32,7 @@ import { ShowEventGuard } from './services/auth/show-event.guard';
 import { PageNotAuthorizedComponent } from './components/page-not-authorized/page-not-authorized.component';
 import { AuthGuard } from './services/auth/auth.guard';
 import { AuthLoginGuard } from './services/auth/auth-login.guard';
+import {ReservationsComponent} from './components/reservations/reservations.component';
 
 
 
@@ -90,6 +93,11 @@ const routes: Routes = [
   },
   { path: NOT_FOUND, component: PageNotFoundComponent },
   { path: NOT_AUTHORIZED, component: PageNotAuthorizedComponent} ,
+  {
+    path: RESERVE_TICKET_ID,
+    canActivate: [AuthLoginGuard],
+    component: ReservationsComponent
+  },
   { path: '**', component: PageNotFoundComponent },
 ];
 
