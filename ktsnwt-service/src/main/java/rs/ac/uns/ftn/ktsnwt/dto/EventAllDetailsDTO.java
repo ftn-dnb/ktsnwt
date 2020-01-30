@@ -39,6 +39,7 @@ public class EventAllDetailsDTO {
         this.hall  = new HallDTO(e.getHall());
         this.location = new LocationDTO(e.getHall().getLocation());
         this.days = e.getEventDays().stream().map(EventDayDTO::new).collect(Collectors.toList());
+        this.pricing = e.getEventDays().iterator().next().getPricings().stream().map(PricingDTO::new).collect(Collectors.toList());
     }
 
     public Long getId() {

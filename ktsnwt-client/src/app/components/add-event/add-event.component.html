@@ -143,6 +143,27 @@
             </div>
         </div>
 
+        
+        <div class="row">
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <input id="description-input" matInput type="number" placeholder="left" formControlName="left"/>
+                </mat-form-field>
+            </div>
+
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <input id="description-input" matInput type="number" placeholder="center" formControlName="center"/>
+                </mat-form-field>
+            </div>
+
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <input id="description-input" matInput type="number" placeholder="right" formControlName="right"/>
+                </mat-form-field>
+            </div>
+        </div>
+
         <button class="submit-button" id="add-btn" type="submit" mat-raised-button color="primary" [disabled]="addEventForm.invalid">
             Add event
         </button>
