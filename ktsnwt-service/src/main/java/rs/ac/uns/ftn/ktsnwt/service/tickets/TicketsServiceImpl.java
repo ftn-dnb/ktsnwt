@@ -55,6 +55,11 @@ public class TicketsServiceImpl implements TicketsService {
         return ticketRepository.findAll(PageRequest.of(page, size)).toList();
     }
 
+    @Override
+    public List<Ticket> getTicketsByEventDayId(Long id) {
+        return ticketRepository.getTicketsByEventDayId(id);
+    }
+
     //for chosen date
     @Override
     public ReportInfoDTO onLocationDailyReport(long idLocation, String date) {
