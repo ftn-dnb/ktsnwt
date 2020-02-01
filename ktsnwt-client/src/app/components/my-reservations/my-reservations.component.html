@@ -40,7 +40,7 @@
       <td>{{ticket.price}}</td>
       <td>
         <div *ngIf = "!ticket.purchased">
-          <button mat-button (click)="onClickCancel(ticket.id)">
+          <button mat-button (click)="onClickCancel(ticket.id)" class="cancelBtn">
             <mat-icon>cancel</mat-icon>
           </button>
         </div>
@@ -50,7 +50,7 @@
       </td>
       <td>
         <div *ngIf="!ticket.purchased">
-          <button mat-button (click)="onClickBuy(ticket.id, ticket.price, ticket.datePurchased)">
+          <button mat-button (click)="onClickBuy(ticket.id, ticket.price, ticket.datePurchased)" class="buyBtn">
             <mat-icon>add_shopping_cart</mat-icon>
           </button>
         </div>

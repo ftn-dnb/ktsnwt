@@ -26,6 +26,16 @@ public class HomePage {
     @FindBy(css = "#adminMenuBtn")
     private WebElement adminMenuButton;
 
+    @FindBy(css = "#myReservationsBtn")
+    private WebElement myReservationsButton;
+
+    public WebElement getMyReservationsButton() {
+        return myReservationsButton;
+    }
+
+    public void setMyReservationsButton(WebElement myReservationsButton) {
+        this.myReservationsButton = myReservationsButton;
+    }
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -65,5 +75,8 @@ public class HomePage {
     }
     public void ensureAdminMenuButtonIsDisplayed() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(adminMenuButton));
+    }
+    public void ensureMyReservationsButtonIsDisplayed() {
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(myReservationsButton));
     }
 }
