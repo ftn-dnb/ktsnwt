@@ -1,3 +1,4 @@
+import { NOT_FOUND } from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -32,6 +33,8 @@ export class ShowEventComponent implements OnInit {
   private getEventData(id: number): void {
     this.eventService.getEventById(id).subscribe(data => {
       this.eventData = data;
+    }, error => {
+      this.router.navigate([NOT_FOUND]);
     });
   }
 
