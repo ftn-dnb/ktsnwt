@@ -1,4 +1,4 @@
-import { USER_TOKEN_KEY } from './local-storage-keys';
+import { USER_TOKEN_KEY } from '../config/local-storage-keys';
 import { HttpInterceptor, HttpHandler, HttpEvent, HttpRequest, HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";

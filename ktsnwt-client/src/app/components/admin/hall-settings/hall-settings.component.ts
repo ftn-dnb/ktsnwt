@@ -1,6 +1,7 @@
+import { NOT_FOUND } from './../../../config/router-paths';
 import { OnInit, Component, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { D3SeatingChart, ShowBehavior } from 'd3-seating-chart';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from 'src/app/services/location.service';
 import { Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class HallSettingsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private locationService: LocationService,
               private toastr: ToastrService) {}
 
@@ -45,7 +47,7 @@ export class HallSettingsComponent implements OnInit {
         this.updateSeatsData();
       },
       (error) => {
-        console.log(error);
+        this.router.navigate([NOT_FOUND]);
       }
     );
   }
@@ -108,9 +110,10 @@ export class HallSettingsComponent implements OnInit {
               (data) => {
                 this.apiData = data;
                 this.updateSeatsData();
+                this.toastr.success('Sector has been updated');
               },
               (error) => {
-                console.log(error);
+                this.toastr.error('Error while updating sector');
               }
             );
           }

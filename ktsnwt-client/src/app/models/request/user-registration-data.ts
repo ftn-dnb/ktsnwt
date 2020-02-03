@@ -1,4 +1,4 @@
-export interface UserInfo {
+export interface UserRegistrationData {
     username: string;
     password: string;
     repeatPassword: string;

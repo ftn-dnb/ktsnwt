@@ -39,7 +39,8 @@
                             <strong>Description:&nbsp;</strong> {{day.description}}
                         </mat-list-item>
                       <div *ngIf="isPlainUserLoggedIn()" id="reserve_div">
-                        <button mat-button id = "reserve" (click) = "onClickReserve()">
+                        <button mat-raised-button color="primary" id="reserve" (click)="onClickReserve()">
+                            <mat-icon>add_shopping_cart</mat-icon>
                             <span>Reserve</span>
                           </button>
                       </div>

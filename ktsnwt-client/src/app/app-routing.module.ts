@@ -13,27 +13,21 @@ import {
   HALL_SETTINGS, NOT_FOUND, NOT_AUTHORIZED, RESERVE_TICKET, RESERVE_TICKET_ID
 } from './config/router-paths';
 
-
 import { HomeComponent } from './components/home/home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AccountConfirmationComponent } from './components/account-confirmation/account-confirmation.component';
-
 import { EditLocationComponent } from './components/admin/edit-location/edit-location.component';
-
-import {MyReservationsComponent} from './components/my-reservations/my-reservations.component';
+import { MyReservationsComponent } from './components/my-reservations/my-reservations.component';
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { ShowEventComponent } from './components/show-event/show-event.component';
-
 import { HallSettingsComponent } from './components/admin/hall-settings/hall-settings.component';
-
-import { EditLocationGuard } from './services/auth/edit-location.guard';
-import { ShowEventGuard } from './services/auth/show-event.guard';
+import { EditLocationGuard } from './guards/edit-location.guard';
+import { ShowEventGuard } from './guards/show-event.guard';
 import { PageNotAuthorizedComponent } from './components/page-not-authorized/page-not-authorized.component';
-import { AuthGuard } from './services/auth/auth.guard';
-import { AuthLoginGuard } from './services/auth/auth-login.guard';
-import {ReservationsComponent} from './components/reservations/reservations.component';
-
+import { AuthGuard } from './guards/auth.guard';
+import { AuthLoginGuard } from './guards/auth-login.guard';
+import { ReservationsComponent } from './components/reservations/reservations.component';
 
 
 const routes: Routes = [

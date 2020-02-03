@@ -5,11 +5,10 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LocationService } from './../../services/location.service';
 import { Observable } from 'rxjs';
-import { EventInfo } from 'src/app/models/event-info';
+import { EventInfo } from 'src/app/models/request/event-info';
 import { EventService } from 'src/app/services/event.service';
 import { formatDate } from '@angular/common';
 import { EVENTS_PATH } from 'src/app/config/router-paths';
-
 
 
 @Component({
@@ -59,7 +58,6 @@ export class AddEventComponent implements OnInit {
   }
 
   onAddEventSubmit(): void {
-
     const fixedStartDate = this.converDate(this.addEventForm.controls.startDate.value);
     const fixedEndDate = this.converDate(this.addEventForm.controls.endDate.value);
     const eventInfo: EventInfo = {
@@ -74,9 +72,7 @@ export class AddEventComponent implements OnInit {
     };
 
     this.eventService.addNewEvent(eventInfo).subscribe(data => {
-      console.log(data);
       this.halls.forEach(hall => {
-        console.log(hall);
         if (hall.id === this.addEventForm.controls.hallId.value) {
             const pricing = [{id: hall.sectors[0].id,
                             price: this.addEventForm.controls.left.value},
@@ -103,7 +99,6 @@ export class AddEventComponent implements OnInit {
   findLocationByName(): void {
     this.locationService.getLocationByName(this.locationName).subscribe(data => {
       this.halls = data.halls;
-      console.log(this.halls);
     }, error => {
       this.halls = [];
       // this.toastr.error('No location with that name');

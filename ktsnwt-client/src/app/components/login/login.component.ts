@@ -1,6 +1,6 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { USER_ID_KEY, USER_ROLE_KEY, USERNAME_KEY, USER_TOKEN_KEY } from './../../config/local-storage-keys';
-import { LoginInfo } from '../../models/login-info';
+import { LoginInfo } from '../../models/request/login-info';
 import { HOME_PATH, REGISTRATION_PATH } from './../../config/router-paths';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from './../../services/auth.service';

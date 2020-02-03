@@ -12,16 +12,26 @@ agm-map {
 
 .container-table {
   flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-.example-container {
-  margin: auto;
-  width: 40%;
-  padding: 10px;
+.edit-form {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-hall-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .div-settings {

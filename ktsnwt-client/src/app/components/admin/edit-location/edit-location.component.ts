@@ -1,3 +1,4 @@
+import { NOT_FOUND } from './../../../config/router-paths';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from 'src/app/services/location.service';
@@ -51,7 +52,9 @@ export class EditLocationComponent implements OnInit {
         this.location = data;
         this.setCurrentPosition();
       },
-      (error) => { console.log(error); }
+      (error) => {
+        this.router.navigate([NOT_FOUND]);
+      }
     );
   }
 
@@ -75,8 +78,13 @@ export class EditLocationComponent implements OnInit {
         name: this.inputName.nativeElement.value
       };
       this.locationService.editLocation(locationData).subscribe(
-        (data) => { this.location = data; },
-        (error) => { console.log(error); }
+        (data) => { 
+          this.location = data; 
+          this.toastr.success('Location has been changed');
+        },
+        (error) => {
+          this.toastr.error('Error while editing location');
+        }
       );
     }
   }

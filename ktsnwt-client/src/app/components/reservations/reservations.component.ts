@@ -180,7 +180,6 @@ export class ReservationsComponent implements OnInit {
         sectorId = sector.id;
         for (let pricing of this.event.pricing) {
           if (pricing.sectorId === sectorId) {
-            console.log(pricing.id);
             return pricing.id;
           }
         }
@@ -231,7 +230,7 @@ export class ReservationsComponent implements OnInit {
         });
       }
     });
-    console.log(reservationData);
+
     this.ticketService.reserveTicket(reservationData).subscribe(
       (data) => {
         this.ticketService.getTicketsByEventDayId(this.eventDayId).subscribe(

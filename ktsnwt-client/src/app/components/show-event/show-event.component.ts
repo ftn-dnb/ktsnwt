@@ -1,3 +1,4 @@
+import { NOT_FOUND } from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -18,24 +19,25 @@ export class ShowEventComponent implements OnInit {
   routeSub: Subscription;
   eventData: any = {};
    // namestiti da bude tip Event
+
   constructor(private route: ActivatedRoute,
               private eventService: EventService,
               private router: Router
               ) {}
 
-    ngOnInit() {
-      this.routeSub = this.route.params.subscribe( params => {
-        this.getEventData(params.id as number);
-      });
-    }
+  ngOnInit() {
+    this.routeSub = this.route.params.subscribe( params => {
+      this.getEventData(params.id as number);
+    });
+  }
 
   private getEventData(id: number): void {
     this.eventService.getEventById(id).subscribe(data => {
       this.eventData = data;
-      console.log(this.eventData);
+    }, error => {
+      this.router.navigate([NOT_FOUND]);
     });
   }
-
 
   tabChanged($event: MatTabChangeEvent) {
     this.selectedDayOrdinal = $event.index;

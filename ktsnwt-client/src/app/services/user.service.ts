@@ -1,6 +1,7 @@
+import { User } from './../models/response/user';
 import { Observable } from 'rxjs';
-import { PasswordChange } from './../models/password-change';
-import { UserEditInfo } from './../models/user-edit-info';
+import { PasswordChange } from '../models/request/password-change';
+import { UserEditInfo } from '../models/request/user-edit-info';
 import { API_MY_PROFILE, API_USER_PASSWORD_CHANGE, API_USER_IMAGE } from './../config/api-paths';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -13,7 +14,7 @@ export class UserService {
   constructor(private http: HttpClient) { 
   }
 
-  getMyProfileData(): Observable<any> {
+  getMyProfileData(): Observable<User> {
     return this.http.get(API_MY_PROFILE);    
   }
 

@@ -45,8 +45,6 @@ export class HomeComponent implements OnInit {
   }
 
   onClickSeeMore(eventId: number): void {
-    // TODO: Uz pomoc rutera se navigirati na zasebnu stranicu za dati event
-    console.log(eventId);
-    this.router.navigate([SHOW_EVENT_DETAILED, eventId], );
+    this.router.navigate([SHOW_EVENT_DETAILED, eventId]);
   }
 }
