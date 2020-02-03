@@ -27,7 +27,7 @@ import { EditLocationComponent } from './components/admin/edit-location/edit-loc
 import { AddEventComponent } from './components/add-event/add-event.component';
 import { MyReservationsComponent, PaymentDialog } from './components/my-reservations/my-reservations.component';
 import { PaypalComponent } from './components/paypal/paypal.component';
-import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material';
 import { ShowEventComponent } from './components/show-event/show-event.component';
 import { HallSettingsComponent } from './components/admin/hall-settings/hall-settings.component';
 import { SeatingDirective } from './directives/seating.directive';
@@ -36,6 +36,9 @@ import { EventReportComponent } from './components/event-report/event-report.com
 import { EventReportDialog } from './components/events/events.component';
 import { LocationReportComponent } from './components/location-report/location-report.component';
 import { ReservationsComponent } from './components/reservations/reservations.component';
+import { ReservationSeatingDirective } from './directives/reservation-seating.directive';
+import { StopClickDirective } from './components/reservations/directive/stop-click.directive';
+import { ReservationDialogComponent } from './components/reservations/dialog/reservation-dialog/reservation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,13 +62,17 @@ import { ReservationsComponent } from './components/reservations/reservations.co
     ShowEventComponent,
     HallSettingsComponent,
     SeatingDirective,
+    ReservationSeatingDirective,
+    StopClickDirective,
     EventReportComponent,
     EventReportDialog,
     LocationReportComponent,
     LocationReportDialog,
-    ReservationsComponent
+    ReservationsComponent,
+    ReservationDialogComponent
   ],
   imports: [
+    MatDialogModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -82,10 +89,11 @@ import { ReservationsComponent } from './components/reservations/reservations.co
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true },
-    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true} }
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true} },
+    { provide: MAT_DIALOG_DATA, useValue: {}}
   ],
   entryComponents: [
-    PaymentDialog, EventReportDialog, LocationReportDialog
+    PaymentDialog, EventReportDialog, LocationReportDialog, ReservationDialogComponent
   ],
   bootstrap: [AppComponent]
 })

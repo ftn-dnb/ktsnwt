@@ -14,8 +14,6 @@ export class SeatingDirective implements OnChanges {
     const element = this.el.nativeElement;
     const className = element.className.baseVal;
 
-    console.log(this.seatingData);
-
     const data = this.seatingData[className];
 
     const rows = data.rows;
@@ -37,15 +35,17 @@ export class SeatingDirective implements OnChanges {
       .selectAll('*')
       .remove();
 
-    for (i = 0; i < cols; i++) {
-      for (j = 0; j < rows; j++) {
+    for (i = 0; i < rows; i++) {
+      for (j = 0; j < cols; j++) {
         d3.select(`g.${className}`)
           .append('rect')
             .attr('seat', '')
             .attr('height', seatHeight.toString())
             .attr('width', seatWidth.toString())
-            .attr('y', (seatY + biasY * j).toString())
-            .attr('x', (seatX + biasX * i).toString())
+            .attr('y', (seatY - biasY * i).toString())
+            .attr('x', (seatX + biasX * j).toString())
+            .attr('row', i + 1)
+            .attr('column', j + 1)
             .on('click', function() {
               if (d3.select(this).attr('selected') === '') {
                 d3.select(this).attr('selected', null);

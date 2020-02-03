@@ -1,8 +1,9 @@
 import { API_EVENTS, API_EVENTS_ADD, API_EVENTS_IMAGE, API_EVENTS_GET_ONE_BY_ID, API_EVENT_SET_PRICING } from './../config/api-paths';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { EventInfo } from '../models/event-info';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -29,10 +30,19 @@ export class EventService {
   }
 
   getEventById(id: number): Observable<any> {
-    return this.http.get(API_EVENTS_GET_ONE_BY_ID + id);
+    return this.http.get(API_EVENTS_GET_ONE_BY_ID + id).pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError)
+    );
   }
 
   setEventPricing(id: number, pricing: any): Observable<any> {
     return this.http.put(API_EVENT_SET_PRICING + id, pricing);
   }
+
+  private handleError(err: HttpErrorResponse) {
+    const errorMessage = `Server returned code ${err.status}, error message is: ${err.message}`;
+    return throwError(errorMessage);
+  }
+
 }

@@ -1,0 +1,63 @@
+svg {
+  display: block;
+  border: 1px solid #000;
+  margin: 30px auto;
+  width: 90%;
+}
+
+#inner {
+  display: block;
+  height: 100%;
+  width: 100%;
+  fill: #1d74aa;
+}
+
+rect {
+  fill: #888888;
+}
+
+[stage] {
+  fill: #000;
+}
+
+[zoom-control] {
+  cursor: pointer;
+  fill: #bdbcbc;
+}
+
+[floor] {
+  cursor: pointer;
+  fill: #bdbcbc;
+}
+
+[floor][selected-floor] {
+  cursor: pointer;
+  fill: #494646;
+}
+
+[seat] {
+  fill: #494646;
+}
+
+[seat][locked] {
+  fill: #494646;
+}
+
+[seat][locked="reserved"] {
+  fill: #00bfff;
+}
+
+[seat][selected] {
+  fill: #ffe100;
+}
+
+[seat]:not([selected]):not([locked]):hover {
+  fill: #8a7c7c;
+  cursor: pointer;
+}
+
+
+.btnTop {
+  margin:0 auto;
+  display:block;
+}

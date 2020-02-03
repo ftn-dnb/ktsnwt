@@ -30,4 +30,5 @@ export const API_LOCATION_DAILY_REPORT = API_BASE + '/api/tickets/locationDailyR
 export const API_LOCATION_MONTHLY_REPORT = API_BASE + '/api/tickets/locationMonthlyReport/';
 export const API_EVENT_SET_PRICING = API_BASE + '/api/event/addPricing/';
 export const API_CANCEL_TICKET = API_BASE + '/api/tickets/cancel';
-
+export const API_GET_TICKETS_BY_EVENT_DAY = API_BASE + '/api/tickets/event-day-id/';
+export const API_RESERVE_TICKETS = API_BASE + '/api/tickets/reserve';
