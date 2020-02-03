@@ -30,14 +30,14 @@ export class TicketService {
 
   getTicketsByEventDayId(eventDayId: number) {
     return this.http.get(API_GET_TICKETS_BY_EVENT_DAY + eventDayId).pipe(
-      tap(data => console.log(data)),
+      tap(data => {}),
       catchError(this.handleError)
     );
   }
 
   reserveTicket(reservationData: any): Observable<any> {
     return this.http.post(API_RESERVE_TICKETS, reservationData).pipe(
-      tap((data) => console.log(data)),
+      tap((data) => {}),
       catchError(this.handleError)
     );
   }

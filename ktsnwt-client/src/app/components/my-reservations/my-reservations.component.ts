@@ -1,5 +1,5 @@
 import { TicketService } from './../../services/ticket.service';
-import { TicketBuyingData } from './../../models/ticket-buying-data';
+import { TicketBuyingData } from '../../models/request/ticket-buying-data';
 import { Ticket } from '../../models/response/ticket';
 import { Component, OnInit, Inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';

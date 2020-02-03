@@ -57,7 +57,6 @@ export class AddLocationComponent implements OnInit {
   onAddLocation() {
     if (this.formControl.hasError('required') || !this.addressContent) {
       this.toastr.error('Location must have a name.');
-      console.log(this.autocompleteInput);
       return;
     }
     const data = {
@@ -67,11 +66,9 @@ export class AddLocationComponent implements OnInit {
 
     this.locationService.addLocation(data).subscribe(
       result => {
-        console.log(result),
         this.toastr.success('Location successfully added.');
       },
       error => {
-        console.log(error);
         this.toastr.error('Location with that name already exists.');
       }
     );
@@ -108,8 +105,6 @@ export class AddLocationComponent implements OnInit {
         default:
       }
     });
-
-    console.log(this.addressObject);
   }
 
   onLocationSelected(location: Location) {

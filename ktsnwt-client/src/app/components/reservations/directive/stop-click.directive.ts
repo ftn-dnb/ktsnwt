@@ -17,7 +17,6 @@ export class StopClickDirective implements OnInit, OnDestroy {
       (event: Event) => {
         event.stopPropagation();
         this.clicked.emit(event);
-        console.log('dawd');
       }
     );
   }

@@ -2,9 +2,9 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { LOGIN_PATH } from './../../config/router-paths';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { PasswordChange } from './../../models/password-change';
-import { UserEditInfo } from './../../models/user-edit-info';
-import { User } from './../../models/user';
+import { PasswordChange } from '../../models/request/password-change';
+import { UserEditInfo } from '../../models/request/user-edit-info';
+import { User } from '../../models/response/user';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';

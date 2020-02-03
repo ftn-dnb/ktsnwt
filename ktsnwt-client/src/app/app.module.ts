@@ -1,12 +1,10 @@
-import {LocationReportDialog, LocationsComponent} from './components/locations/locations.component';
-import { AddTokenInterceptor } from './config/http-interceptor';
+import { LocationReportDialog, LocationsComponent } from './components/locations/locations.component';
+import { AddTokenInterceptor } from './interceptors/http-interceptor';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material';
 import { AgmCoreModule } from '@agm/core';
-
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

@@ -32,7 +32,6 @@ export class ShowEventComponent implements OnInit {
   private getEventData(id: number): void {
     this.eventService.getEventById(id).subscribe(data => {
       this.eventData = data;
-      console.log(this.eventData);
     });
   }
 

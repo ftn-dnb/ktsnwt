@@ -1,5 +1,5 @@
 import { TicketService } from './../../services/ticket.service';
-import { TicketBuyingData } from './../../models/ticket-buying-data';
+import { TicketBuyingData } from '../../models/request/ticket-buying-data';
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 
 declare var paypal;

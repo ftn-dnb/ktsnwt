@@ -62,14 +62,12 @@ export class LocationReportComponent implements OnInit {
     });
   }
 
-
   fillYears() {
     for ( let i = 0; i < 12; i++) {
       this.years.push(this.currentYear - i);
     }
 
   }
-
 
   transformMonth(pickedMonth: string) {
     switch (pickedMonth) {

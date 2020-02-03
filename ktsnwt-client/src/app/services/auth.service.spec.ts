@@ -1,6 +1,6 @@
 import { USER_ID_KEY } from './../config/local-storage-keys';
 import { API_LOGIN } from './../config/api-paths';
-import { LoginInfo } from './../models/login-info';
+import { LoginInfo } from '../models/request/login-info';
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';

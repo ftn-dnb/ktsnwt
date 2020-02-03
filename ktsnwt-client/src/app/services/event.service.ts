@@ -2,7 +2,7 @@ import { API_EVENTS, API_EVENTS_ADD, API_EVENTS_IMAGE, API_EVENTS_GET_ONE_BY_ID,
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { EventInfo } from '../models/event-info';
+import { EventInfo } from '../models/request/event-info';
 import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -31,7 +31,7 @@ export class EventService {
 
   getEventById(id: number): Observable<any> {
     return this.http.get(API_EVENTS_GET_ONE_BY_ID + id).pipe(
-      tap(data => console.log(data)),
+      tap(data => {}),
       catchError(this.handleError)
     );
   }
