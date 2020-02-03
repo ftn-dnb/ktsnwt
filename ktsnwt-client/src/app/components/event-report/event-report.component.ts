@@ -1,7 +1,6 @@
+import { EventService } from 'src/app/services/event.service';
 import {Component, Input, OnInit} from '@angular/core';
 import { DatePipe } from '@angular/common';
-import {EventReportService} from '../../services/event-report.service';
-
 
 @Component({
   selector: 'app-event-report',
@@ -19,7 +18,7 @@ export class EventReportComponent implements OnInit {
   @Input() eventId: number;
 
   constructor(private datePipe: DatePipe,
-              private service: EventReportService) { }
+              private service: EventService) { }
 
   ngOnInit() {
 

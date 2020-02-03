@@ -1,4 +1,4 @@
-import { API_LOCATIONS_ALL, API_LOCATION_ADD, API_LOCATION_GET_ID, API_LOCATION, API_LOCATION_ADDRESS, API_LOCATION_GET_NAME, API_LOCATION_GET_NAMES, API_HALL_GET, API_SECTOR } from './../config/api-paths';
+import { API_LOCATIONS_ALL, API_LOCATION_ADD, API_LOCATION_GET_ID, API_LOCATION, API_LOCATION_ADDRESS, API_LOCATION_GET_NAME, API_LOCATION_GET_NAMES, API_HALL_GET, API_SECTOR, API_LOCATION_DAILY_REPORT, API_LOCATION_MONTHLY_REPORT } from './../config/api-paths';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -59,6 +59,14 @@ export class LocationService {
       tap(data => {}),
       catchError(this.handleError)
     );
+  }
+
+  getDailyReport(pickedDate: string, eventId: number): Observable<any> {
+    return this.http.post(API_LOCATION_DAILY_REPORT + eventId, pickedDate);
+  }
+
+  getMonthlyReport(pickedDate: string, eventId: number): Observable<any> {
+    return this.http.post(API_LOCATION_MONTHLY_REPORT + eventId, pickedDate);
   }
 
   ////////////////////////////////////////////////////////////////////

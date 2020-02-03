@@ -1,6 +1,6 @@
+import { LocationService } from 'src/app/services/location.service';
 import {Component, Input, OnInit} from '@angular/core';
 import {DatePipe} from "@angular/common";
-import {LocationReportService} from "../../services/location-report.service";
 
 @Component({
   selector: 'app-location-report',
@@ -29,7 +29,7 @@ export class LocationReportComponent implements OnInit {
   isDivHiddenM: boolean = true;
 
   constructor(private datePipe: DatePipe,
-              private service: LocationReportService) { }
+              private service: LocationService) { }
 
   ngOnInit() {
     this.fillYears();

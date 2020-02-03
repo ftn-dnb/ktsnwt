@@ -1,4 +1,4 @@
-import { API_EVENTS, API_EVENTS_ADD, API_EVENTS_IMAGE, API_EVENTS_GET_ONE_BY_ID, API_EVENT_SET_PRICING } from './../config/api-paths';
+import { API_EVENTS, API_EVENTS_ADD, API_EVENTS_IMAGE, API_EVENTS_GET_ONE_BY_ID, API_EVENT_SET_PRICING, API_EVENT_DAILY_REPORT } from './../config/api-paths';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -38,6 +38,10 @@ export class EventService {
 
   setEventPricing(id: number, pricing: any): Observable<any> {
     return this.http.put(API_EVENT_SET_PRICING + id, pricing);
+  }
+
+  getDailyReport(pickedDate: string, eventId: number): Observable<any>  {
+    return this.http.post(API_EVENT_DAILY_REPORT + eventId, pickedDate);
   }
 
   private handleError(err: HttpErrorResponse) {
