@@ -4,24 +4,24 @@
     <rect zoom-control="right" height="120.175489" width="90.875103" y="170.119891" x="350.511515"/>
     <rect zoom-control="main" height="110.687786" width="126.854046" y="105.769235" x="220.459768"/>
     <rect zoom-control="left" height="120.962273" width="90.448662" y="170.119891" x="125.930951"/>
-    <g class="left" seating-area zoom-target="left">
-
+    <g class="left" seating-area zoom-target="left" [appSeating]='seatsData'>
+    <!--
      <rect selected seat height="14.560438" width="13" y="206.529233" x="158.181482"/>
      <rect locked seat height="14.560438" width="13" y="206.529233" x="172.049076"/>
      <rect locked="reserved" seat height="14.560438" width="13" y="206.475552" x="185.969085"/>
-
+    -->
     </g>
-    <g class="right" seating-area zoom-target="right">
-
+    <g class="right" seating-area zoom-target="right" [appSeating]='seatsData'>
+    <!--
       <rect seat height="10.080303" width="9" y="100" x="210"/>
       <rect seat height="10.080303" width="9" y="100" x="219.5"/>
       <rect seat height="10.080303" width="9" y="100" x="229"/>
       <rect seat height="10.080303" width="9" y="110.5" x="210"/>
       <rect seat height="10.080303" width="9" y="110.5" x="219.5"/>
       <rect seat height="10.080303" width="9" y="110.5" x="229"/>
-
+    -->
     </g>
-    <g class="main" seating-area zoom-target="main">
+    <g class="main" seating-area zoom-target="main" [appSeating]='seatsData'>
       <!--
       <rect seat class="reserved" height="14.560438" width="13" y="106.863558" x="207.345423"/>
       <rect seat class="locked" height="14.560438" width="13" y="106.863558" x="221.213018"/>
@@ -31,10 +31,10 @@
   </g>
 </svg>
 
-  <button mat-raised-button color="primary" class="btnTop" (click)="onTopViewClick()">
-    <mat-icon class="icon">view_comfy</mat-icon>
-    <span> Top View</span>
-  </button>
+<button mat-raised-button color="primary" class="btnTop" (click)="onTopViewClick()">
+  <mat-icon class="icon">view_comfy</mat-icon>
+  <span> Top View</span>
+</button>
 
 <div style="width: 100%; margin-top: 30px;">
   <div class="sector-divs">

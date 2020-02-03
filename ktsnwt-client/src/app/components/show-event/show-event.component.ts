@@ -42,8 +42,9 @@ export class ShowEventComponent implements OnInit {
   }
 
   onClickReserve() {
-    console.log(this.selectedDayOrdinal + " " + this.eventData.id);
-    this.router.navigate([RESERVE_TICKET, this.eventData.id, this.selectedDayOrdinal]);
+    let eventDayId;
+    eventDayId = this.eventData.days.filter(item => item)[this.selectedDayOrdinal];
+    this.router.navigate([RESERVE_TICKET, this.eventData.id, eventDayId.id]);
   }
 
   isPlainUserLoggedIn() {
