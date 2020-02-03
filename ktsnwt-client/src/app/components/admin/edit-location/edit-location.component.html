@@ -6,22 +6,25 @@
     </agm-map>
   </div>
 
-  <div fxFlex fxFlexAlign="center"
-       class="autocomplete-container">
-    <mat-google-maps-autocomplete (onAutocompleteSelected)="onAutocompleteSelected($event)"
-                                  (onLocationSelected)="onLocationSelected($event)">
-    </mat-google-maps-autocomplete>
-
+  <div class="edit-form">
+    <div fxFlex fxFlexAlign="center"
+         class="autocomplete-container">
+      <mat-google-maps-autocomplete (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                                    (onLocationSelected)="onLocationSelected($event)"
+                                    appearance="outline">
+      </mat-google-maps-autocomplete>
+  
+    </div>
+  
+    <mat-form-field class="example-full-width" appearance="outline">
+      <input matInput placeholder="Enter location name" #locationName>
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" class="btn-settings" (click)="onEditLocation()">
+      <mat-icon class="icon">edit</mat-icon>
+      <span>  Edit location</span>
+    </button>
   </div>
-
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Enter location name" #locationName>
-  </mat-form-field>
-
-  <button mat-raised-button color="primary" class="btn-settings" (click)="onEditLocation()">
-    <mat-icon class="icon">edit</mat-icon>
-    <span>  Edit location</span>
-  </button>
 
 
   <div class="container-table">
@@ -47,8 +50,8 @@
     </table>
   </div>
 
-  <div class="example-container">
-    <mat-form-field>
+  <div class="add-hall-form">
+    <mat-form-field appearance="outline">
       <input matInput placeholder="Enter hall name" #hallName>
     </mat-form-field>
     <button mat-raised-button color="primary" class="btn-settings" (click)="onAddHall()">
@@ -57,7 +60,4 @@
     </button>
   </div>
 
-  <div class="div-settings">
-
-  </div>
 </div>

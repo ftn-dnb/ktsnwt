@@ -110,9 +110,10 @@ export class HallSettingsComponent implements OnInit {
               (data) => {
                 this.apiData = data;
                 this.updateSeatsData();
+                this.toastr.success('Sector has been updated');
               },
               (error) => {
-                console.log(error);
+                this.toastr.error('Error while updating sector');
               }
             );
           }

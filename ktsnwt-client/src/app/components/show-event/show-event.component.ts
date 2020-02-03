@@ -19,16 +19,17 @@ export class ShowEventComponent implements OnInit {
   routeSub: Subscription;
   eventData: any = {};
    // namestiti da bude tip Event
+
   constructor(private route: ActivatedRoute,
               private eventService: EventService,
               private router: Router
               ) {}
 
-    ngOnInit() {
-      this.routeSub = this.route.params.subscribe( params => {
-        this.getEventData(params.id as number);
-      });
-    }
+  ngOnInit() {
+    this.routeSub = this.route.params.subscribe( params => {
+      this.getEventData(params.id as number);
+    });
+  }
 
   private getEventData(id: number): void {
     this.eventService.getEventById(id).subscribe(data => {
@@ -37,7 +38,6 @@ export class ShowEventComponent implements OnInit {
       this.router.navigate([NOT_FOUND]);
     });
   }
-
 
   tabChanged($event: MatTabChangeEvent) {
     this.selectedDayOrdinal = $event.index;

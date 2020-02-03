@@ -78,8 +78,13 @@ export class EditLocationComponent implements OnInit {
         name: this.inputName.nativeElement.value
       };
       this.locationService.editLocation(locationData).subscribe(
-        (data) => { this.location = data; },
-        (error) => { console.log(error); }
+        (data) => { 
+          this.location = data; 
+          this.toastr.success('Location has been changed');
+        },
+        (error) => {
+          this.toastr.error('Error while editing location');
+        }
       );
     }
   }

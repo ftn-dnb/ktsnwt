@@ -36,15 +36,15 @@
   <span> Top View</span>
 </button>
 
-<div style="width: 100%; margin-top: 30px;">
+<div class="sector-settings">
   <div class="sector-divs">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input matInput placeholder="Left sector row num" #leftRow>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input matInput placeholder="Left sector col num" #leftCol>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Select seating type</mat-label>
       <mat-select [(value)]="selectedTypeLeft">
         <mat-option value="FLOOR">Floor</mat-option>
@@ -57,13 +57,13 @@
     </button>
   </div>
   <div class="sector-divs">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input matInput placeholder="Main sector row num" #mainRow>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input matInput placeholder="Main sector col num" #mainCol>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Select seating type</mat-label>
       <mat-select [(value)]="selectedTypeMain">
         <mat-option value="FLOOR">Floor</mat-option>
@@ -76,13 +76,13 @@
     </button>
   </div>
   <div class="sector-divs">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input matInput placeholder="Right sector row num" #rightRow>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <input matInput placeholder="Right sector col num" #rightCol>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Select seating type</mat-label>
       <mat-select [(value)]="selectedTypeRight">
         <mat-option value="FLOOR">Floor</mat-option>
