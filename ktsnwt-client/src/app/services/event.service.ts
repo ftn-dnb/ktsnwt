@@ -1,9 +1,12 @@
-import { API_EVENTS, API_EVENTS_ADD, API_EVENTS_IMAGE, API_EVENTS_GET_ONE_BY_ID, API_EVENT_SET_PRICING, API_EVENT_DAILY_REPORT } from './../config/api-paths';
+import { API_EVENTS, API_EVENTS_ADD, API_EVENTS_IMAGE, API_EVENTS_GET_ONE_BY_ID, API_EVENT_SET_PRICING, API_EVENT_DAILY_REPORT, API_EVENT_DAY_DISABBLE, API_EVENT_EDIT, API_EVENT_DAY_DESCRIPTION } from './../config/api-paths';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { EventInfo } from '../models/request/event-info';
 import { catchError, tap } from 'rxjs/operators';
+import { Event } from '../models/response/event';
+import { EditEvent } from '../models/request/edit-event';
+import { EventDesription } from '../models/request/event-description';
 
 @Injectable({
   providedIn: 'root'
@@ -44,9 +47,22 @@ export class EventService {
     return this.http.post(API_EVENT_DAILY_REPORT + eventId, pickedDate);
   }
 
+  disableEventDay(id: number): Observable<any> {
+    return this.http.post(API_EVENT_DAY_DISABBLE + id, ' ');
+  }
+
+  editEvent(data: EditEvent): Observable<any> {
+    return this.http.put(API_EVENT_EDIT, data);
+  }
+
+  editEventDayDescription(data: EventDesription): Observable<any> {
+    return this.http.post(API_EVENT_DAY_DESCRIPTION, data);
+  }
+
   private handleError(err: HttpErrorResponse) {
     const errorMessage = `Server returned code ${err.status}, error message is: ${err.message}`;
     return throwError(errorMessage);
   }
+  
 
 }

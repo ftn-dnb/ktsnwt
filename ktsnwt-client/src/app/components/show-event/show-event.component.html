@@ -1,4 +1,4 @@
-<div class="page">
+<div class="page" *ngIf="this.eventData">
     <div class = "container">
         <div class="row">
             <img src="{{eventData.imagePath}}" class="image" />
@@ -25,7 +25,7 @@
         </div>
     
         <div class="row">
-            <mat-tab-group (selectedTabChange)="tabChanged($event)">
+            <mat-tab-group (selectedTabChange)="tabChanged($event)" >
                 <mat-tab *ngFor="let day of eventData.days;" [label]=day.name >
                     <mat-list>
                         <mat-list-item >
@@ -33,7 +33,12 @@
                         </mat-list-item>
                         <mat-list-item>
                             <strong>Event day status:&nbsp;</strong>
-                            <span>{{day.status | titlecase}}</span>
+                            <span>{{day.status | titlecase}}
+                                <button *ngIf="isAdminLoggedIn() && isDayActive(day) && isDayBeforeEvent(day)"  mat-raised-button color="primary" (click)="onClickDisableDay(day)">
+                                    <span>Cancel</span>
+                                </button>
+                            </span>
+                           
                         </mat-list-item>
                         <mat-list-item>
                             <strong>Description:&nbsp;</strong> {{day.description}}
