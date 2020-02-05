@@ -39,6 +39,7 @@ import { LocationReportDialog, LocationsComponent } from './components/locations
 import { SeatingDirective } from './directives/seating.directive';
 import { ReservationSeatingDirective } from './directives/reservation-seating.directive';
 import { StopClickDirective } from './components/reservations/directive/stop-click.directive';
+import { EditEventComponent } from './components/edit-event/edit-event.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { StopClickDirective } from './components/reservations/directive/stop-cli
     LocationReportComponent,
     LocationReportDialog,
     ReservationsComponent,
-    ReservationDialogComponent
+    ReservationDialogComponent,
+    EditEventComponent,
   ],
   imports: [
     MatDialogModule,

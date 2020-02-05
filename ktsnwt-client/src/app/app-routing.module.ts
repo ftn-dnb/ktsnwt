@@ -10,7 +10,7 @@ import {
   VERIFY_ACCOUNT_PATH, USER_SETTINGS_PATH, LOCATIONS_PATH,
   EVENTS_PATH, ADD_LOCATION_PATH, EDIT_LOCATION_PATH,
   MY_RESERVATIONS_PATH, ADD_EVENT_PATH, SHOW_EVENT_DETAILED_ID,
-  HALL_SETTINGS, NOT_FOUND, NOT_AUTHORIZED, RESERVE_TICKET, RESERVE_TICKET_ID
+  HALL_SETTINGS, NOT_FOUND, NOT_AUTHORIZED, RESERVE_TICKET, RESERVE_TICKET_ID, EDIT_EVENT_ID
 } from './config/router-paths';
 
 import { HomeComponent } from './components/home/home.component';
@@ -28,7 +28,7 @@ import { PageNotAuthorizedComponent } from './components/page-not-authorized/pag
 import { AuthGuard } from './guards/auth.guard';
 import { AuthLoginGuard } from './guards/auth-login.guard';
 import { ReservationsComponent } from './components/reservations/reservations.component';
-
+import { EditEventComponent } from './components/edit-event/edit-event.component';
 
 const routes: Routes = [
   { path: HOME_PATH, component: HomeComponent },
@@ -79,6 +79,11 @@ const routes: Routes = [
     path: ADD_EVENT_PATH,
     canActivate: [AuthGuard],
     component: AddEventComponent
+  },
+  {
+    path: EDIT_EVENT_ID,
+    canActivate: [AuthGuard],
+    component: EditEventComponent,
   },
   {
     path: SHOW_EVENT_DETAILED_ID,

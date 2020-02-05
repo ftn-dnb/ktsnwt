@@ -1,0 +1,59 @@
+<div class = "container" >
+    <form [formGroup]="editEventForm" (ngSubmit)="onEditEventSubmit()">
+        <div class="row">
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <input id="purchase-limit-input" matInput type="number" placeholder="Purchase limit" formControlName="purchaseLimit" min="1" matTooltip="Insert purchase limit days before event"/>
+                </mat-form-field>
+
+                <small id="purchase-error-msg-req" class="text-danger"
+                *ngIf="editEventForm.controls.purchaseLimit.touched && editEventForm.controls.purchaseLimit.errors?.required">
+                Purchase limit is required
+                </small>
+
+                <small id="purchase-error-msg-negative" class="text-danger"
+                *ngIf="editEventForm.controls.purchaseLimit.touched && editEventForm.controls.purchaseLimit.errors?.min">
+                Purchase must be greater than 0
+                </small>
+
+            </div>
+
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <input id="tickets-per-user-input" matInput type="number" placeholder="Tickets per user" formControlName="ticketsPerUser" min="1" matTooltip="Insert tickets per user limit"/>
+                </mat-form-field>
+
+                <small id="number-error-msg-req" class="text-danger"
+                *ngIf="editEventForm.controls.ticketsPerUser.touched && editEventForm.controls.ticketsPerUser.errors?.required">
+                Ticket per user limit is required
+                </small>
+
+                <small id="number-error-msg-negative" class="text-danger"
+                *ngIf="editEventForm.controls.ticketsPerUser.touched && editEventForm.controls.ticketsPerUser.errors?.min">
+                Tickets per user must be greater than 0
+                </small>
+
+            </div>
+
+            <div class="input-field-description">
+                <mat-form-field appearance="outline">
+                    <textarea id="description-input" matInput type="text" placeholder="Description" formControlName="description" matTooltip="Insert global description for event">
+                    </textarea>
+                </mat-form-field>
+
+                <small id="description-error-msg-req" class="text-danger"
+                *ngIf="editEventForm.controls.description.touched && editEventForm.controls.description.errors?.required">
+                Description is required
+                </small>
+            </div>
+
+        </div>
+
+
+        <button class="submit-button" id="edit-btn" type="submit" mat-raised-button color="primary" [disabled]="editEventForm.invalid">
+            Edit event
+        </button>
+    </form>
+
+</div>
+

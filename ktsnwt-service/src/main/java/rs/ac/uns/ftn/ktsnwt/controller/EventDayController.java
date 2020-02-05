@@ -4,10 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import rs.ac.uns.ftn.ktsnwt.dto.EventDayDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.EventDayDescriptionEditDTO;
 import rs.ac.uns.ftn.ktsnwt.service.eventday.EventDayService;
 
 @RestController
@@ -21,6 +20,12 @@ public class EventDayController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> disableEventDay(@PathVariable("id") Long id){
         eventDayService.disableEventDay(id);
-        return new ResponseEntity<>("Event day canceled",HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/description")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<EventDayDTO> changeDescription(@RequestBody EventDayDescriptionEditDTO dto){
+        return new ResponseEntity<>(new EventDayDTO(eventDayService.changeDescription(dto)),HttpStatus.OK);
     }
 }

@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EventService } from './../../services/event.service';
 import {Component, Inject, OnInit} from '@angular/core';
-import { ADD_EVENT_PATH, SHOW_EVENT_DETAILED } from 'src/app/config/router-paths';
+import { ADD_EVENT_PATH, SHOW_EVENT_DETAILED, EDIT_EVENT} from 'src/app/config/router-paths';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
@@ -45,8 +45,7 @@ export class EventsComponent implements OnInit {
   }
 
   onClickEdit(eventId: number): void {
-    // TODO: implementirati odlazak na stranicu za izmenu podataka o manifestaciji
-    console.log("EDIT", eventId);
+    this.router.navigate([EDIT_EVENT, eventId]);
   }
 
   onClickStats(eventId: number): void {

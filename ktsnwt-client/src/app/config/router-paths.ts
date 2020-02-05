@@ -16,6 +16,8 @@ export const EVENTS_PATH = 'events';
 export const ADD_EVENT_PATH = 'add-event';
 export const SHOW_EVENT_DETAILED_ID = 'show-event/:id';
 export const SHOW_EVENT_DETAILED = 'show-event/';
+export const EDIT_EVENT_ID = 'edit-event/:id';
+export const EDIT_EVENT = 'edit-event/';
 
 // Halls
 export const HALL_SETTINGS = 'hall-settings/:id';
