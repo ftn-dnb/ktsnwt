@@ -42,7 +42,9 @@ public class SectorControllerIntegrationTest {
     @Autowired
     HallRepository hallRepository;
 
-    private TestRestTemplate restTemplate = new TestRestTemplate();
+    @Autowired
+    private TestRestTemplate restTemplate;
+
     private String accessToken;
 
 
