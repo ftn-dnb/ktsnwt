@@ -15,7 +15,8 @@ import rs.ac.uns.ftn.ktsnwt.controller.*;
         LocationControllerIntegrationTest.class,
         EventDayControllerIntegrationTest.class,
         EventControllerIntegrationTest.class,
-        AuthencticationControllerIntegrationTest.class
+        AuthencticationControllerIntegrationTest.class,
+        UserControllerIntegrationTest.class
 })
 public class ControllerIntegrationTests {
 }
