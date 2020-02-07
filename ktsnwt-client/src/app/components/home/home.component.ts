@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private eventService: EventService,
               private toastr: ToastrService,
-              private router: Router,) {
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  @HostListener("window:scroll", [])
+  @HostListener('window:scroll', [])
   onScrollDetectEndOfPage(): void {
     if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
       if (!this.isLastPage) {

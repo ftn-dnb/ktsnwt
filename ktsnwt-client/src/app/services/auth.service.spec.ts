@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AuthService', () => {
-  
+
   let injector: TestBed;
   let service: AuthService;
   let httpMock: HttpTestingController;
@@ -55,7 +55,7 @@ describe('AuthService', () => {
     const req = httpMock.expectOne(API_LOGIN);
     expect(req.request.method).toBe('POST');
     req.flush({
-      status: 400, 
+      status: 400,
       statusText: 'Bad credentials'
     });
   });

@@ -59,5 +59,4 @@ export class PaypalComponent implements OnInit {
     })
     .render(this.paypalElement.nativeElement);
   }
-  
 }

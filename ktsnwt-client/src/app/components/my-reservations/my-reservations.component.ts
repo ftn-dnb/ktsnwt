@@ -61,7 +61,7 @@ export class MyReservationsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getAllTickets();
-    })
+    });
   }
 
   onPageSizeSelect(): void {

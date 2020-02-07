@@ -10,6 +10,7 @@ export const USER_SETTINGS_PATH = 'settings';
 export const LOCATIONS_PATH = 'locations';
 export const ADD_LOCATION_PATH = 'add-location';
 export const EDIT_LOCATION_PATH = 'edit-location/:id';
+export const EDIT_LOCATION_PATH_NO_PARAM = 'edit-location/';
 
 // Events
 export const EVENTS_PATH = 'events';

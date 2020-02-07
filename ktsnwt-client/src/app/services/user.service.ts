@@ -11,11 +11,11 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
   }
 
   getMyProfileData(): Observable<User> {
-    return this.http.get(API_MY_PROFILE);    
+    return this.http.get(API_MY_PROFILE);
   }
 
   editMyProfile(userEditData: UserEditInfo): Observable<any> {

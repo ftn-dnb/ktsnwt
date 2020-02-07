@@ -1,4 +1,5 @@
-import { API_BUY_TICKET, API_CANCEL_TICKET, API_MY_RESERVATIONS, API_GET_TICKETS_BY_EVENT_DAY, API_RESERVE_TICKETS } from './../config/api-paths';
+import { API_BUY_TICKET, API_CANCEL_TICKET, API_MY_RESERVATIONS,
+  API_GET_TICKETS_BY_EVENT_DAY, API_RESERVE_TICKETS } from './../config/api-paths';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';

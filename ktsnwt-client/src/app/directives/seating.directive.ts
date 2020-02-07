@@ -1,5 +1,6 @@
-import { ElementRef, Directive, Input, OnInit, Renderer2, OnChanges, SimpleChanges } from "@angular/core";
+import { ElementRef, Directive, Input, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
 import * as d3 from 'd3';
+
 @Directive({
   selector: '[appSeating]'
 })

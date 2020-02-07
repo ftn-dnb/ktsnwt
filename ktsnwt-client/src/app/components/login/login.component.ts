@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private router: Router,
               private authService: AuthService,
-              private toastr: ToastrService) { 
+              private toastr: ToastrService) {
 
     this.createForm();
   }
@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit {
 
   private createForm(): void {
     this.loginForm = this.fb.group({
-      'username': ['', Validators.required],
-      'password': ['', Validators.required]
+      username: ['', Validators.required],
+      password: ['', Validators.required]
     });
   }
 
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem(USER_ROLE_KEY, data.authorities[0]);
       localStorage.setItem(USERNAME_KEY, data.username);
       localStorage.setItem(USER_TOKEN_KEY, data.token.accessToken);
-  
+
       this.loginSuccess = true;
       this.loginError = false;
       this.router.navigate([HOME_PATH]);

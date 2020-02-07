@@ -63,9 +63,9 @@ export class EditEventComponent implements OnInit {
     id: this.eventData.id,
     purchaseLimit: this.editEventForm.controls.purchaseLimit.value as number};
     this.eventService.editEvent(newD).subscribe( data => {
-      this.toastr.success("Event changed");
+      this.toastr.success('Event changed');
     }, error => {
-      this.toastr.error("Event not changed");
+      this.toastr.error('Event not changed');
     });
   }
 
