@@ -1,6 +1,57 @@
 <div class="container">
     <h2>KTS-NWT Events</h2>
 
+
+    <form [formGroup]="searchForm" (ngSubmit)="onClickSearch()">
+
+        <div class="row">
+            <div class="input-field">
+                <mat-form-field appearance="outline">
+                    <input id="name-input" matInput type="text" placeholder="Event name" formControlName="name"/>
+                </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline">
+                <input id="locationName-input" matInput type="text" placeholder="Location name" formControlName="locationName"/>
+            </mat-form-field>
+
+        </div>
+        
+        <div class="row">
+            <div class="input-date">
+                <mat-form-field appearance="outline">
+                    <input matInput [matDatepicker]="myDatepicker" id="date-input" formControlName="searchDate" placeholder="Search until this date">
+                    <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #myDatepicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+    
+            <div class="input-field">
+                 <mat-form-field appearance="outline">
+                    <mat-select id="type-input" formControlName="type" placeholder="Event type">
+                            <mat-option class="type_option" value="SPORT">SPORT</mat-option>
+                            <mat-option class="type_option" value="CONCERT">CONCERT</mat-option>
+                            <mat-option class="type_option" value="THEATER">THEATER</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        
+            <mat-form-field appearance="outline">
+                <input id="locationName-input" matInput type="text" placeholder="Location name" formControlName="locationName"/>
+            </mat-form-field>
+    
+
+            <button class="submit-button" id="search-btn" type="submit" mat-raised-button color="primary" [disabled]="searchForm.invalid">
+                Search
+            </button>
+    </form>
+
+    <button class="reset-button" id="reset-btn" (click)="onClickReset()" mat-raised-button>
+        Reset search
+    </button>
+
     <mat-card class="card" *ngFor="let event of events">
         <mat-card-header>
             <mat-card-title>{{event.name}}</mat-card-title>
