@@ -95,6 +95,14 @@ public class EventServiceImpl implements EventService {
     @Override
     public Page<EventDTO> filterEvents(SearchEventDTO filter, Pageable pageable) {
         Date endDate;
+        Integer type;
+
+        if(filter.getType() == null){
+            type = null;
+        }
+        else {
+            type = filter.getType().ordinal();
+        }
 
         try{
             endDate = timeProvider.makeDate(filter.getEndDate());
@@ -103,7 +111,7 @@ public class EventServiceImpl implements EventService {
             throw new ApiRequestException("Invalid date format");
         }
 
-        return eventRepository.filterEvents(endDate,filter.getType(),filter.getLocation(), pageable).map(x -> EventMapper.toDTO(x));
+        return eventRepository.filterEvents(endDate, type, filter.getLocation(), filter.getName(), pageable).map(x -> EventMapper.toDTO(x));
     }
 
     @Override

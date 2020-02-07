@@ -14,12 +14,16 @@ public class SearchEventDTO {
 
     private Long location;
 
+    private String name;
+
     public SearchEventDTO(){
 
     }
 
+
     public String getEndDate() {
         return endDate;
+
     }
 
     public void setEndDate(String endDate) {
@@ -40,5 +44,13 @@ public class SearchEventDTO {
 
     public void setLocation(Long location) {
         this.location = location;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
