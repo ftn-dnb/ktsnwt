@@ -32,6 +32,7 @@ export const API_EVENT_SET_PRICING = API_BASE + '/api/event/addPricing/';
 export const API_EVENT_DAY_DISABBLE = API_BASE + '/api/eventDay/disable/';
 export const API_EVENT_EDIT = API_BASE + '/api/event/editEvent';
 export const API_EVENT_DAY_DESCRIPTION = API_BASE + '/api/eventDay/description';
+export const API_EVENT_SEARCH = API_BASE + '/api/event/public/search';
 
 // Tickets
 export const API_MY_RESERVATIONS = API_BASE + '/api/tickets';

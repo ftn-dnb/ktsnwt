@@ -12,7 +12,7 @@ public class SearchEventDTO {
 
     private EventType type;
 
-    private Long location;
+    private String location;
 
     private String name;
 
@@ -20,10 +20,8 @@ public class SearchEventDTO {
 
     }
 
-
     public String getEndDate() {
         return endDate;
-
     }
 
     public void setEndDate(String endDate) {
@@ -38,11 +36,11 @@ public class SearchEventDTO {
         this.type = type;
     }
 
-    public Long getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Long location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 

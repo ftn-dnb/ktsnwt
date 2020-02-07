@@ -1,7 +1,7 @@
 import { API_EVENTS, API_EVENTS_ADD, API_EVENTS_IMAGE,
   API_EVENTS_GET_ONE_BY_ID, API_EVENT_SET_PRICING,
   API_EVENT_DAILY_REPORT, API_EVENT_DAY_DISABBLE,
-  API_EVENT_EDIT, API_EVENT_DAY_DESCRIPTION } from './../config/api-paths';
+  API_EVENT_EDIT, API_EVENT_DAY_DESCRIPTION, API_EVENT_SEARCH } from './../config/api-paths';
 import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -9,6 +9,7 @@ import { EventInfo } from '../models/request/event-info';
 import { catchError, tap } from 'rxjs/operators';
 import { EditEvent } from '../models/request/edit-event';
 import { EventDesription } from '../models/request/event-description';
+import { SearchEvent } from '../models/request/search-event';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,10 @@ export class EventService {
 
   editEventDayDescription(data: EventDesription): Observable<any> {
     return this.http.post(API_EVENT_DAY_DESCRIPTION, data);
+  }
+
+  searchEvents(data: SearchEvent): Observable <any> {
+    return this.http.post(API_EVENT_SEARCH, data);
   }
 
   private handleError(err: HttpErrorResponse) {
