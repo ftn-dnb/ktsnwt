@@ -57,7 +57,7 @@ public class LocationControllerIntegrationTest {
         JwtAuthenticationRequest loginDto = new JwtAuthenticationRequest(
                 UserConstants.DB_USERNAME, UserConstants.DB_PASSWORD
         );
-        ResponseEntity<UserDTO> response = restTemplate.postForEntity("http://localhost:8080/auth/login", loginDto, UserDTO.class);
+        ResponseEntity<UserDTO> response = restTemplate.postForEntity("/auth/login", loginDto, UserDTO.class);
         UserDTO user = response.getBody();
         accessToken = user.getToken().getAccessToken();
     }
@@ -73,7 +73,7 @@ public class LocationControllerIntegrationTest {
     public void whenFindByValidId_thenReturnOk(){
         LocationDTO l = LocationConstants.returnDBLocationDTO();
         ResponseEntity<LocationDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/locations/" + l.getId(), HttpMethod.GET, createHttpEntity(), LocationDTO.class);
+                "/api/locations/" + l.getId(), HttpMethod.GET, createHttpEntity(), LocationDTO.class);
 
         LocationDTO responseBody = response.getBody();
 
@@ -89,7 +89,7 @@ public class LocationControllerIntegrationTest {
         LocationDTO l = LocationConstants.returnDBLocationDTO();
         l.setId(LocationConstants.NOT_EXISTING_DB_ID);
         ResponseEntity<LocationDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/locations/" + l.getId(), HttpMethod.GET, createHttpEntity(), LocationDTO.class);
+                "/api/locations/" + l.getId(), HttpMethod.GET, createHttpEntity(), LocationDTO.class);
         LocationDTO responseBody = response.getBody();
 
         assertNotNull(responseBody);
@@ -99,14 +99,14 @@ public class LocationControllerIntegrationTest {
 
     @Test
     public void findAllOnPage_thenReturnOk(){
-        ResponseEntity<Object> response = restTemplate.exchange("http://localhost:8080/api/locations/all/?page=" + LocationConstants.VALID_PAGE + "&size=" + LocationConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), Object.class);
+        ResponseEntity<Object> response = restTemplate.exchange("/api/locations/all/?page=" + LocationConstants.VALID_PAGE + "&size=" + LocationConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), Object.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
     }
 
     @Test
     public void whenFindAllOnNotExistingPage_thenReturnOk(){
-        ResponseEntity<Object> response = restTemplate.exchange("http://localhost:8080/api/locations/all/?page=" + LocationConstants.NOT_EXISTING_PAGE + "&size=" + LocationConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), Object.class);
+        ResponseEntity<Object> response = restTemplate.exchange("/api/locations/all/?page=" + LocationConstants.NOT_EXISTING_PAGE + "&size=" + LocationConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), Object.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(new ArrayList<>(), response.getBody());
@@ -114,13 +114,13 @@ public class LocationControllerIntegrationTest {
 
     @Test
     public void findAllOnInvalidPage_thenReturnBadRequest(){
-        ResponseEntity<Object> response = restTemplate.exchange("http://localhost:8080/api/locations/all/?page=" + LocationConstants.NOT_VALID_PAGE + "&size=" + LocationConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), Object.class);
+        ResponseEntity<Object> response = restTemplate.exchange("/api/locations/all/?page=" + LocationConstants.NOT_VALID_PAGE + "&size=" + LocationConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), Object.class);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
     public void whenFindAllWithInvalidSize_thenReturnBadRequest(){
-        ResponseEntity<Object> response = restTemplate.exchange("http://localhost:8080/api/locations/all/?page=" + LocationConstants.VALID_PAGE + "&size=" + LocationConstants.NOT_VALID_SIZE, HttpMethod.GET, createHttpEntity(), Object.class);
+        ResponseEntity<Object> response = restTemplate.exchange("/api/locations/all/?page=" + LocationConstants.VALID_PAGE + "&size=" + LocationConstants.NOT_VALID_SIZE, HttpMethod.GET, createHttpEntity(), Object.class);
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
@@ -128,7 +128,7 @@ public class LocationControllerIntegrationTest {
     @Test
     public void whenFindByExistingName_thenReturnOk(){
         String name =  LocationConstants.EXISTING_DB_NAME;
-        ResponseEntity<LocationDTO> response = restTemplate.exchange("http://localhost:8080/api/locations/name/" + name, HttpMethod.GET, createHttpEntity(), LocationDTO.class);
+        ResponseEntity<LocationDTO> response = restTemplate.exchange("/api/locations/name/" + name, HttpMethod.GET, createHttpEntity(), LocationDTO.class);
         LocationDTO l = response.getBody();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -139,7 +139,7 @@ public class LocationControllerIntegrationTest {
     @Test
     public void whenFindByNotExistingName_thenReturnNotFound(){
         String name =  LocationConstants.NOT_EXISTING_DB_NAME;
-        ResponseEntity<LocationDTO> response = restTemplate.exchange("http://localhost:8080/api/locations/name/" + name, HttpMethod.GET, createHttpEntity(), LocationDTO.class);
+        ResponseEntity<LocationDTO> response = restTemplate.exchange("/api/locations/name/" + name, HttpMethod.GET, createHttpEntity(), LocationDTO.class);
         LocationDTO l = response.getBody();
 
         assertNotNull(l);
@@ -159,7 +159,7 @@ public class LocationControllerIntegrationTest {
         List<Address> oldListA = addressRepository.findAll();
 
 
-        ResponseEntity<LocationDTO> response = restTemplate.exchange("http://localhost:8080/api/locations", HttpMethod.POST, request, LocationDTO.class);
+        ResponseEntity<LocationDTO> response = restTemplate.exchange("/api/locations", HttpMethod.POST, request, LocationDTO.class);
         List<Location> newList = locationRepository.findAll();
         LocationDTO newL = response.getBody();
 
@@ -184,7 +184,7 @@ public class LocationControllerIntegrationTest {
         headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<LocationDTO> request = new HttpEntity<>(l, headers);
 
-        ResponseEntity<LocationDTO> response = restTemplate.exchange("http://localhost:8080/api/locations", HttpMethod.POST, request, LocationDTO.class);
+        ResponseEntity<LocationDTO> response = restTemplate.exchange("/api/locations", HttpMethod.POST, request, LocationDTO.class);
         List<Location> newList = locationRepository.findAll();
 
         deleteRedundantLocationWithAddress(oldList, oldListA);
@@ -203,7 +203,7 @@ public class LocationControllerIntegrationTest {
         headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<LocationDTO> request = new HttpEntity<>(l, headers);
 
-        ResponseEntity<LocationDTO> response = restTemplate.exchange("http://localhost:8080/api/locations", HttpMethod.POST, request, LocationDTO.class);
+        ResponseEntity<LocationDTO> response = restTemplate.exchange("/api/locations", HttpMethod.POST, request, LocationDTO.class);
         List<Location> newList = locationRepository.findAll();
 
         deleteRedundantLocationWithAddress(oldList, oldListA);
@@ -222,7 +222,7 @@ public class LocationControllerIntegrationTest {
         headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<LocationDTO> request = new HttpEntity<>(l, headers);
 
-        ResponseEntity<LocationDTO> response = restTemplate.exchange("http://localhost:8080/api/locations", HttpMethod.POST, request, LocationDTO.class);
+        ResponseEntity<LocationDTO> response = restTemplate.exchange("/api/locations", HttpMethod.POST, request, LocationDTO.class);
         List<Location> newList = locationRepository.findAll();
 
         deleteRedundantLocationWithAddress(oldList, oldListA);
@@ -273,7 +273,7 @@ public class LocationControllerIntegrationTest {
         List<Location> oldList = locationRepository.findAll();
         List<Address> oldListA = addressRepository.findAll();
 
-        ResponseEntity<LocationDTO> response = restTemplate.exchange("http://localhost:8080/api/locations/", HttpMethod.PUT, request, LocationDTO.class);
+        ResponseEntity<LocationDTO> response = restTemplate.exchange("/api/locations/", HttpMethod.PUT, request, LocationDTO.class);
         LocationDTO editedL = response.getBody();
         Optional<Location> newDBOptL = locationRepository.findById(LocationConstants.DB_ID);
 
@@ -339,7 +339,7 @@ public class LocationControllerIntegrationTest {
         List<Location> oldList = locationRepository.findAll();
         List<Address> oldListA = addressRepository.findAll();
 
-        ResponseEntity<LocationDTO> response = restTemplate.exchange("http://localhost:8080/api/locations/", HttpMethod.PUT, request, LocationDTO.class);
+        ResponseEntity<LocationDTO> response = restTemplate.exchange("/api/locations/", HttpMethod.PUT, request, LocationDTO.class);
         LocationDTO editedL = response.getBody();
         Optional<Location> newDBOptL = locationRepository.findById(oldL.getId());
 
@@ -384,7 +384,7 @@ public class LocationControllerIntegrationTest {
         List<Location> oldList = locationRepository.findAll();
         List<Address> oldListA = addressRepository.findAll();
 
-        ResponseEntity<LocationDTO> response = restTemplate.exchange("http://localhost:8080/api/locations/address/" + id, HttpMethod.PUT, request, LocationDTO.class);
+        ResponseEntity<LocationDTO> response = restTemplate.exchange("/api/locations/address/" + id, HttpMethod.PUT, request, LocationDTO.class);
         LocationDTO editedL = response.getBody();
 
 
@@ -419,7 +419,7 @@ public class LocationControllerIntegrationTest {
         List<Location> oldList = locationRepository.findAll();
         List<Address> oldListA = addressRepository.findAll();
 
-        ResponseEntity<LocationDTO> response = restTemplate.exchange("http://localhost:8080/api/locations/address/" + id, HttpMethod.PUT, request, LocationDTO.class);
+        ResponseEntity<LocationDTO> response = restTemplate.exchange("/api/locations/address/" + id, HttpMethod.PUT, request, LocationDTO.class);
         Optional<Location> newDBOptL = locationRepository.findById(id);
 
         locationRepository.save(oldDBLocation);
@@ -448,7 +448,7 @@ public class LocationControllerIntegrationTest {
         List<Location> oldList = locationRepository.findAll();
         List<Address> oldListA = addressRepository.findAll();
 
-        ResponseEntity<LocationDTO> response = restTemplate.exchange("http://localhost:8080/api/locations/address/" + id, HttpMethod.PUT, request, LocationDTO.class);
+        ResponseEntity<LocationDTO> response = restTemplate.exchange("/api/locations/address/" + id, HttpMethod.PUT, request, LocationDTO.class);
 
 
         LocationDTO editedL = response.getBody();

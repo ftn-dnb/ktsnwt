@@ -28,11 +28,8 @@ import rs.ac.uns.ftn.ktsnwt.service.user.UserServiceUnitTest;
         LocationServiceImplUnitTest.class,
         EventServiceImplUnitTest.class,
         MailSenderServiceUnitTest.class,
-
         CustomUserDetailsServiceUnitTest.class,
-
         UserServiceUnitTest.class,
-
 })
 public class ServiceUnitTests {
 }
