@@ -7,7 +7,7 @@ public class Constants {
      */
 
     public static final String FRONTEND_APP_URL   = "http://localhost:4200/";
-    public static final String CHROME_DRIVER_PATH = "C:/Users/mica/Downloads/chromedriver.exe";
+    public static final String CHROME_DRIVER_PATH = "E:/KTS_NWT/chromedriver.exe";
     public static final String IMAGE_PATH = "C:/Users/mica/Desktop/70412898_1936293256525920_2135423663300673536_n.jpg";
 
     /**

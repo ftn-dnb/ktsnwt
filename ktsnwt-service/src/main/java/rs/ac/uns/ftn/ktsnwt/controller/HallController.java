@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.ktsnwt.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.ktsnwt.dto.HallDTO;
 import rs.ac.uns.ftn.ktsnwt.mappers.HallMapper;
@@ -18,7 +19,7 @@ public class HallController {
     @Autowired
     private HallService hallService;
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/all/{id}")
     public ResponseEntity<List<HallDTO>> getAllHalls(@RequestParam(name = "page") int page,
                                                      @RequestParam(name = "size") int size,
@@ -34,12 +35,14 @@ public class HallController {
 
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("")
     public ResponseEntity<HallDTO> addHall(@RequestBody HallDTO hallDTO) {
         Hall hall = hallService.addHall(hallDTO.getLocationId(), hallDTO);
         return new ResponseEntity<>(HallMapper.toDto(hall), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
     public ResponseEntity<HallDTO> editHall(@RequestBody HallDTO hallDTO) {
         Hall hall = hallService.editHall(hallDTO);

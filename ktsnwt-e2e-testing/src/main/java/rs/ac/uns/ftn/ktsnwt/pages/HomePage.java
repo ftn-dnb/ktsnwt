@@ -29,6 +29,9 @@ public class HomePage {
     @FindBy(css = "#myReservationsBtn")
     private WebElement myReservationsButton;
 
+    @FindBy(css = "body > app-root > app-home > div > mat-card > mat-card-actions > button")
+    private WebElement seeMoreButton;
+
     public WebElement getMyReservationsButton() {
         return myReservationsButton;
     }
@@ -61,6 +64,8 @@ public class HomePage {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#cdk-overlay-0")));
     }
+
+    public WebElement getSeeMoreButton() { return seeMoreButton; }
 
     public void ensureLoginIsDisplayed() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(loginButton));

@@ -195,6 +195,10 @@ export class ReservationsComponent implements OnInit {
       this.cd.detectChanges();
       return;
     }
+    if (selected.length <= 0) {
+      this.toastrService.error('Invalid number of tickets chosen.');
+      return;
+    }
     const reservationData = {
       eventDayId: this.eventDayId,
       seats: []
