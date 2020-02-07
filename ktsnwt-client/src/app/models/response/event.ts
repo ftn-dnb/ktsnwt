@@ -16,5 +16,4 @@ export interface Event {
     days: EventDay[];
     pricings: Pricing[];
     location: Location;
-
 }

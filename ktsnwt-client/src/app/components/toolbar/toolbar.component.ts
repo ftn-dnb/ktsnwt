@@ -22,7 +22,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ToolbarComponent implements OnInit {
 
   constructor(private router: Router,
-              private authService: AuthService, private t: ToastrService) { 
+              private authService: AuthService, private t: ToastrService) {
   }
 
   ngOnInit() {
@@ -40,7 +40,6 @@ export class ToolbarComponent implements OnInit {
     return localStorage.getItem(USER_ROLE_KEY) === ROLE_ADMIN;
   }
 
-
   isPlainUserLoggedIn(): boolean {
     return localStorage.getItem(USER_ROLE_KEY) === ROLE_USER;
   }
@@ -49,11 +48,9 @@ export class ToolbarComponent implements OnInit {
     this.router.navigate([HOME_PATH]);
   }
 
-
   onClickMyReservations(): void {
     this.router.navigate([MY_RESERVATIONS_PATH]);
   }
-
 
   onClickLogin(): void {
     this.router.navigate([LOGIN_PATH]);

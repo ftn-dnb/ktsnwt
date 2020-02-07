@@ -14,7 +14,7 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
 
-    let authServiceMock = {
+    const authServiceMock = {
       login: jasmine.createSpy('login').and.returnValue(of({
         username: 'jane.doe',
         email: 'jane@doe.com'
@@ -56,10 +56,10 @@ describe('LoginComponent', () => {
 
   // TODO: FIX
   it('should be true when submitted', () => {
-    component.loginForm.controls['username'].setValue('jane.doe');
-    component.loginForm.controls['password'].setValue('123');
+    component.loginForm.controls.username.setValue('jane.doe');
+    component.loginForm.controls.password.setValue('123');
     component.onLogin();
-    
+
     expect(component.loginForm.invalid).toBeFalsy();
     // expect(component.loginSuccess).toBeTruthy();
     // expect(component.loginError).toBeFalsy();
@@ -68,20 +68,20 @@ describe('LoginComponent', () => {
   });
 
   it('should be invalid form when inputs are empty', () => {
-    component.loginForm.controls['username'].setValue('');
-    component.loginForm.controls['password'].setValue('');
+    component.loginForm.controls.username.setValue('');
+    component.loginForm.controls.password.setValue('');
     expect(component.loginForm.invalid).toBeTruthy();
   });
 
   it('should be invalid form when username is empty', () => {
-    component.loginForm.controls['username'].setValue('');
-    component.loginForm.controls['password'].setValue('123');
+    component.loginForm.controls.username.setValue('');
+    component.loginForm.controls.password.setValue('123');
     expect(component.loginForm.invalid).toBeTruthy();
   });
 
   it('should be invalid form when password is empty', () => {
-    component.loginForm.controls['username'].setValue('jane.doe');
-    component.loginForm.controls['password'].setValue('');
+    component.loginForm.controls.username.setValue('jane.doe');
+    component.loginForm.controls.password.setValue('');
     expect(component.loginForm.invalid).toBeTruthy();
   });
 });

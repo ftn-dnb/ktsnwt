@@ -1,6 +1,6 @@
 import { LocationService } from 'src/app/services/location.service';
-import {Component, Input, OnInit} from '@angular/core';
-import {DatePipe} from "@angular/common";
+import { Component, Input, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-location-report',

@@ -1,12 +1,12 @@
-import { NOT_FOUND, SHOW_EVENT_DETAILED } from './../../config/router-paths';
+import { NOT_FOUND } from './../../config/router-paths';
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
-import {MatTabChangeEvent} from '@angular/material';
-import {RESERVE_TICKET} from '../../config/router-paths';
-import {USER_ROLE_KEY} from '../../config/local-storage-keys';
-import {ROLE_USER, ROLE_ADMIN} from '../../config/user-roles-keys';
+import { MatTabChangeEvent } from '@angular/material';
+import { RESERVE_TICKET } from '../../config/router-paths';
+import { USER_ROLE_KEY } from '../../config/local-storage-keys';
+import { ROLE_USER, ROLE_ADMIN } from '../../config/user-roles-keys';
 import { ToastrService } from 'ngx-toastr';
 import { Event } from 'src/app/models/response/event';
 import { EventDay } from 'src/app/models/response/eventDay';
@@ -40,7 +40,6 @@ export class ShowEventComponent implements OnInit {
   private getEventData(id: number): void {
     this.eventService.getEventById(id).subscribe(data => {
       this.eventData = data as Event;
-      console.log(this.eventData);
     }, error => {
       this.router.navigate([NOT_FOUND]);
     });

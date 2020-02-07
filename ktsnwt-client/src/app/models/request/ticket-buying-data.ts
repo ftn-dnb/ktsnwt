@@ -1,5 +1,5 @@
 export interface TicketBuyingData {
-    ticketId: number,
-    price: number,
-    date: string,
+    ticketId: number;
+    price: number;
+    date: string;
 }

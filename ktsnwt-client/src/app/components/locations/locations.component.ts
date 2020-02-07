@@ -1,8 +1,9 @@
+import { ADD_LOCATION_PATH, EDIT_LOCATION_PATH_NO_PARAM } from './../../config/router-paths';
 import { ToastrService } from 'ngx-toastr';
 import { LocationService } from './../../services/location.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { Location } from '../../models/response/location';
 
 @Component({
@@ -37,11 +38,11 @@ export class LocationsComponent implements OnInit {
   }
 
   onClickAddLocation(): void {
-    this.router.navigate(['/add-location']);
+    this.router.navigate([ADD_LOCATION_PATH]);
   }
 
   onClickEdit(locationId: number): void {
-    this.router.navigate(['/edit-location/' + locationId]);
+    this.router.navigate([EDIT_LOCATION_PATH_NO_PARAM, locationId]);
   }
 
   onClickStats(locationId: number): void {
@@ -75,7 +76,6 @@ export class LocationsComponent implements OnInit {
 @Component({
   selector: 'location-report-dialog',
   template: `
-      
       <h3 id="title"> Report for location: {{this.data}}</h3>
       <app-location-report [locationId]="this.data" ></app-location-report>
 

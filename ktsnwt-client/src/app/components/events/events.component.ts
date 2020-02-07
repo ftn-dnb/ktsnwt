@@ -1,9 +1,9 @@
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EventService } from './../../services/event.service';
-import {Component, Inject, OnInit} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ADD_EVENT_PATH, SHOW_EVENT_DETAILED, EDIT_EVENT} from 'src/app/config/router-paths';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-events',
@@ -54,7 +54,7 @@ export class EventsComponent implements OnInit {
 
   onClickArchive(eventId: number): void {
     // TODO: Implementirati
-    console.log("ARCHIVE", eventId);
+    console.log('ARCHIVE', eventId);
   }
 
   onPageSizeSelect(): void {
@@ -85,7 +85,6 @@ export class EventsComponent implements OnInit {
 @Component({
   selector: 'event-report-dialog',
   template: `
-      
       <h3 id="title"> Report for event: {{this.data}}</h3>
       <app-event-report [eventId]="this.data" ></app-event-report>
       <button mat-button (click)="onClickExit()">

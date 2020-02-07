@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { MapsAPILoader, MouseEvent } from '@agm/core';
 import PlaceResult = google.maps.places.PlaceResult;
 import { Appearance, Location } from '@angular-material-extensions/google-maps-autocomplete';
 import { Title } from '@angular/platform-browser';

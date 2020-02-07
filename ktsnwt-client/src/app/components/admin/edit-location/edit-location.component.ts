@@ -78,8 +78,8 @@ export class EditLocationComponent implements OnInit {
         name: this.inputName.nativeElement.value
       };
       this.locationService.editLocation(locationData).subscribe(
-        (data) => { 
-          this.location = data; 
+        (data) => {
+          this.location = data;
           this.toastr.success('Location has been changed');
         },
         (error) => {
@@ -101,7 +101,7 @@ export class EditLocationComponent implements OnInit {
       };
       this.locationService.addHall(hallData).subscribe(
         (data) => {
-          let sectorData = {
+          const sectorData = {
             name: 'left',
             hallId: data.id,
             numColumns: 0,
@@ -165,8 +165,6 @@ export class EditLocationComponent implements OnInit {
         default:
       }
     });
-
-    console.log(this.addressObject);
   }
 
   onLocationSelected(location: Location) {

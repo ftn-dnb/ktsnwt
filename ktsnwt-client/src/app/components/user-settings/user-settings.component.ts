@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { LOGIN_PATH } from './../../config/router-paths';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -22,10 +22,10 @@ export class UserSettingsComponent implements OnInit {
   passwordForm: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private userService: UserService, 
+              private userService: UserService,
               private toastr: ToastrService,
               private router: Router,
-              private authService: AuthService) { 
+              private authService: AuthService) {
 
     this.createBasicInfoForm();
     this.createPasswordForm();
@@ -37,16 +37,16 @@ export class UserSettingsComponent implements OnInit {
 
   private createBasicInfoForm(): void {
     this.basicInfoForm = this.fb.group({
-      'firstName': ['', Validators.required],
-      'lastName': ['', Validators.required],
-      'email': ['', [Validators.required, Validators.email]]
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
   private createPasswordForm(): void {
     this.passwordForm = this.fb.group({
-      'oldPassword': ['', Validators.required],
-      'newPassword': ['', Validators.required]
+      oldPassword: ['', Validators.required],
+      newPassword: ['', Validators.required]
     });
   }
 
@@ -64,7 +64,7 @@ export class UserSettingsComponent implements OnInit {
       this.addValuesToFormGroups();
     }, error => {
       this.toastr.error('There was an error while getting your profile data');
-    })
+    });
   }
 
   private addValuesToFormGroups(): void {
@@ -77,9 +77,9 @@ export class UserSettingsComponent implements OnInit {
 
   onClickSaveEdit(): void {
     const data: UserEditInfo = {
-      firstName: this.basicInfoForm.controls['firstName'].value,
-      lastName: this.basicInfoForm.controls['lastName'].value,
-      email: this.basicInfoForm.controls['email'].value,
+      firstName: this.basicInfoForm.controls.firstName.value,
+      lastName: this.basicInfoForm.controls.lastName.value,
+      email: this.basicInfoForm.controls.email.value,
     };
 
     this.userService.editMyProfile(data).subscribe(data => {
@@ -95,9 +95,9 @@ export class UserSettingsComponent implements OnInit {
       return;
     }
 
-    const oldPassword = this.passwordForm.controls['oldPassword'].value;
-    const newPassword = this.passwordForm.controls['newPassword'].value;
-    
+    const oldPassword = this.passwordForm.controls.oldPassword.value;
+    const newPassword = this.passwordForm.controls.newPassword.value;
+
     const passwords: PasswordChange = {
       oldPassword: oldPassword,
       newPassword: newPassword

@@ -6,10 +6,8 @@ import { TicketService } from 'src/app/services/ticket.service';
 import { ToastrService } from 'ngx-toastr';
 import { D3SeatingChart, ShowBehavior } from 'd3-seating-chart';
 import * as d3 from 'd3';
-import { ControlContainer } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { ReservationDialogComponent } from './dialog/reservation-dialog/reservation-dialog.component';
-import { count } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reservations',
@@ -59,7 +57,7 @@ export class ReservationsComponent implements OnInit {
       this.toastrService.error('There is no available seats.');
       return;
     }
-    let dialogRef = this.dialog.open(ReservationDialogComponent, {data: {eventInfo: this.event, remaining: ticketsRemaining}});
+    const dialogRef = this.dialog.open(ReservationDialogComponent, {data: {eventInfo: this.event, remaining: ticketsRemaining}});
     dialogRef.afterClosed().subscribe(result => {
       this.onTopViewClick();
       if (result) {
@@ -145,7 +143,6 @@ export class ReservationsComponent implements OnInit {
   }
 
   updateSeatsData() {
-    let seatingData;
     let seatsSector = {};
     const ticketData = [];
     this.reservedTickets.forEach(ticket => {

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -33,31 +33,31 @@ export class RegistrationComponent implements OnInit {
 
   private createForm(): void {
     this.registrationForm = this.fb.group({
-      'firstName': ['', Validators.required],
-      'lastName': ['', Validators.required],
-      'username': ['', Validators.required],
-      'email': ['', [Validators.required, Validators.email]],
-      'password': ['', Validators.required],
-      'repeatPassword': ['', Validators.required]
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      repeatPassword: ['', Validators.required]
     });
   }
 
   onRegisterSubmit(): void {
-    const password = this.registrationForm.controls['password'].value;
-    const repeatPassword = this.registrationForm.controls['repeatPassword'].value;
+    const password = this.registrationForm.controls.password.value;
+    const repeatPassword = this.registrationForm.controls.repeatPassword.value;
 
     if (password !== repeatPassword) {
       this.toastr.warning('Passwords don\'t match', 'Warning');
       return;
     }
-    
+
     const userInfo: UserRegistrationData = {
-      username: this.registrationForm.controls['username'].value,
+      username: this.registrationForm.controls.username.value,
       password: password,
       repeatPassword: repeatPassword,
-      email: this.registrationForm.controls['email'].value,
-      firstName: this.registrationForm.controls['firstName'].value,
-      lastName: this.registrationForm.controls['lastName'].value,
+      email: this.registrationForm.controls.email.value,
+      firstName: this.registrationForm.controls.firstName.value,
+      lastName: this.registrationForm.controls.lastName.value,
     };
 
     this.authService.addNewUser(userInfo).subscribe(data => {
