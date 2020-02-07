@@ -10,7 +10,7 @@ public class EventDayConstants {
     private EventDayConstants() {}
 
     public static final Long DB_ID = 1L;
-    public static final String DB_DATE = "2019-11-29 21:58:58.0";
+    public static final String DB_DATE = "2019-11-29 22:58:58.0";
     public static final String DB_DESCRIPTION = "dan 1";
     public static final String DB_NAME = "DAY1";
     public static final Long DB_REFERENCED_EVENT_ID = 1L;

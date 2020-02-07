@@ -30,7 +30,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Address findByGoogleApiId(String googleApiId) {
         Address address = addressRepository.findByGoogleApiId(googleApiId);
-        if (address == null) {
+        if (address.getCity() == null) {
             throw new ResourceNotFoundException(
                     "Address with googleId: '" + googleApiId + "' doesn't exist."
             );

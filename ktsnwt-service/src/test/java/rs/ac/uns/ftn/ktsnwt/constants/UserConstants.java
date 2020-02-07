@@ -15,6 +15,8 @@ public class UserConstants {
 
     public static final String DB_USERNAME_NON_EXIST = "jack.doe";
 
+    public static final String DB_CHANGED_PASSWORD = "newPass";
+
 
     //admin other info
     public static final String DB_EMAIL = "jane@doe.com";

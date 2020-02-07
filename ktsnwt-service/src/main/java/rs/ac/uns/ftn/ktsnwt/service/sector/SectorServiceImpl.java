@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import rs.ac.uns.ftn.ktsnwt.dto.SectorDTO;
+import rs.ac.uns.ftn.ktsnwt.exception.BadAttributeValueException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceAlreadyExistsException;
 import rs.ac.uns.ftn.ktsnwt.exception.ResourceNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.Hall;
@@ -74,6 +75,10 @@ public class SectorServiceImpl implements SectorService {
             );
         }
 
+
+
+
+
         //if (sectorRepository.findByName(sectorDTO.getName(), sectorDTO.getHallId()) != null) {
         //    throw new ResourceAlreadyExistsException("" +
         //            "Sector with that name already exists in hall with that id."
@@ -81,6 +86,10 @@ public class SectorServiceImpl implements SectorService {
         //}
 
         Sector sector = sectorRepository.findById(sectorDTO.getId()).get();
+
+        if (sector.getName() == null) {
+            throw new BadAttributeValueException("");
+        }
 
         sector.setName(sectorDTO.getName());
         sector.setCapacity(sectorDTO.getCapacity());

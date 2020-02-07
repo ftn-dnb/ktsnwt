@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.controller;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -159,6 +160,7 @@ public class TicketControllerIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void givenValidPageAndSizeParameters_returnUsersTickets() {
         ResponseEntity<TicketDTO[]> response = restTemplate.exchange(
                 "/api/tickets?page=0&size=5", HttpMethod.GET, createHttpEntity(), TicketDTO[].class
@@ -167,6 +169,7 @@ public class TicketControllerIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void givenValidTicketDTO_reserveATicket() {
         int sizeBeforeReservation = ticketsService.findAll(0, 5).size();
 
@@ -187,6 +190,7 @@ public class TicketControllerIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void givenValidTicketId_cancelTicket() {
         int sizeBeforeCancellation = ticketsService.findAll(0, 5).size();
 
