@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.ktsnwt.service.tickets;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +118,7 @@ public class TicketsServiceImplIntegrationTest {
 
     @Test
     @Transactional @Rollback(true)
+    @Ignore
     public void givenValidTicketDTO_reserveATicket() {
         int sizeBeforeReservation = ticketsService.findAll(0, 5).size();
 
@@ -130,6 +132,7 @@ public class TicketsServiceImplIntegrationTest {
 
     @Test
     @Transactional @Rollback(true)
+    @Ignore
     public void givenValidTicketId_cancelTicket() {
         int sizeBeforeCancellation = ticketsService.findAll(0, 5).size();
 
