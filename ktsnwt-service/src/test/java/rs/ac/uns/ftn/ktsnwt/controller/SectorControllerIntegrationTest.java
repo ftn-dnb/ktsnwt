@@ -1,9 +1,6 @@
 package rs.ac.uns.ftn.ktsnwt.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,13 +24,10 @@ import rs.ac.uns.ftn.ktsnwt.repository.HallRepository;
 import rs.ac.uns.ftn.ktsnwt.repository.SectorRepository;
 import rs.ac.uns.ftn.ktsnwt.security.auth.JwtAuthenticationRequest;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -52,14 +46,16 @@ public class SectorControllerIntegrationTest {
     private String accessToken;
 
 
-
-
     @Before
     public void login() {
         JwtAuthenticationRequest loginDto = new JwtAuthenticationRequest(
                 UserConstants.DB_USERNAME, UserConstants.DB_PASSWORD
         );
-        ResponseEntity<UserDTO> response = restTemplate.postForEntity("http://localhost:8080/auth/login", loginDto, UserDTO.class);
+
+//        ResponseEntity<UserDTO> response = restTemplate.postForEntity("/auth/login", loginDto, UserDTO.class);
+        HttpEntity<JwtAuthenticationRequest> loginEntity = new HttpEntity<>(loginDto);
+        ResponseEntity<UserDTO> response = restTemplate.exchange("/auth/login", HttpMethod.POST, loginEntity ,UserDTO.class);
+
         UserDTO user = response.getBody();
         accessToken = user.getToken().getAccessToken();
     }
@@ -74,7 +70,7 @@ public class SectorControllerIntegrationTest {
     @Test
     public void whenValidGetSectorById_thenReturnSector(){
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors/" + SectorConstants.EXISTING_DB_ID, HttpMethod.GET, createHttpEntity(), SectorDTO.class);
+                "/api/sectors/" + SectorConstants.EXISTING_DB_ID, HttpMethod.GET, createHttpEntity(), SectorDTO.class);
         SectorDTO s = response.getBody();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -86,7 +82,7 @@ public class SectorControllerIntegrationTest {
     @Test
     public void whenInvalidGetSectorById_thenReturnNotFound(){
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors/" + SectorConstants.NOT_EXISTING_DB_ID, HttpMethod.GET, createHttpEntity(), SectorDTO.class);
+                "/api/sectors/" + SectorConstants.NOT_EXISTING_DB_ID, HttpMethod.GET, createHttpEntity(), SectorDTO.class);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
@@ -96,7 +92,7 @@ public class SectorControllerIntegrationTest {
         List<SectorDTO> sectors = new ArrayList<>();
 
         ResponseEntity<List<SectorDTO>> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors/all/" + SectorConstants.EXISTING_DB_HALL_ID + "?page=" + SectorConstants.EXISTING_PAGE + "&size=" + SectorConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), new ParameterizedTypeReference<List<SectorDTO>>() {
+                "/api/sectors/all/" + SectorConstants.EXISTING_DB_HALL_ID + "?page=" + SectorConstants.EXISTING_PAGE + "&size=" + SectorConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), new ParameterizedTypeReference<List<SectorDTO>>() {
                 });
         assertNotNull(response.getBody());
         sectors = response.getBody();
@@ -126,7 +122,7 @@ public class SectorControllerIntegrationTest {
         List<SectorDTO> sectors = new ArrayList<>();
 
         ResponseEntity<List<SectorDTO>> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors/all/" + SectorConstants.NOT_EXISTING_HALL_ID + "?page=" + SectorConstants.EXISTING_PAGE + "&size=" + SectorConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), new ParameterizedTypeReference<List<SectorDTO>>() {
+                "/api/sectors/all/" + SectorConstants.NOT_EXISTING_HALL_ID + "?page=" + SectorConstants.EXISTING_PAGE + "&size=" + SectorConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), new ParameterizedTypeReference<List<SectorDTO>>() {
                 });
         assertNotNull(response.getBody());
         sectors = response.getBody();
@@ -139,14 +135,14 @@ public class SectorControllerIntegrationTest {
     @Test
     public void whenGetAllSectorsOnInvalidPage(){
         ResponseEntity<Object> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors/all/" + SectorConstants.EXISTING_DB_HALL_ID + "?page=" + SectorConstants.NOT_VALID_PAGE + "&size=" + SectorConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(),Object.class);
+                "/api/sectors/all/" + SectorConstants.EXISTING_DB_HALL_ID + "?page=" + SectorConstants.NOT_VALID_PAGE + "&size=" + SectorConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(),Object.class);
         assertNotEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
     @Test
     public void whenGetAllSectorsOnNotExistingPage(){
         ResponseEntity<List<SectorDTO>> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors/all/" + SectorConstants.EXISTING_DB_HALL_ID + "?page=" + SectorConstants.NOT_EXISTING_PAGE + "&size=" + SectorConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), new ParameterizedTypeReference<List<SectorDTO>>() {
+                "/api/sectors/all/" + SectorConstants.EXISTING_DB_HALL_ID + "?page=" + SectorConstants.NOT_EXISTING_PAGE + "&size=" + SectorConstants.VALID_SIZE, HttpMethod.GET, createHttpEntity(), new ParameterizedTypeReference<List<SectorDTO>>() {
                 });
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -157,7 +153,7 @@ public class SectorControllerIntegrationTest {
     @Test
     public void whenGetAllSectorsWithInvalidSize(){
         ResponseEntity<Object> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors/all/" + SectorConstants.EXISTING_DB_HALL_ID + "?page=" + SectorConstants.EXISTING_PAGE + "&size=" + SectorConstants.NOT_VALID_SIZE, HttpMethod.GET, createHttpEntity(),Object.class);
+                "/api/sectors/all/" + SectorConstants.EXISTING_DB_HALL_ID + "?page=" + SectorConstants.EXISTING_PAGE + "&size=" + SectorConstants.NOT_VALID_SIZE, HttpMethod.GET, createHttpEntity(),Object.class);
         assertNotEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 
     }
@@ -173,7 +169,7 @@ public class SectorControllerIntegrationTest {
         int oldSize = sectorRepository.findAll().size();
 
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors", HttpMethod.POST, request,SectorDTO.class);
+                "/api/sectors", HttpMethod.POST, request,SectorDTO.class);
 
         //make sure there's no problem with http request
         SectorDTO s = response.getBody();
@@ -227,7 +223,7 @@ public class SectorControllerIntegrationTest {
         List<Sector> oldList = sectorRepository.findAll();
 
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors", HttpMethod.POST, request,SectorDTO.class);
+                "/api/sectors", HttpMethod.POST, request,SectorDTO.class);
 
         deleteRedundantSector(oldList);
 
@@ -242,7 +238,7 @@ public class SectorControllerIntegrationTest {
         headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<SectorDTO> request = new HttpEntity<>(existSector, headers);
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                    "http://localhost:8080/api/sectors", HttpMethod.POST, request,SectorDTO.class);
+                    "/api/sectors", HttpMethod.POST, request,SectorDTO.class);
 
         deleteRedundantSector(oldList);
 
@@ -260,7 +256,7 @@ public class SectorControllerIntegrationTest {
 
 
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors", HttpMethod.POST, request,SectorDTO.class);
+                "/api/sectors", HttpMethod.POST, request,SectorDTO.class);
 
 
         deleteRedundantSector(oldList);
@@ -278,7 +274,7 @@ public class SectorControllerIntegrationTest {
 
 
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors", HttpMethod.POST, request,SectorDTO.class);
+                "/api/sectors", HttpMethod.POST, request,SectorDTO.class);
 
         deleteRedundantSector(oldList);
 
@@ -295,7 +291,7 @@ public class SectorControllerIntegrationTest {
 
 
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors", HttpMethod.POST, request,SectorDTO.class);
+                "/api/sectors", HttpMethod.POST, request,SectorDTO.class);
 
         deleteRedundantSector(oldList);
 
@@ -311,7 +307,7 @@ public class SectorControllerIntegrationTest {
         List<Sector> oldList = sectorRepository.findAll();
 
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors", HttpMethod.POST, request,SectorDTO.class);
+                "/api/sectors", HttpMethod.POST, request,SectorDTO.class);
 
         deleteRedundantSector(oldList);
 
@@ -329,7 +325,7 @@ public class SectorControllerIntegrationTest {
         List<Sector> oldList = sectorRepository.findAll();
 
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors", HttpMethod.POST, request,SectorDTO.class);
+                "/api/sectors", HttpMethod.POST, request,SectorDTO.class);
 
         deleteRedundantSector(oldList);
 
@@ -376,7 +372,7 @@ public class SectorControllerIntegrationTest {
         HttpEntity<SectorDTO> request = new HttpEntity<>(beforeEditing, headers);
 
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors", HttpMethod.PUT, request,SectorDTO.class);
+                "/api/sectors", HttpMethod.PUT, request,SectorDTO.class);
 
         SectorDTO s = response.getBody();
 
@@ -530,7 +526,7 @@ public class SectorControllerIntegrationTest {
         HttpEntity<SectorDTO> request = new HttpEntity<>(beforeEditing, headers);
 
         ResponseEntity<SectorDTO> response = restTemplate.exchange(
-                "http://localhost:8080/api/sectors", HttpMethod.PUT, request,SectorDTO.class);
+                "/api/sectors", HttpMethod.PUT, request,SectorDTO.class);
 
         List<Sector> newList = sectorRepository.findAll();
         Optional o = sectorRepository.findById(SectorConstants.EXISTING_DB_ID);

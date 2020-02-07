@@ -17,8 +17,6 @@ public class HallRepositoryIntegrationTest {
     @Autowired
     HallRepository hallRepository;
 
-
-
     @Test
     public void whenFindByExistingName_thenReturnHall(){
         Hall h = hallRepository.findByName(HallConstants.EXISTING_DB_NAME, HallConstants.EXISTING_DB_LOCATION_ID);
