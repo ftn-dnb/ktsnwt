@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SearchEvent } from 'src/app/models/request/search-event';
 import { formatDate } from '@angular/common';
 import { LocationService } from 'src/app/services/location.service';
+import { Event } from 'src/app/models/response/event';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ import { LocationService } from 'src/app/services/location.service';
 })
 export class HomeComponent implements OnInit {
 
-  events: any[] = [];
+  events: Event[] = [];
   locations: Location[];
   private pageNum: number = 0;
   private pageSize: number = 10;
