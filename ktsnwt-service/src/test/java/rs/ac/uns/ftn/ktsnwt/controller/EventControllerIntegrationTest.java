@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.*;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -303,5 +305,76 @@ public class EventControllerIntegrationTest {
         assertEquals(EventConstants.DB_1_NAME, responseBody.getName());
         assertNotNull(responseBody.getOneDay().getPricing().get(0).getId());
         assertEquals(1000, responseBody.getOneDay().getPricing().get(0).getPrice(), 0.1);
+    }
+
+    @Test
+    public void whenFilterEventsReturnNone() {
+        SearchEventDTO filter = new SearchEventDTO();
+        filter.setEndDate("20-01-2020");
+        filter.setLocation("Lokacija");
+        filter.setName("Ime");
+        filter.setType(EventType.CONCERT);
+
+        final int page = 0;
+        final int size = 5;
+
+        ParameterizedTypeReference<RestResponsePage<EventDTO>> responseType = new ParameterizedTypeReference<RestResponsePage<EventDTO>>() {};
+        HttpEntity<SearchEventDTO> httpEntity = new HttpEntity<>(filter);
+
+        ResponseEntity<RestResponsePage<EventDTO>> response = restTemplate.exchange(
+                "/api/event/public/search?page=" + page + "&size=" + size, HttpMethod.POST, httpEntity, responseType);
+
+        List<EventDTO> events = response.getBody().getContent();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(events.isEmpty());
+    }
+
+    @Test
+    public void whenFilterEventsReturnSpecificEvent() {
+        SearchEventDTO filter = new SearchEventDTO();
+        filter.setEndDate("20-01-2020");
+        filter.setLocation("SPENS");
+        filter.setName("Koncert");
+        filter.setType(EventType.CONCERT);
+
+        final int page = 0;
+        final int size = 5;
+
+        ParameterizedTypeReference<RestResponsePage<EventDTO>> responseType = new ParameterizedTypeReference<RestResponsePage<EventDTO>>() {};
+        HttpEntity<SearchEventDTO> httpEntity = new HttpEntity<>(filter);
+
+        ResponseEntity<RestResponsePage<EventDTO>> response = restTemplate.exchange(
+                "/api/event/public/search?page=" + page + "&size=" + size, HttpMethod.POST, httpEntity, responseType);
+
+        List<EventDTO> events = response.getBody().getContent();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(1, events.size());
+        assertEquals(Long.valueOf(1L), events.get(0).getId());
+        assertEquals("Koncert", events.get(0).getName());
+    }
+
+    @Test
+    public void whenFilterEventsJustDateReturnAll() {
+        SearchEventDTO filter = new SearchEventDTO();
+        filter.setEndDate("20-01-2020");
+
+        final int page = 0;
+        final int size = 5;
+
+        ParameterizedTypeReference<RestResponsePage<EventDTO>> responseType = new ParameterizedTypeReference<RestResponsePage<EventDTO>>() {};
+        HttpEntity<SearchEventDTO> httpEntity = new HttpEntity<>(filter);
+
+        ResponseEntity<RestResponsePage<EventDTO>> response = restTemplate.exchange(
+                "/api/event/public/search?page=" + page + "&size=" + size, HttpMethod.POST, httpEntity, responseType);
+
+        List<EventDTO> events = response.getBody().getContent();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(2, events.size());
     }
 }
