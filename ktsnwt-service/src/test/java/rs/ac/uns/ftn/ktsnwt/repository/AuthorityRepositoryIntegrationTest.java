@@ -13,14 +13,15 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AuthorityRepositoryIntegrationTest {
 
-    @Autowired AuthorityRepository authorityRepository;
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     @Test
     public void findByNameUser(){
         Long id = 1l;
         String name = "ROLE_USER";
 
-        Authority a = authorityRepository.findByName("name");
+        Authority a = authorityRepository.findByName(name);
         assertEquals(id, a.getId());
         assertEquals(name, a.getName());
     }
