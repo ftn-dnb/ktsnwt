@@ -15,31 +15,31 @@ public class ReservationPage {
         this.driver = driver;
     }
 
-    @FindBy(css = "#x > g > rect:nth-child(4)")
+    @FindBy(css = "#x > g > rect#left_sector")
     private WebElement leftSector;
 
-    @FindBy(css = "#x > g > rect:nth-child(2)")
+    @FindBy(css = "#x > g > rect#right_sector")
     private WebElement rightSector;
 
-    @FindBy(css = "#x > g > g.left.focused > rect:nth-child(1)")
+    @FindBy(css = "#x > g > g.left.focused > rect[row='1'][column='1']")
     private WebElement reservedSeat;
 
-    @FindBy(css = "#x > g > g.left.focused > rect:nth-child(2)")
+    @FindBy(css = "#x > g > g.left.focused > rect[row='1'][column='2']")
     private WebElement unreservedSeat;
 
-    @FindBy(css = "#x > g > g.left.focused > rect:nth-child(3)")
+    @FindBy(css = "#x > g > g.left.focused > rect[row='1'][column='3']")
     private WebElement unreservedSeat1;
 
-    @FindBy(css = "#x > g > g.left.focused > rect:nth-child(4)")
+    @FindBy(css = "#x > g > g.left.focused > rect[row='1'][column='4']")
     private WebElement unreservedSeat2;
 
-    @FindBy(css = "body > app-root > app-reservations > button:nth-child(3)")
+    @FindBy(css = "#reserveButton")
     private WebElement reserveButton;
 
-    @FindBy(css = "#mat-dialog-0 > app-reservation-dialog > div.mat-dialog-actions > button:nth-child(2)")
+    @FindBy(css = "#reserveButtonFloor")
     private WebElement reserveFloorButton;
 
-    @FindBy(css = "#mat-input-2")
+    @FindBy(css = "#inputFloorField")
     private WebElement numSeatsInputField;
 
     @FindBy(css = "div.toast-message")
@@ -60,17 +60,17 @@ public class ReservationPage {
 
     public WebElement getReservedSeat() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#x > g > g.left.focused > rect:nth-child(1)")));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#x > g > g.left.focused > rect[row='1'][column='1']")));
     }
 
     public WebElement getUnreservedSeat() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#x > g > g.left.focused > rect:nth-child(2)")));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#x > g > g.left.focused > rect[row='1'][column='2']")));
     }
 
     public WebElement getReserveFloorButton() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#mat-dialog-0 > app-reservation-dialog > div.mat-dialog-actions > button:nth-child(2)")));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#reserveButtonFloor")));
     }
 
     public WebElement getUnreservedSeat1() {
@@ -112,7 +112,7 @@ public class ReservationPage {
 
     public WebElement getLeftSector() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#x > g > rect:nth-child(4)")));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#x > g > rect#left_sector")));
     }
 
     public void ensureFloorFormVisible() {

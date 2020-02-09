@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.ktsnwt.e2e;
 
-import jdk.jfr.Timespan;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;

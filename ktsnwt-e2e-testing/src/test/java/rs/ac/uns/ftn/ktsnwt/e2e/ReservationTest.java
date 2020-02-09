@@ -129,7 +129,8 @@ public class ReservationTest {
         reservationPage.ensureRightSectorIsClickable();
         reservationPage.getRightSector().click();
         reservationPage.ensureFloorFormVisible();
-        reservationPage.getNumSeatsInputField().sendKeys("3");
+        reservationPage.getNumSeatsInputField().sendKeys("4");
+        reservationPage.ensureFloorFormVisible();
         reservationPage.getReserveFloorButton().click();
         reservationPage.ensureErrorMessageVisible();
     }

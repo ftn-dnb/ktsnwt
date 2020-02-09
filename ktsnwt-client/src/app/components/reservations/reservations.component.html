@@ -1,9 +1,9 @@
 <svg id="x" width="640" height="480" xmlns="http://www.w3.org/2000/svg">
   <g board>
     <rect stage height="70.38871" width="126.153836" y="220.825647" x="220.459768"/>
-    <rect zoom-control="right" height="120.175489" width="90.875103" y="170.119891" x="350.511515"  (click)="onSectorClick($event)" />
-    <rect zoom-control="main" height="110.687786" width="126.854046" y="105.769235" x="220.459768"  (click)="onSectorClick($event)"/>
-    <rect zoom-control="left" height="120.962273" width="90.448662" y="170.119891" x="125.930951"  (click)="onSectorClick($event)"/>
+    <rect id="right_sector" zoom-control="right" height="120.175489" width="90.875103" y="170.119891" x="350.511515"  (click)="onSectorClick($event)" />
+    <rect id="main_sector" zoom-control="main" height="110.687786" width="126.854046" y="105.769235" x="220.459768"  (click)="onSectorClick($event)"/>
+    <rect id="left_sector" zoom-control="left" height="120.962273" width="90.448662" y="170.119891" x="125.930951"  (click)="onSectorClick($event)"/>
     <g class="left" seating-area zoom-target="left" [appSeatingRes]='seatsData'>
     <!--
      <rect selected seat height="14.560438" width="13" y="206.529233" x="158.181482"/>
@@ -36,7 +36,7 @@
   <span> Top View</span>
 </button>
 
-<button mat-raised-button color="primary" class="btnTop" (click)="onReserveTicket()">
+<button id="reserveButton" mat-raised-button color="primary" class="btnTop" (click)="onReserveTicket()">
   <mat-icon class="icon">event_available</mat-icon>
   <span> Make reservation</span>
 </button>

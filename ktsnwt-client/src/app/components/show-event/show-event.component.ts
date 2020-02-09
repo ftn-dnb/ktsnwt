@@ -35,6 +35,7 @@ export class ShowEventComponent implements OnInit {
     this.routeSub = this.route.params.subscribe( params => {
       this.getEventData(params.id as number);
     });
+    this.selectedDayOrdinal = 0;
   }
 
   private getEventData(id: number): void {
@@ -51,6 +52,8 @@ export class ShowEventComponent implements OnInit {
 
   onClickReserve() {
     let eventDayId;
+    console.log(this.eventData);
+    console.log(eventDayId);
     eventDayId = this.eventData.days.filter(item => item)[this.selectedDayOrdinal];
     this.router.navigate([RESERVE_TICKET, this.eventData.id, eventDayId.id]);
   }

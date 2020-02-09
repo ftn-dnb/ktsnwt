@@ -20,10 +20,10 @@ INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id)
 INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id) VALUES (3, 10, 'right', 5, 2, 0, 1);
 INSERT INTO `sectors` (id, capacity, name, num_columns, num_rows, type, hall_id) VALUES (4, 6, 'right', 2, 3, 0, 2);
 
-INSERT INTO `events` (id, description, end_date, image_path, name, purchase_limit, start_date, tickets_per_user, type, hall_id) VALUES (1, 'Ovo je event', '2020-02-12 00:00:00', 'path', 'Koncert', 2, '2020-02-11 00:00:00', 2, 1, 1);
+INSERT INTO `events` (id, description, end_date, image_path, name, purchase_limit, start_date, tickets_per_user, type, hall_id) VALUES (1, 'Ovo je event', '2020-02-14 00:00:00', 'path', 'Koncert', 2, '2020-02-13 00:00:00', 2, 1, 1);
 
-INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (1, '2020-02-11 00:00:00', 'dan 1', 'DAY1', 0, 1);
-INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (2, '2020-02-12 00:00:00', 'dan 2', 'DAY2', 0, 1);
+INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (1, '2020-02-13 00:00:00', 'dan 1', 'DAY1', 0, 1);
+INSERT INTO `event_days` (id, date, description, name, status, event_id) VALUES (2, '2020-02-14 00:00:00', 'dan 2', 'DAY2', 0, 1);
 
 INSERT INTO `pricings` (id, price, event_day_id, sector_id) VALUES (1, 199, 1, 1);
 INSERT INTO `pricings` (id, price, event_day_id, sector_id) VALUES (2, 399, 1, 2);
