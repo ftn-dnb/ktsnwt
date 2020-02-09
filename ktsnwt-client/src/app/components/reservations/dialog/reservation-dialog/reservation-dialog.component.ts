@@ -34,7 +34,11 @@ export class ReservationDialogComponent implements OnInit {
       return;
     }
     if (Number(this.data.ticketNumber) === 0) {
-      this.toastr.error('Cant enter 0 tickets.');
+      this.toastr.error('Can not enter 0 tickets.');
+      return;
+    }
+    if (Number(this.data.ticketNumber) > Number(this.data.remaining)) {
+      this.toastr.error('Can not reserve more tickets than available.');
       return;
     }
     this.dialogRef.close(this.data.ticketNumber);
