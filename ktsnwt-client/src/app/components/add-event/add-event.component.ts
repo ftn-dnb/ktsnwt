@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { EventInfo } from 'src/app/models/request/event-info';
 import { EventService } from 'src/app/services/event.service';
 import { formatDate } from '@angular/common';
-import { EVENTS_PATH } from 'src/app/config/router-paths';
+import { EVENTS_PATH } from './../../../../src/app/config/router-paths';
 
 
 @Component({
