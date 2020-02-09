@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PricingConstants {
 
-    public static final int DB_NUM_PRICINGS = 2;
+    public static final int DB_NUM_PRICINGS = 3;
 
     // Existing elements
     public static final Long DB_ID_1 = 1L;

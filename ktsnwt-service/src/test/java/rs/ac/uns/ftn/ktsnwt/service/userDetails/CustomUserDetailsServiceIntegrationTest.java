@@ -72,6 +72,8 @@ public class CustomUserDetailsServiceIntegrationTest {
         System.out.println(loggedUserRepoChanged.getPassword());
 
         assertNotEquals(loggedUserRepo.getPassword(), loggedUserRepoChanged.getPassword());
+
+        customUserDetailsService.changePassword(newPassword, UserConstants.DB_PASSWORD);
     }
 
     @Test

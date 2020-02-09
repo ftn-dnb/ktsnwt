@@ -147,20 +147,57 @@
         <div class="row">
             <div class="input-field">
                 <mat-form-field appearance="outline">
-                    <input id="left" matInput type="number" placeholder="left" formControlName="left"/>
+                    <input id="left-sector-input" matInput type="number" placeholder="left" formControlName="left" min="1"/>
                 </mat-form-field>
+
+
+                <small id="left-sector-error-msg-req" class="text-danger"
+                *ngIf="addEventForm.controls.left.touched && addEventForm.controls.left.errors?.required">
+                Price for left sector is required
+                </small>
+
+                <small id="left-sector-error-msg-negative" class="text-danger"
+                *ngIf="addEventForm.controls.left.touched && addEventForm.controls.left.errors?.min">
+                Price must be greater than 0
+                </small>
+
             </div>
 
             <div class="input-field">
                 <mat-form-field appearance="outline">
-                    <input id="center" matInput type="number" placeholder="center" formControlName="center"/>
+
+                    <input id="center-sector-input" matInput type="number" placeholder="center" formControlName="center" min="1"/>
+
                 </mat-form-field>
+
+                <small id="center-sector-error-msg-req" class="text-danger"
+                *ngIf="addEventForm.controls.center.touched && addEventForm.controls.center.errors?.required">
+                Price for center sector is required
+                </small>
+
+                <small id="center-sector-error-msg-negative" class="text-danger"
+                *ngIf="addEventForm.controls.center.touched && addEventForm.controls.center.errors?.min">
+                Price must be greater than 0
+                </small>
             </div>
 
             <div class="input-field">
                 <mat-form-field appearance="outline">
-                    <input id="right" matInput type="number" placeholder="right" formControlName="right"/>
+
+                    <input id="right-sector-input" matInput type="number" placeholder="right" formControlName="right" min="1"/>
+
                 </mat-form-field>
+
+                
+                <small id="left-sector-error-msg-req" class="text-danger"
+                *ngIf="addEventForm.controls.right.touched && addEventForm.controls.right.errors?.required">
+                Price for right sector is required
+                </small>
+
+                <small id="right-sector-error-msg-negative" class="text-danger"
+                *ngIf="addEventForm.controls.right.touched && addEventForm.controls.right.errors?.min">
+                Price must be greater than 0
+                </small>
             </div>
         </div>
 

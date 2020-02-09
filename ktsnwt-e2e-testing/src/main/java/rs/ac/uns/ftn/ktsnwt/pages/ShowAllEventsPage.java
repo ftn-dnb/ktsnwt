@@ -21,13 +21,14 @@ public class ShowAllEventsPage {
     @FindBy(css = ".table")
     private WebElement table;
 
-
     @FindBy(css = ".previousBtn")
     private WebElement previousButton;
 
     @FindBy(css = ".nextBtn")
     private WebElement nextButton;
 
+    @FindBy(css = ".btnEdit")
+    private WebElement editBtn;
 
     public WebElement getAddButton() {
         return addButton;
@@ -37,10 +38,16 @@ public class ShowAllEventsPage {
         return table;
     }
 
+    public WebElement getEditBtn() {return  editBtn;};
+
     public void ensureAddBtnIsDisplayed(){
         new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(addButton));
     }
 
+
+    public void ensureEditBtnIsDisplayed(){
+        new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(editBtn));
+    }
 
     public void ensureTableIsDisplayed(){
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(table));

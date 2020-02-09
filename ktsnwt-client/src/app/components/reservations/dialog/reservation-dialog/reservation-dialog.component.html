@@ -2,10 +2,10 @@
 <div mat-dialog-content>
   <p>Choose number of tickets</p>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.ticketNumber">
+    <input id="inputFloorField" matInput [(ngModel)]="data.ticketNumber">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-raised-button (click)="onNoClick()">Cancel</button>
-  <button mat-button mat-raised-button (click)="onReserve()" cdkFocusInitial>Reserve</button>
+  <button id="reserveButtonFloor" mat-button mat-raised-button (click)="onReserve()" cdkFocusInitial>Reserve</button>
 </div>

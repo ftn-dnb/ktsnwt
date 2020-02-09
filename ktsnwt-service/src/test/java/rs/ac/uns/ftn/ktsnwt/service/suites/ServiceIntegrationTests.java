@@ -17,7 +17,6 @@ import rs.ac.uns.ftn.ktsnwt.service.userDetails.CustomUserDetailsServiceIntegrat
 import rs.ac.uns.ftn.ktsnwt.service.user.UserServiceImplIntegrationTest;
 
 
-
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         SectorServiceImplIntegrationTest.class,
@@ -29,11 +28,8 @@ import rs.ac.uns.ftn.ktsnwt.service.user.UserServiceImplIntegrationTest;
         LocationServiceImplIntegrationTest.class,
         EventServiceImplIntegrationTest.class,
         MailSenderServiceIntegrationTest.class,
-
         CustomUserDetailsServiceIntegrationTest.class,
-
         UserServiceImplIntegrationTest.class,
-
 })
 public class ServiceIntegrationTests {
 }

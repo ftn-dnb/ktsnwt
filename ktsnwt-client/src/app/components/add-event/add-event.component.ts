@@ -8,7 +8,11 @@ import { Observable } from 'rxjs';
 import { EventInfo } from 'src/app/models/request/event-info';
 import { EventService } from 'src/app/services/event.service';
 import { formatDate } from '@angular/common';
+
 import { EVENTS_PATH } from './../../../../src/app/config/router-paths';
+import { Hall } from 'src/app/models/response/hall';
+import { Location } from 'src/app/models/response/location';
+
 
 
 @Component({
@@ -20,8 +24,8 @@ export class AddEventComponent implements OnInit {
 
   addEventForm: FormGroup;
   locationName: string;
-  location: any;
-  halls: any[] = [];
+  location: Location;
+  halls: Hall[] = [];
   locationNames: string[] = [];
   filteredNames: Observable<string[]>;
   nameControl = new FormControl();
@@ -51,9 +55,9 @@ export class AddEventComponent implements OnInit {
       type: ['', Validators.required],
       locationName: [],
       hallId: ['', Validators.required],
-      left: ['', ],
-      center: ['', ],
-      right: ['', ],
+      left: ['', [Validators.required, Validators.min(1)]],
+      center: ['', [Validators.required, Validators.min(1)]],
+      right: ['', [Validators.required, Validators.min(1)]],
     }, { validator: [this.dateValidateToday, this.endDateBeforeStartDate]});
   }
 
@@ -101,6 +105,7 @@ export class AddEventComponent implements OnInit {
       this.halls = data.halls;
     }, error => {
       this.halls = [];
+      this.addEventForm.controls.hallId.reset();
       // this.toastr.error('No location with that name');
     });
   }

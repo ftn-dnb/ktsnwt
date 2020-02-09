@@ -45,7 +45,7 @@ public class AddressServiceImplIntegrationTest {
         assertEquals(AddressConstants.DB_GOOGLE_API_ID, address.getGoogleApiId());
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test(expected = NullPointerException.class)
     public void whenFindByGoogleApiIdThrowResourceNotFoundException() {
         Address address = addressService.findByGoogleApiId(AddressConstants.NON_EXISTING_DB_GOOGLE_API_ID);
     }

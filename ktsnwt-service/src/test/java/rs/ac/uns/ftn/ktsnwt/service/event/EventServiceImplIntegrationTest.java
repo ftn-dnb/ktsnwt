@@ -2,6 +2,7 @@ package rs.ac.uns.ftn.ktsnwt.service.event;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,18 +14,22 @@ import org.springframework.transaction.annotation.Transactional;
 import rs.ac.uns.ftn.ktsnwt.constants.EventConstants;
 import rs.ac.uns.ftn.ktsnwt.dto.EventDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.EventEditDTO;
+import rs.ac.uns.ftn.ktsnwt.dto.SearchEventDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.SetSectorPriceDTO;
 import rs.ac.uns.ftn.ktsnwt.exception.ApiRequestException;
 import rs.ac.uns.ftn.ktsnwt.exception.EventNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.exception.HallNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.exception.SectorNotFoundException;
 import rs.ac.uns.ftn.ktsnwt.model.*;
+import rs.ac.uns.ftn.ktsnwt.model.enums.EventType;
 import rs.ac.uns.ftn.ktsnwt.repository.EventRepository;
 
+import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -98,9 +103,6 @@ public class EventServiceImplIntegrationTest {
         assertEquals(EventConstants.NEW_DB_TYPE, event.getType());
         assertEquals(EventConstants.NEW_DB_HALL_ID, event.getHall().getId());
         assertEquals(defaultEventImage, event.getImagePath());
-
-        // TODO: kako proveriti datum ??
-//        assertEquals(, event.getStartDate());
     }
 
     @Test(expected = EventNotFoundException.class)
@@ -197,5 +199,51 @@ public class EventServiceImplIntegrationTest {
             assertEquals(1000, price.getPrice(), 0.1);
             assertEquals(sectorId, price.getSector().getId());
         }
+    }
+
+    @Test
+    public void whenFilterEventsReturnNone() {
+        SearchEventDTO filter = new SearchEventDTO();
+        filter.setEndDate("20-01-2020");
+        filter.setLocation("Lokacija");
+        filter.setName("Ime");
+        filter.setType(EventType.CONCERT);
+
+        Page<EventDTO> events = eventService.filterEvents(filter, PageRequest.of(0, 5));
+        assertEquals(0, events.getContent().size());
+    }
+
+    @Test(expected = ApiRequestException.class)
+    public void whenFilterEventsDateParseFailed() throws ParseException {
+        SearchEventDTO filter = new SearchEventDTO();
+        filter.setEndDate("20.01.2020");
+        filter.setLocation("Lokacija");
+        filter.setName("Ime");
+        filter.setType(EventType.CONCERT);
+
+        Page<EventDTO> events = eventService.filterEvents(filter, PageRequest.of(0, 5));
+    }
+
+    @Test
+    public void whenFilterEventsReturnSpecificEvent() {
+        SearchEventDTO filter = new SearchEventDTO();
+        filter.setEndDate("20-01-2020");
+        filter.setLocation("SPENS");
+        filter.setName("Koncert");
+        filter.setType(EventType.CONCERT);
+
+        Page<EventDTO> events = eventService.filterEvents(filter, PageRequest.of(0, 5));
+        assertEquals(1, events.getContent().size());
+        assertEquals(Long.valueOf(1L), events.getContent().get(0).getId());
+        assertEquals("Koncert", events.getContent().get(0).getName());
+    }
+
+    @Test
+    public void whenFilterEventsJustDateReturnAll() {
+        SearchEventDTO filter = new SearchEventDTO();
+        filter.setEndDate("20-01-2020");
+
+        Page<EventDTO> events = eventService.filterEvents(filter, PageRequest.of(0, 5));
+        assertEquals(2, events.getContent().size());
     }
 }

@@ -11,7 +11,8 @@ import rs.ac.uns.ftn.ktsnwt.repository.*;
         HallRepositoryIntegrationTest.class,
         LocationRepositoryIntegrationTest.class,
         EventRepositoryIntegrationTest.class,
-        ConfirmationTokenRepositoryIntegrationTest.class
+        ConfirmationTokenRepositoryIntegrationTest.class,
+        AuthorityRepositoryIntegrationTest.class
 })
 public class RepositoryIntegrationTests {
 }

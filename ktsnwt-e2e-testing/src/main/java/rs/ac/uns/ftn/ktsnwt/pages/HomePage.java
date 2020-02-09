@@ -29,6 +29,15 @@ public class HomePage {
     @FindBy(css = "#myReservationsBtn")
     private WebElement myReservationsButton;
 
+    @FindBy(css = "#locationsBtn")
+    private WebElement locationsButton;
+
+    @FindBy(css = "#logoutBtn")
+    private WebElement logoutButton;
+
+    @FindBy(css = "body > app-root > app-home > div > mat-card > mat-card-actions > button")
+    private WebElement seeMoreButton;
+
     public WebElement getMyReservationsButton() {
         return myReservationsButton;
     }
@@ -57,10 +66,16 @@ public class HomePage {
         return userMenuButton;
     }
 
+    public WebElement getLocationsButton(){ return  locationsButton;}
+
+    public WebElement getLogoutButton() { return  logoutButton;};
+
     public WebElement getUserSettingsButton() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#cdk-overlay-0")));
     }
+
+    public WebElement getSeeMoreButton() { return seeMoreButton; }
 
     public void ensureLoginIsDisplayed() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(loginButton));
@@ -68,6 +83,11 @@ public class HomePage {
 
     public void ensureLoggedInPageIsDisplayed() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(userMenuButton));
+    }
+
+    public WebElement getLogOut(){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#logoutBtn")));
     }
 
     public void ensureRegistrationButtonIsDisplayed() {
@@ -79,4 +99,13 @@ public class HomePage {
     public void ensureMyReservationsButtonIsDisplayed() {
         (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(myReservationsButton));
     }
+
+    public void ensureLocationButtonIsDisplayed(){
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(locationsButton));
+    }
+
+    public void ensureUserMenuButtonIsDisplayed(){
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(userMenuButton));
+    }
+
 }

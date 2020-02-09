@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.ac.uns.ftn.ktsnwt.dto.AddressDTO;
 import rs.ac.uns.ftn.ktsnwt.dto.LocationDTO;
@@ -28,6 +29,7 @@ public class LocationController {
         return new ResponseEntity<>(LocationMapper.toDto(location), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<Page<LocationDTO>> getAllLocations(@RequestParam(name = "page") int page,
                                                              @RequestParam(name = "size") int size) {
@@ -41,12 +43,14 @@ public class LocationController {
         return new ResponseEntity<>(LocationMapper.toDto(location), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("")
     public ResponseEntity<LocationDTO> addLocation(@RequestBody LocationDTO locationDTO) {
         Location location = locationService.addLocation(locationDTO);
         return new ResponseEntity<>(LocationMapper.toDto(location), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
     public ResponseEntity<LocationDTO> editLocation(@RequestBody LocationDTO locationDTO) {
         Location location = locationService.editLocation(locationDTO);

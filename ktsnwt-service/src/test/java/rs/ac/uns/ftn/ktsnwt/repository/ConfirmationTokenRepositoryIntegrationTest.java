@@ -14,7 +14,8 @@ import static org.junit.Assert.assertFalse;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ConfirmationTokenRepositoryIntegrationTest {
 
-    @Autowired private ConfirmationTokenRepository tokenRepository;
+    @Autowired
+    private ConfirmationTokenRepository tokenRepository;
 
     @Test
     public void whenTokenNameExists(){

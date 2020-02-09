@@ -12,7 +12,9 @@ public class SearchEventDTO {
 
     private EventType type;
 
-    private Long location;
+    private String location;
+
+    private String name;
 
     public SearchEventDTO(){
 
@@ -34,11 +36,19 @@ public class SearchEventDTO {
         this.type = type;
     }
 
-    public Long getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Long location) {
+    public void setLocation(String location) {
         this.location = location;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
